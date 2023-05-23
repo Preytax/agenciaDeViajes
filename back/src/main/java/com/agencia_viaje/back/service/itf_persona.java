@@ -17,5 +17,6 @@ public interface itf_persona {
 
     /* QUERY CON JPA */
     public Boolean savePersonaJPA(mdl_persona request);
+    public Boolean updatePersona(mdl_persona request);
     /* END QUERY CON JPA */
 }

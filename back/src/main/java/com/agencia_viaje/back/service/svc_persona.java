@@ -49,5 +49,16 @@ public class svc_persona implements itf_persona {
             return false;
         }
     }
+
+    @Override
+    public Boolean updatePersona(mdl_persona request) {
+        try {
+            persistence.save(request);
+            return true;
+
+        } catch (Exception e) {
+            return false;
+        }
+    }
     /* END QUERY CON JPA */
 }

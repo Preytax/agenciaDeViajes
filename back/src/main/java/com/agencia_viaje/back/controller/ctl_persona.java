@@ -116,4 +116,49 @@ public class ctl_persona {
        
         return mensaje;
     }
+
+    @PostMapping("/updatePersona")
+    @ResponseStatus(HttpStatus.CREATED)
+    String updatePersona(@RequestBody mdl_persona operador){
+        String mensaje = "ER|Existe un error interno y no pudo actualizar.";
+
+        if(
+            !operador.getNombres().equals("") && !operador.getNombres().isEmpty() &&
+            !operador.getApellidoPaterno().equals("") && !operador.getApellidoPaterno().isEmpty() &&
+            !operador.getApellidoMaterno().equals("") && !operador.getApellidoMaterno().isEmpty() &&
+            !operador.getTipoDocumento().equals("") && !operador.getTipoDocumento().isEmpty() &&
+            !operador.getNroDocumento().equals("") && !operador.getNroDocumento().isEmpty() &&
+            !operador.getFechaNacimiento().equals("") && !operador.getFechaNacimiento().isEmpty() &&
+            !operador.getCorreo().equals("") && !operador.getCorreo().isEmpty() &&
+            !operador.getIp().equals("") && !operador.getIp().isEmpty()
+        )
+        {
+            mensaje = "ER|No se pudo actualizar la informaci&oacute;n";
+
+            mdl_persona persona = new mdl_persona();
+
+            persona.setId(operador.getId());
+            persona.setIdPerfil(operador.getIdPerfil());
+            persona.setNombres(operador.getNombres());
+            persona.setApellidoPaterno(operador.getApellidoPaterno());
+            persona.setApellidoMaterno(operador.getApellidoMaterno());
+            persona.setTipoDocumento(operador.getTipoDocumento());
+            persona.setNroDocumento(operador.getNroDocumento());
+            persona.setFechaNacimiento(operador.getFechaNacimiento());
+            persona.setCorreo(operador.getCorreo());
+            persona.setUsuarioRegistra(operador.getUsuarioRegistra());
+            persona.setEstado("1");
+            persona.setIp(operador.getIp());
+
+            if(operador.getPassword() != null){
+                persona.setPassword(operador.getPassword());
+            }
+            
+            if(servicio.updatePersona(persona)){
+                mensaje = "OK|" + ((operador.getIdPerfil() == "2") ? "Se actualiz&oacute; la informci&oacute;n del operador" : "Su informci&oacute;n se ha actualizado");
+            }
+        }
+       
+        return mensaje;
+    }
 }

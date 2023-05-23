@@ -20,6 +20,7 @@ export default {
     
     mostrarEdit(){
       this.$refs.ref_incEditarInfo.mostrarEdit();
+      this.$refs.ref_incEditarInfo.getPersona();
     },
   },
   mounted() {

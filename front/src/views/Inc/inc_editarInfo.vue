@@ -1,4 +1,5 @@
 <template>
+    <div class="mp_row_Alert" v-if="showAlert">{{valorAlerta}}<i @click="hideAlert"></i></div>
     <transition name="fade">
         <div v-if="show" class="conteiner divSombraAlerta">
             <div class="contenedorAlerta">
@@ -10,7 +11,7 @@
                                     <div class="row g-3">
                                         <div class="col-sm-6">
                                             <label for="firstName" class="form-label" _msttexthash="76193" _msthash="27">Nombre</label>
-                                            <InputText type="text" class="form-control" id="firstName" placeholder="" maxlength="45" v-model="nombres" required/>
+                                            <input type="text" class="form-control" id="firstName" placeholder="" maxlength="45" v-model="nombres" required/>
                                             <div class="invalid-feedback" _msttexthash="637039" _msthidden="1" _msthash="28">
                                                 Valid first name is required.
                                             </div>
@@ -53,7 +54,7 @@
                                                 Valid first name is required.
                                             </div>
                                         </div>            
-                                        <div class="col-sm-6">
+                                        <div class="col-sm">
                                             <label for="username" class="form-label">Correo Electronico</label>
                                             <div class="input-group has-validation">
                                                 <span class="input-group-text">@</span>
@@ -63,6 +64,8 @@
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="row mt-1 g-3">
                                         <div class="col-sm-6">
                                             <label for="email" class="form-label" _msttexthash="731406" _msthash="34">Contraseña <span class="text-body-secondary" _istranslated="1"></span></label>
                                             <input v-model="password" type="password" class="form-control" id="password" placeholder="**********"  maxlength="10" _mstplaceholder="274417" _msthash="35">
@@ -70,13 +73,18 @@
                                                 Please enter a valid email address for shipping updates.
                                             </div>
                                         </div>
+                                        <div class="col-sm-6">
+                                            <label for="email" class="form-label" _msttexthash="731406" _msthash="34">Repetir Contraseña <span class="text-body-secondary" _istranslated="1"></span></label>
+                                            <input v-model="passwordR" type="password" class="form-control" id="passwordR" placeholder="**********"  maxlength="10" _mstplaceholder="274417" _msthash="35">
+                                            <div class="invalid-feedback" _msttexthash="1993589" _msthidden="1" _msthash="36">
+                                                Please enter a valid email address for shipping updates.
+                                            </div>
+                                        </div>
                                     </div>
-
                                     <hr class="my-4">
-
                                     <a class="w-100 btn btn-primary btn-lg" @click="addOperador" href="#">Registrar</a>
                                 </div>
-                                <button type="button" class="btn btn-success m-1">Actualizar</button>
+                                <button @click="updatePersona" type="button" class="btn btn-success m-1">Actualizar</button>
                                 <button @click="ocultarEdit" ref="divOculto" type="button" class="btn btn-danger m-1">Cancelar</button>
                             </div>
                         </div>
@@ -88,23 +96,112 @@
 </template>
 
 <script>
+import axios from 'axios';
+import CryptoJS from 'crypto-js';
 
 export default {
   name: "inc_editarInfo",
   data() {
     return {
-      title: 'Operadores',
-      url: window.location.href,
-      show: false,
+        title: 'Operadores',
+        id: "1",
+        persona: null,
+        nombres: null,
+        apellidoPaterno: null,
+        apellidoMaterno: null,
+        tipoDocumento: null,
+        nroDocumento: null,
+        fechaNacimiento: null,
+        correo: null,
+        password: null,
+        passwordR: null,
+        url: window.location.href,
+        tiposDocumentos: null,
+        showAlert: false,
+        show: false,
     }
   },
   methods: {
+    async getPersona() {
+        const baseUrl = 'http://localhost:8080/';
+        const request = await axios({
+            method: "POST",
+            url: baseUrl + "getOperador",
+            data: {
+                "id": "1"
+            },
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+
+        const responseTipoDocumento = await axios.get( baseUrl + 'getTiposDocumentos');
+        this.tiposDocumentos = responseTipoDocumento.data;
+
+        this.persona           = request.data[0];
+        this.nombres            = this.persona.nombres;
+        this.apellidoPaterno    = this.persona.apellidoPaterno;
+        this.apellidoMaterno    = this.persona.apellidoMaterno;
+        this.tipoDocumento      = this.persona.tipoDocumento;
+        this.nroDocumento       = this.persona.nroDocumento;
+        this.fechaNacimiento    = this.persona.fechaNacimiento;
+        this.correo             = this.persona.correo;
+    },
+    async updatePersona(){
+        const baseUrl = 'http://localhost:8080/';
+
+        if(this.password != null && this.password != ""){
+            if(this.password === this.passwordR){
+                this.password = CryptoJS.MD5(this.password).toString();
+            }else{
+                this.valorAlerta = "Las contraseñas no coinciden.";
+                this.showAlert = true;
+                return
+            }
+        }
+
+        const request = await axios({
+            method: "POST",
+            url: baseUrl + "updatePersona",
+            data: {
+                "id"                : this.id,
+                "nombres"           : this.nombres,
+                "apellidoPaterno"   : this.apellidoPaterno,
+                "apellidoMaterno"   : this.apellidoMaterno,
+                "tipoDocumento"     : this.tipoDocumento,
+                "nroDocumento"      : this.nroDocumento,
+                "fechaNacimiento"   : this.fechaNacimiento,
+                "correo"            : this.correo,
+                "password"          : this.password,
+            },
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+
+        var respuesta =  request.data.split("|");
+        if(respuesta[0] == "OK")
+        {
+            this.valorAlerta = respuesta[1];
+            this.showAlert = true;
+            setTimeout(() => {
+                location.reload();
+            }, 1000);
+
+        }else{
+            this.valorAlerta = respuesta[1];
+            this.showAlert = true;
+        }
+    },
     mostrarEdit(){
-      this.show = true;
+        this.show = true;
     },
     ocultarEdit(){
-      this.show = false;
+        this.show = false;
     },
+    hideAlert() {
+        this.showAlert = false;
+    }
   },
 };
 
