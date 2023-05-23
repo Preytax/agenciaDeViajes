@@ -1,68 +1,3 @@
-<script>
-import inc_editarInfo from "./inc_editarInfo";
-/* eslint-disable */
-import $ from 'jquery';
-/* eslint-enable */
-
-
-export default {
-  name: "inc_head",
-  components:{
-    inc_editarInfo
-  },
-  data() {
-    return {
-      title: 'Operadores',
-      url: window.location.href
-    };
-  },
-  methods: {
-    
-    mostrarEdit(){
-      this.$refs.ref_incEditarInfo.mostrarEdit();
-      this.$refs.ref_incEditarInfo.getPersona();
-    },
-  },
-  mounted() {
-    this.url = this.url.slice(this.url.lastIndexOf('/') + 1);
-    // Admin Panel settings
-
-    //****************************
-    /* This is for the mini-sidebar if width is less than 1170*/
-    //****************************
-    var setsidebartype = function () {
-      var width =
-        window.innerWidth > 0 ? window.innerWidth : this.screen.width;
-      if (width < 1199) {
-        $("#main-wrapper").attr("data-sidebartype", "mini-sidebar");
-        $("#main-wrapper").addClass("mini-sidebar");
-      } else {
-        $("#main-wrapper").attr("data-sidebartype", "full");
-        $("#main-wrapper").removeClass("mini-sidebar");
-      }
-    };
-    $(window).ready(setsidebartype);
-    $(window).on("resize", setsidebartype);
-    //****************************
-    /* This is for sidebartoggler*/
-    //****************************
-    $(".sidebartoggler").on("click", function () {
-      $("#main-wrapper").toggleClass("mini-sidebar");
-      if ($("#main-wrapper").hasClass("mini-sidebar")) {
-        $(".sidebartoggler").prop("checked", true);
-        $("#main-wrapper").attr("data-sidebartype", "mini-sidebar");
-      } else {
-        $(".sidebartoggler").prop("checked", false);
-        $("#main-wrapper").attr("data-sidebartype", "full");
-      }
-    });
-    $(".sidebartoggler").on("click", function () {
-      $("#main-wrapper").toggleClass("show-sidebar");
-    });
-  }
-};
-
-</script>
 <template>
   <div>
     <!-- Sidebar Start -->
@@ -141,7 +76,7 @@ export default {
               <span class="hide-menu">AUTH</span>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="./login" aria-expanded="false">
+              <a class="sidebar-link" :href="baseUrl + 'login'" aria-expanded="false">
                 <span>
                   <i class="ti ti-login"></i>
                 </span>
@@ -149,7 +84,7 @@ export default {
               </a>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="./registrarse" aria-expanded="false">
+              <a class="sidebar-link" :href="baseUrl + 'registrarse'" aria-expanded="false">
                 <span>
                   <i class="ti ti-user-plus"></i>
                 </span>
@@ -238,7 +173,7 @@ export default {
                       <i class="ti ti-list-check fs-6"></i>
                       <p class="mb-0 fs-3">My Task</p>
                     </a>
-                    <a href="./login" class="btn btn-outline-primary mx-3 mt-2 d-block">Logout</a>
+                    <a :href="baseUrl + 'login'" class="btn btn-outline-primary mx-3 mt-2 d-block">Logout</a>
                   </div>
                 </div>
               </li>
@@ -296,6 +231,73 @@ export default {
     <router-view/>
   </div>  
 </template>
+
+<script>
+import inc_editarInfo from "./inc_editarInfo";
+/* eslint-disable */
+import $ from 'jquery';
+/* eslint-enable */
+
+
+export default {
+  inject: ['baseUrl'],
+  name: "inc_head",
+  components:{
+    inc_editarInfo
+  },
+  data() {
+    return {
+      title: 'Operadores',
+      url: window.location.href
+    };
+  },
+  methods: {
+    
+    mostrarEdit(){
+      this.$refs.ref_incEditarInfo.mostrarEdit();
+      this.$refs.ref_incEditarInfo.getPersona();
+    },
+  },
+  mounted() {
+    this.url = this.url.slice(this.url.lastIndexOf('/') + 1);
+    // Admin Panel settings
+
+    //****************************
+    /* This is for the mini-sidebar if width is less than 1170*/
+    //****************************
+    var setsidebartype = function () {
+      var width =
+        window.innerWidth > 0 ? window.innerWidth : this.screen.width;
+      if (width < 1199) {
+        $("#main-wrapper").attr("data-sidebartype", "mini-sidebar");
+        $("#main-wrapper").addClass("mini-sidebar");
+      } else {
+        $("#main-wrapper").attr("data-sidebartype", "full");
+        $("#main-wrapper").removeClass("mini-sidebar");
+      }
+    };
+    $(window).ready(setsidebartype);
+    $(window).on("resize", setsidebartype);
+    //****************************
+    /* This is for sidebartoggler*/
+    //****************************
+    $(".sidebartoggler").on("click", function () {
+      $("#main-wrapper").toggleClass("mini-sidebar");
+      if ($("#main-wrapper").hasClass("mini-sidebar")) {
+        $(".sidebartoggler").prop("checked", true);
+        $("#main-wrapper").attr("data-sidebartype", "mini-sidebar");
+      } else {
+        $(".sidebartoggler").prop("checked", false);
+        $("#main-wrapper").attr("data-sidebartype", "full");
+      }
+    });
+    $(".sidebartoggler").on("click", function () {
+      $("#main-wrapper").toggleClass("show-sidebar");
+    });
+  }
+};
+
+</script>
 
 <style>
 @import '@/assets/css/styles.min.css';

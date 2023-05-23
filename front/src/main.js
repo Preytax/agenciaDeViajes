@@ -30,6 +30,10 @@ import CryptoJS from 'crypto-js';
 Window.axios = require('axios')
 const app = createApp(App).use(router);
 
+/* VARIBLES GLOBALES */
+app.provide('baseUrl', 'http://localhost:8081/');
+/* END VARIBLES GLOBALES */
+
 /* PRIMEVUE */
 app.use(PrimeVue);
 app.use(PrimeVue, { ripple: true });
