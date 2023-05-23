@@ -2,12 +2,16 @@
     <div class="container">
       <div class="row">
         <h3>{{ title }}</h3>
-        <DataTable selectionMode="single" :metaKeySelection="metaKey" v-model:filters="filters" :value="operadores" paginator showGridlines :rows="10" dataKey="id" filterDisplay="menu" :loading="loading"
-          :globalFilterFields="['idPerfil', 'nombres', 'apellidoPaterno', 'apellidoPaterno', 'tipoDocumento', 'nroDocumento']">
+        <DataTable selectionMode="single" :metaKeySelection="metaKey" v-model:filters="filters" :value="operadores" paginator showGridlines :rows="10" editMode="row" dataKey="id" filterDisplay="menu" 
+          :loading="loading" :globalFilterFields="['idPerfil', 'nombres', 'apellidoPaterno', 'apellidoPaterno', 'tipoDocumento', 'nroDocumento']" tableClass="editable-cells-table" @row-edit-save="onRowEditSave"
+          tableStyle="min-width: 50rem" v-model:editingRows="editingRows">
   
           <template v-slot:header>
             <div class="flex justify-content-end">
-              <Button type="button" icon="pi pi-filter-slash" style="float: left;" label="Limpiar" outlined @click="clearFilter()" />
+              <Button type="button" class="p-button p-component p-button-outlined p-button-sm" style="float: left;" label="Limpiar" outlined @click="clearFilter()">
+                <span class="p-button-icon p-button-icon-left pi pi-filter-slash"></span>
+                <span class="p-button-label">Limpiar</span>
+              </Button>
               <span class="p-input-icon-left">
                 <i class="pi pi-search" />
                 <InputText ref="search" style="" v-model="filters['global'].value" placeholder="Buscar..." />
@@ -32,7 +36,11 @@
                 <InputText v-model="filterModel.value" type="text" class="p-column-filter" placeholder="Search by name" />
             </template>
           </Column>
-          <Column field="nombres" header="Nombres" style="min-width: 12rem"></Column>
+          <Column field="nombres" header="Nombres" style="min-width: 12rem">
+            <template #editor="{ data, field }">
+                <InputText v-model="data[field]" />
+            </template>
+          </Column>
           <Column field="apellidoPaterno" header="Apellido Paterno" style="min-width: 12rem"></Column>
           <Column field="apellidoMaterno" header="Apellido Materno" style="min-width: 12rem"></Column>
           <Column field="tipoDocumento" header="Documento" style="min-width: 12rem"></Column>
@@ -46,7 +54,21 @@
           <Column field="usuarioRegistra" header="Usuario Registra" style="min-width: 12rem"></Column>
           <Column field="fechaRegistro" header="Fecha Registro" style="min-width: 12rem"></Column>
           <Column field="ip" header="ip" style="min-width: 12rem"></Column>
+          
+          <Column :rowEditor="true" style="width: 10%; min-width: 8rem" bodyStyle="text-align:center"></Column>
         </DataTable>
+      </div>
+    </div>
+    <div class="conteiner" style="width: 100%;
+        height: 100%;
+        position: fixed;
+        background: #c4c4c4b0;
+        bottom: 0;
+        left: 0;
+        z-index: 9999;
+        display: none;">
+      <div style="width: 100%; height: 30rem; background-color: yellow; position: absolute; bottom: 0;">
+
       </div>
     </div>
   </template>
