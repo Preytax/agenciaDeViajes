@@ -16,8 +16,8 @@ const routes = [
   },
   {
     path: '/home',
-    name: 'perfil',
-    omponent: sesion
+    name: 'home',
+    component: sesion,
   },
   {
     path: '/perfil',

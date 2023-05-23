@@ -187,8 +187,8 @@
           <ul class="nav nav-pills nav-fill gap-2 p-1 small bg-primary rounded-5 shadow-sm" id="pillNav2" role="tablist" 
             style="--bs-nav-link-color: var(--bs-white); --bs-nav-pills-link-active-color: var(--bs-primary); --bs-nav-pills-link-active-bg: var(--bs-white);">
             <li class="nav-item" role="presentation">
-              <router-link to="/">
-                <button :class="{ 'active': url === ''}" class="nav-link rounded-5" id="home-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="true">
+              <router-link to="/home">
+                <button :class="{ 'active': url === 'home'}" class="nav-link rounded-5" id="home-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="true">
                   Home
                 </button>
               </router-link>
