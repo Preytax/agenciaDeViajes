@@ -11,8 +11,13 @@ import Register from '@/views/sesion/RegisterIn.vue'
 const routes = [
   {
     path: '/',
-    name: 'home',
-    component: sesion
+    name: 'Login',
+    component: Login
+  },
+  {
+    path: '/home',
+    name: 'perfil',
+    omponent: sesion
   },
   {
     path: '/perfil',
