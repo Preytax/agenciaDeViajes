@@ -58,6 +58,7 @@
 </template>
 
 <style>
+@import './assets/css/styles.min.css';
 body {
   font: HelveticaNeue;
     /*font-family: var(--font-family);*/

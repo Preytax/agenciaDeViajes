@@ -244,10 +244,6 @@ export default{
 </script>
 
 <style>
-.container, nav {
-  max-width: 960px;
-}
-
 .mp_row_Alert
 {
     font: 14px/14px HelveticaNeue_Light;
