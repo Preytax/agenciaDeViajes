@@ -28,21 +28,21 @@
                       <label for="lastName" class="form-label" _msttexthash="112346" _msthash="29">Apellido Paterno</label>
                       <InputText type="text" class="form-control" id="lastName" placeholder="" maxlength="45" v-model="apellidoPaterno" required/>
                       <div ref="apellidoPaterno" class="invalid-feedback" _msttexthash="592748" _msthidden="1" _msthash="30">
-                          Valid last name is required.
+                          El apellido paterno es obligatorio.
                       </div>
                   </div>
                   <div class="col-sm-6">
                       <label for="firstName" class="form-label" _msttexthash="76193" _msthash="27">Aapellido Materno</label>
                       <InputText type="text" class="form-control" id="lastName2" placeholder="" maxlength="45" v-model="apellidoMaterno" required/>
                       <div ref="apellidoMaterno" class="invalid-feedback" _msttexthash="637039" _msthidden="1" _msthash="28">
-                          Valid first name is required.
+                          El apellido materno es obligatorio.
                       </div>
                   </div>
                   <div class="col-sm-6">
                       <label for="firstName" class="form-label" _msttexthash="76193" _msthash="27">Fecha de Nacimiento</label>
                       <InputText type="date" class="form-control" id="lastName2" placeholder="" v-model="fechaNacimiento" required/>
                       <div ref="fechaNacimiento" class="invalid-feedback" _msttexthash="637039" _msthidden="1" _msthash="28">
-                          Valid first name is required.
+                          La fecha de Nacimiento es obligatoria.
                       </div>
                   </div>
                   <div class="col-sm-6">
@@ -52,14 +52,14 @@
                           <option v-for="tipoDocumento in tiposDocumentos" :key="tipoDocumento.id" :value="tipoDocumento.id">{{tipoDocumento.nombre}}</option>
                       </select>
                       <div ref="tipoDocumento" class="invalid-feedback" _msttexthash="685542" _msthidden="1" _msthash="45">
-                          Please select a valid country.
+                          El tipo de documento es obligatorio.
                       </div>
                   </div>
                   <div class="col-sm-6">
                       <label for="firstName" class="form-label" _msttexthash="76193" _msthash="27">Nro. de Documento</label>
                       <InputText type="text" class="form-control" id="lastName2" placeholder="" maxlength="8" v-model="nroDocumento" required/>
                       <div ref="nroDocumento" class="invalid-feedback" _msttexthash="637039" _msthidden="1" _msthash="28">
-                          Valid first name is required.
+                          El nro. de documento es obligatorio.
                       </div>
                   </div>            
                   <div class="col-sm-6">
@@ -68,7 +68,7 @@
                           <span class="input-group-text">@</span>
                           <input v-model="correo" type="email" class="form-control" id="correo" placeholder="Correo" maxlength="150" required="">
                           <div ref="correo" class="invalid-feedback">
-                              Your username is required.
+                              El correo es obligatorio.
                           </div>
                       </div>
                   </div>

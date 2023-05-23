@@ -4,88 +4,91 @@
         <div v-if="show" class="conteiner divSombraAlerta">
             <div class="contenedorAlerta">
                 <div class="divAlerta">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="tab-content">
-                                <div class="tab-pane fade show active" id="pills-register" role="tabpanel" aria-labelledby="tab-register">
-                                    <div class="row g-3">
-                                        <div class="col-sm-6">
-                                            <label for="firstName" class="form-label" _msttexthash="76193" _msthash="27">Nombre</label>
-                                            <input type="text" class="form-control" id="firstName" placeholder="" maxlength="45" v-model="nombres" required/>
-                                            <div class="invalid-feedback" _msttexthash="637039" _msthidden="1" _msthash="28">
-                                                Valid first name is required.
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <label for="lastName" class="form-label" _msttexthash="112346" _msthash="29">Apellido Paterno</label>
-                                            <InputText type="text" class="form-control" id="lastName" placeholder="" maxlength="45" v-model="apellidoPaterno" required/>
-                                            <div class="invalid-feedback" _msttexthash="592748" _msthidden="1" _msthash="30">
-                                                Valid last name is required.
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <label for="firstName" class="form-label" _msttexthash="76193" _msthash="27">Aapellido Materno</label>
-                                            <InputText type="text" class="form-control" id="lastName2" placeholder="" maxlength="45" v-model="apellidoMaterno" required/>
-                                            <div class="invalid-feedback" _msttexthash="637039" _msthidden="1" _msthash="28">
-                                                Valid first name is required.
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <label for="firstName" class="form-label" _msttexthash="76193" _msthash="27">Fecha de Nacimiento</label>
-                                            <InputText type="date" class="form-control" id="lastName2" placeholder="" v-model="fechaNacimiento" required/>
-                                            <div class="invalid-feedback" _msttexthash="637039" _msthidden="1" _msthash="28">
-                                                Valid first name is required.
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <label for="country" class="form-label" _msttexthash="60047" _msthash="42">Tipo de Documento</label>
-                                            <select class="form-select" id="country" outlined v-model="tipoDocumento">
-                                                <option value="" _msttexthash="101647" _msthash="43">Elegir...</option>
-                                                <option v-for="tipoDocumento in tiposDocumentos" :key="tipoDocumento.id" :value="tipoDocumento.id">{{tipoDocumento.nombre}}</option>
-                                            </select>
-                                            <div class="invalid-feedback" _msttexthash="685542" _msthidden="1" _msthash="45">
-                                                Please select a valid country.
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <label for="firstName" class="form-label" _msttexthash="76193" _msthash="27">Nro. de Documento</label>
-                                            <InputText type="text" class="form-control" id="lastName2" placeholder="" maxlength="8" v-model="nroDocumento" required/>
-                                            <div class="invalid-feedback" _msttexthash="637039" _msthidden="1" _msthash="28">
-                                                Valid first name is required.
-                                            </div>
-                                        </div>            
-                                        <div class="col-sm">
-                                            <label for="username" class="form-label">Correo Electronico</label>
-                                            <div class="input-group has-validation">
-                                                <span class="input-group-text">@</span>
-                                                <input v-model="correo" type="email" class="form-control" id="correo" placeholder="Correo" maxlength="150" required="">
-                                                <div class="invalid-feedback">
-                                                    Your username is required.
+                    <div class="body-wrapper">
+                        <div class="container-fluid scrollEditor">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="tab-content">
+                                        <div class="tab-pane fade show active" id="pills-register" role="tabpanel" aria-labelledby="tab-register">
+                                            <div class="row g-3">
+                                                <div class="col-sm-6">
+                                                    <label for="firstName" class="form-label" _msttexthash="76193" _msthash="27">Nombre</label>
+                                                    <input type="text" class="form-control" id="firstName" placeholder="" maxlength="45" v-model="nombres" required/>
+                                                    <div class="invalid-feedback" _msttexthash="637039" _msthidden="1" _msthash="28">
+                                                        Valid first name is required.
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <label for="lastName" class="form-label" _msttexthash="112346" _msthash="29">Apellido Paterno</label>
+                                                    <InputText type="text" class="form-control" id="lastName" placeholder="" maxlength="45" v-model="apellidoPaterno" required/>
+                                                    <div class="invalid-feedback" _msttexthash="592748" _msthidden="1" _msthash="30">
+                                                        Valid last name is required.
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <label for="firstName" class="form-label" _msttexthash="76193" _msthash="27">Aapellido Materno</label>
+                                                    <InputText type="text" class="form-control" id="lastName2" placeholder="" maxlength="45" v-model="apellidoMaterno" required/>
+                                                    <div class="invalid-feedback" _msttexthash="637039" _msthidden="1" _msthash="28">
+                                                        Valid first name is required.
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <label for="firstName" class="form-label" _msttexthash="76193" _msthash="27">Fecha de Nacimiento</label>
+                                                    <InputText type="date" class="form-control" id="lastName2" placeholder="" v-model="fechaNacimiento" required/>
+                                                    <div class="invalid-feedback" _msttexthash="637039" _msthidden="1" _msthash="28">
+                                                        Valid first name is required.
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <label for="country" class="form-label" _msttexthash="60047" _msthash="42">Tipo de Documento</label>
+                                                    <select class="form-select" id="country" outlined v-model="tipoDocumento">
+                                                        <option value="" _msttexthash="101647" _msthash="43">Elegir...</option>
+                                                        <option v-for="tipoDocumento in tiposDocumentos" :key="tipoDocumento.id" :value="tipoDocumento.id">{{tipoDocumento.nombre}}</option>
+                                                    </select>
+                                                    <div class="invalid-feedback" _msttexthash="685542" _msthidden="1" _msthash="45">
+                                                        Please select a valid country.
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <label for="firstName" class="form-label" _msttexthash="76193" _msthash="27">Nro. de Documento</label>
+                                                    <InputText type="text" class="form-control" id="lastName2" placeholder="" maxlength="8" v-model="nroDocumento" required/>
+                                                    <div class="invalid-feedback" _msttexthash="637039" _msthidden="1" _msthash="28">
+                                                        Valid first name is required.
+                                                    </div>
+                                                </div>            
+                                                <div class="col-sm">
+                                                    <label for="username" class="form-label">Correo Electronico</label>
+                                                    <div class="input-group has-validation">
+                                                        <span class="input-group-text">@</span>
+                                                        <input v-model="correo" type="email" class="form-control" id="correo" placeholder="Correo" maxlength="150" required="">
+                                                        <div class="invalid-feedback">
+                                                            Your username is required.
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div class="row mt-1 g-3">
-                                        <div class="col-sm-6">
-                                            <label for="email" class="form-label" _msttexthash="731406" _msthash="34">Contraseña <span class="text-body-secondary" _istranslated="1"></span></label>
-                                            <input v-model="password" type="password" class="form-control" id="password" placeholder="**********"  maxlength="10" _mstplaceholder="274417" _msthash="35">
-                                            <div class="invalid-feedback" _msttexthash="1993589" _msthidden="1" _msthash="36">
-                                                Please enter a valid email address for shipping updates.
+                                            <div class="row mt-1 g-3">
+                                                <div class="col-sm-6">
+                                                    <label for="email" class="form-label" _msttexthash="731406" _msthash="34">Contraseña <span class="text-body-secondary" _istranslated="1"></span></label>
+                                                    <input v-model="password" type="password" class="form-control" id="password" placeholder="**********"  maxlength="10" _mstplaceholder="274417" _msthash="35">
+                                                    <div class="invalid-feedback" _msttexthash="1993589" _msthidden="1" _msthash="36">
+                                                        Please enter a valid email address for shipping updates.
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <label for="email" class="form-label" _msttexthash="731406" _msthash="34">Repetir Contraseña <span class="text-body-secondary" _istranslated="1"></span></label>
+                                                    <input v-model="passwordR" type="password" class="form-control" id="passwordR" placeholder="**********"  maxlength="10" _mstplaceholder="274417" _msthash="35">
+                                                    <div class="invalid-feedback" _msttexthash="1993589" _msthidden="1" _msthash="36">
+                                                        Please enter a valid email address for shipping updates.
+                                                    </div>
+                                                </div>
                                             </div>
+                                            <hr class="my-4">
                                         </div>
-                                        <div class="col-sm-6">
-                                            <label for="email" class="form-label" _msttexthash="731406" _msthash="34">Repetir Contraseña <span class="text-body-secondary" _istranslated="1"></span></label>
-                                            <input v-model="passwordR" type="password" class="form-control" id="passwordR" placeholder="**********"  maxlength="10" _mstplaceholder="274417" _msthash="35">
-                                            <div class="invalid-feedback" _msttexthash="1993589" _msthidden="1" _msthash="36">
-                                                Please enter a valid email address for shipping updates.
-                                            </div>
-                                        </div>
+                                        <button @click="updatePersona" type="button" class="btn btn-success m-1">Actualizar</button>
+                                        <button @click="ocultarEdit" ref="divOculto" type="button" class="btn btn-danger m-1">Cancelar</button>
                                     </div>
-                                    <hr class="my-4">
-                                    <a class="w-100 btn btn-primary btn-lg" @click="addOperador" href="#">Registrar</a>
                                 </div>
-                                <button @click="updatePersona" type="button" class="btn btn-success m-1">Actualizar</button>
-                                <button @click="ocultarEdit" ref="divOculto" type="button" class="btn btn-danger m-1">Cancelar</button>
                             </div>
                         </div>
                     </div>
@@ -231,9 +234,20 @@ export default {
 .divAlerta{
     position: absolute;
     bottom: 0;
-    right: 30%;
-    left: 30%;
-    top: -250px
+    top: -450px
+}
+
+.scrollEditor{
+    max-height: 700px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+@media (min-width: 767.98px)
+{
+    .scrollEditor{
+        margin-left: 200px !important;
+    }
 }
 
 .fade-enter-active{
