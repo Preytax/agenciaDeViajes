@@ -110,7 +110,7 @@ public class ctl_persona {
             persona.setIp(operador.getIp());
             
             if(servicio.savePersonaJPA(persona)){
-                mensaje = "OK|Se registro el operador con exito";
+                mensaje = "OK|" + ((operador.getIdPerfil() == "2") ? "Se registro el operador con exito" : "Su registro ha sido exitoso");
             }
         }
        

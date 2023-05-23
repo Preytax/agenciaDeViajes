@@ -1,4 +1,5 @@
 <template>
+    <div class="mp_row_Alert" v-if="showAlert">{{valorAlerta}}<i @click="hideAlert"></i></div>
     <div class="container" style="max-width: 400px;">
         <main data-bd-theme="dark">
             <!-- Pills navs -->
@@ -185,7 +186,6 @@ export default{
             correo: null,
             password: null,
             showAlert: false,
-            perfiles: null,
             tiposDocumentos: null,
             valorAlerta: "",
             navRegister: false,
@@ -197,9 +197,6 @@ export default{
     props: [],
     mounted: async function() {
         const baseUrl = 'http://localhost:8080/';
-        
-        const responsePerfil = await axios.get( baseUrl + 'getPerfiles');
-        this.perfiles = responsePerfil.data;
 
         const responseTipoDocumento = await axios.get( baseUrl + 'getTiposDocumentos');
         this.tiposDocumentos = responseTipoDocumento.data;
@@ -218,6 +215,7 @@ export default{
             this.navLogin  = false
         },
         async addOperador(){
+            console.log("llego")
             Object.keys(this.$refs).forEach((refKey) => {
                 const elements = this.$refs[refKey];
                 if (!Array.isArray(elements)) {
@@ -225,11 +223,6 @@ export default{
                 }
             });
            
-            if (this.idPerfil == null) {
-                this.showAlert = true;
-                //this.$refs.idPerfil.classList.add("notValid-Requerid");
-                error = 1;
-            }
             if (this.nombres == null) {
                 this.showAlert = true;
                 //this.$refs.nombres.classList.add("notValid-Requerid");
@@ -274,7 +267,7 @@ export default{
                return;
             }
             const newOperador = {
-                idPerfil : this.idPerfil,
+                idPerfil : 3,
                 nombres : this.nombres,
                 apellidoPaterno : this.apellidoPaterno,
                 apellidoMaterno : this.apellidoMaterno,
