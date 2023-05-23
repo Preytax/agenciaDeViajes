@@ -245,7 +245,7 @@ export default {
           <li class="nav-item" role="presentation">
             <router-link to="/about">
               <button :class="{ 'active': url === 'about'}" class="nav-link rounded-5" id="profile-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="false">
-                About
+                About.
               </button>
             </router-link>
           </li>
