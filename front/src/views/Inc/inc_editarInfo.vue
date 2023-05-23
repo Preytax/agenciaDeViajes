@@ -95,7 +95,7 @@ export default {
     return {
       title: 'Operadores',
       url: window.location.href,
-      show: true,
+      show: false,
     }
   },
   methods: {
