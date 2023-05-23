@@ -5,6 +5,8 @@ import GetOperadores from '@/views/operador/GetOperadores.vue'
 import CreatePaquetes from '@/views/paquetespersonalizados/CreatePaquetes.vue'
 import GetPaquetes from '@/views/paquetespersonalizados/GetPaquetes.vue'
 import sesion from '@/views/sesion/login-register.vue'
+import Login from '@/views/sesion/LogIn.vue'
+import Register from '@/views/sesion/RegisterIn.vue'
 
 const routes = [
   {
@@ -24,6 +26,16 @@ const routes = [
     path: '/admin/operador/add',
     name: 'AddOperador',
     component: AddOperador,
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: Login,
+  },
+  {
+    path: '/registrarse',
+    name: 'register',
+    component: Register,
   },
   {
     path: '/admin/operador/get',

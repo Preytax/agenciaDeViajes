@@ -1,4 +1,5 @@
 <template>
+    <inc_head/>
     <div class="mp_row_Alert" v-if="showAlert">{{valorAlerta}}<i @click="hideAlert"></i></div>
     <div class="body-wrapper">
         <div class="container-fluid" data-bd-theme="dark">
@@ -107,11 +108,16 @@
 </template>
 
 <script>
+import inc_head from "../Inc/inc_head";
 import CryptoJS from 'crypto-js';
+
 var axios = require('axios');
 var error = 0;
 
 export default{
+    components: {
+        inc_head,
+    },
     data(){
         return {
             idPerfil: null,
@@ -131,6 +137,7 @@ export default{
     },
     props: [],
     mounted: async function() {
+
         const baseUrl = 'http://localhost:8080/';
         
         const responsePerfil = await axios.get( baseUrl + 'getPerfiles');
