@@ -32,11 +32,8 @@
       
               <Column field="id" header="Id" style="min-width: 12rem"></Column>
               <Column field="idPerfil" header="Perfil" style="min-width: 12rem">
-                <template #body="{ data }">
-                    {{ data.idPerfil }}
-                </template>
-                <template #filter="{ filterModel }">
-                    <InputText v-model="filterModel.value" type="text" class="p-column-filter" placeholder="Search by name" />
+                <template #body="datosTiposPerlies">
+                  <span>{{ perfiles[datosTiposPerlies.data.tipoDocumento] }}</span>
                 </template>
               </Column>
               <Column field="nombres" header="Nombres" style="min-width: 12rem">
@@ -46,7 +43,11 @@
               </Column>
               <Column field="apellidoPaterno" header="Apellido Paterno" style="min-width: 12rem"></Column>
               <Column field="apellidoMaterno" header="Apellido Materno" style="min-width: 12rem"></Column>
-              <Column field="tipoDocumento" header="Documento" style="min-width: 12rem"></Column>
+              <Column field="tipoDocumento" header="Documento" style="min-width: 12rem">
+                <template #body="datostipoDocumento">
+                  <span>{{ tiposDocumentos[datostipoDocumento.data.tipoDocumento] }}</span>
+                </template>
+              </Column>
               <Column field="nroDocumento" header="Nro. Documento" style="min-width: 12rem"></Column>
               <Column field="estado" header="Estado" style="min-width: 12rem">
                 <template #body="datoOperador">
@@ -56,7 +57,7 @@
               <Column field="fechaNacimiento" header="Fecha Nacimiento" style="min-width: 12rem"></Column>
               <Column field="usuarioRegistra" header="Usuario Registra" style="min-width: 12rem"></Column>
               <Column field="fechaRegistro" header="Fecha Registro" style="min-width: 12rem"></Column>
-              <Column field="ip" header="ip" style="min-width: 12rem"></Column>
+              <Column field="ipRegistra" header="ip" style="min-width: 12rem"></Column>
               
               <Column :rowEditor="true" style="width: 10%; min-width: 8rem" bodyStyle="text-align:center"></Column>
             </DataTable>
@@ -82,6 +83,8 @@
     },
     data() {
       return {
+        tiposDocumentos : {},
+        perfiles : {},
         statuses : {0: 'Deshabilitado', 1:'Habilitado', 2:'Eliminado'},
         loading: true,
         operadores: null,
@@ -108,17 +111,34 @@
           },
       };
     },
-    mounted() {
-      this.fetchData();
+    mounted: async function() {
+
+      const baseUrl = 'http://localhost:8080/';
+
+      const response = await axios.get( baseUrl + 'getOperadores');
+      this.operadores = response.data;
+      this.loading = false;
+
+      /* REORDENAMIENTO DE TIPOS DE DOCUEMNTOS */
+      const responseTipoDocumento = await axios.get( baseUrl + 'getTiposDocumentos');
+      var auxTiposDocumentos = {};
+
+      for (const op of responseTipoDocumento.data) {
+        auxTiposDocumentos[op.id] = op.nombre;
+      }
+      this.tiposDocumentos = auxTiposDocumentos;
+
+      /*REORDENAMIENTO DE TIPOS DE PERFILES */
+      const responsePerfil = await axios.get( baseUrl + 'getPerfiles');
+      var auxTipoPerfiles = {};
+
+      for (const op of responsePerfil.data) {
+        auxTipoPerfiles[op.id] = op.nombre;
+      }
+      this.perfiles = auxTipoPerfiles;
+
     },
     methods: {
-      async fetchData() {
-        const baseUrl = 'http://localhost:8080/';
-        const response = await axios.get( baseUrl + 'getOperadores');
-        this.operadores = response.data;
-        this.loading = false;
-        //ProductService.getProductsMini().then((data) => (this.operadores.value = data));
-      },
       clearFilter() {
         this.$refs.search.$el.value = ''; //Limpiar el inputText
         this.filters.global.value = null; // Restablecer el valor del filtro global // Restablecer el valor del filtro nroDocumento

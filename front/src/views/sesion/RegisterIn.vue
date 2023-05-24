@@ -13,8 +13,7 @@
                 <a href="#" class="text-nowrap logo-img text-center d-block py-3 w-100">
                   <img src="@/assets/images/logos/dark-logo.svg" width="180" alt="">
                 </a>
-                <p class="text-center">Your Social Campaigns</p>
-                
+                <p class="text-center">Registrate y recibe un atenci&oacute;n personalizada</p>
                 
                 <div class="row g-3">
                   <div class="col-sm-6">
@@ -76,7 +75,7 @@
                       <label for="email" class="form-label" _msttexthash="731406" _msthash="34">Contraseña <span class="text-body-secondary" _istranslated="1"></span></label>
                       <input v-model="password" type="password" class="form-control" id="password" placeholder="**********"  maxlength="10" _mstplaceholder="274417" _msthash="35">
                       <div ref="password" class="invalid-feedback" _msttexthash="1993589" _msthidden="1" _msthash="36">
-                          Please enter a valid email address for shipping updates.
+                          La contraseña es obligatoria.
                       </div>
                   </div>
                 </div>
@@ -99,7 +98,7 @@
 
                 <a class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2" @click="addOperador" href="#">Registrarse</a>
                 <div class="d-flex align-items-center justify-content-center">
-                  <p class="fs-4 mb-0 fw-bold">Already have an Account?</p>
+                  <p class="fs-4 mb-0 fw-bold">&#191;Ya tienes una cuenta&#63;</p>
                   <a class="text-primary fw-bold ms-2" :href="baseUrl + 'login'">Iniciar Sesi&oacute;n</a>
                 </div>
               </div>
@@ -170,87 +169,75 @@ export default{
             });
            
             if (this.nombres == null || this.nombres == "") {
-                this.showAlert = true;
                 this.$refs.nombres.classList.add("mostrarObligatorio");
                 error = 1;
             }
             if (this.apellidoPaterno == null || this.apellidoPaterno == "") {
-                this.showAlert = true;
                 this.$refs.apellidoPaterno.classList.add("mostrarObligatorio");
                 error = 1;
             }
             if (this.apellidoMaterno == null || this.apellidoMaterno == "") {
-                this.showAlert = true;
                 this.$refs.apellidoMaterno.classList.add("mostrarObligatorio");
                 error = 1;
             }
             if (this.tipoDocumento == null || this.tipoDocumento == "") {
-                this.showAlert = true;
                 this.$refs.tipoDocumento.classList.add("mostrarObligatorio");
                 error = 1;
             }
             if (this.nroDocumento == null || this.nroDocumento == "") {
-                this.showAlert = true;
                 this.$refs.nroDocumento.classList.add("mostrarObligatorio");
                 error = 1;
             }
             if (this.fechaNacimiento == null || this.fechaNacimiento == "") {
-                this.showAlert = true;
                 this.$refs.fechaNacimiento.classList.add("mostrarObligatorio");
                 error = 1;
             }
             if (this.correo == null || this.correo == "") {
-                this.showAlert = true;
                 this.$refs.correo.classList.add("mostrarObligatorio");
                 error = 1;
             }
             if (this.password == null || this.password == "") {
-                this.showAlert = true;
                 this.$refs.password.classList.add("mostrarObligatorio");
                 error = 1;
             }
-            if(error != 0){
-               return;
-            }
-            const newOperador = {
-                idPerfil : 3,
-                nombres : this.nombres,
-                apellidoPaterno : this.apellidoPaterno,
-                apellidoMaterno : this.apellidoMaterno,
-                tipoDocumento : this.tipoDocumento,
-                nroDocumento : this.nroDocumento,
-                fechaNacimiento : this.fechaNacimiento,
-                correo : this.correo,
-                password : CryptoJS.MD5(this.password).toString()
-            };
+            if(error == 0){
+                const newOperador = {
+                    idPerfil : 3,
+                    nombres : this.nombres,
+                    apellidoPaterno : this.apellidoPaterno,
+                    apellidoMaterno : this.apellidoMaterno,
+                    tipoDocumento : this.tipoDocumento,
+                    nroDocumento : this.nroDocumento,
+                    fechaNacimiento : this.fechaNacimiento,
+                    correo : this.correo,
+                    password : CryptoJS.MD5(this.password).toString()
+                };
 
-            const baseUrl = "http://localhost:8080/";
+                const baseUrl = "http://localhost:8080/";
 
-            const request = await axios({
-                method: "POST",
-                url: baseUrl + "saveOperador",
-                data: newOperador,
-                headers: {
-                    "Content-Type": "application/json"
+                const request = await axios({
+                    method: "POST",
+                    url: baseUrl + "saveOperador",
+                    data: newOperador,
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                })
+
+                var arreglo =  request.data.split("|");
+
+                if(arreglo[0] == "OK")
+                {
+                    this.valorAlerta = arreglo[1];
+                    this.showAlert = true;
+                    setTimeout(() => {
+                        location.reload();
+                    }, 1000);
+
+                }else{
+                    this.valorAlerta = arreglo[1];
+                    this.showAlert = true;
                 }
-            })
-            /*.then(()=>{
-                
-            })
-            .catch(err => console.log(err));*/
-            var arreglo =  request.data.split("|");
-
-            if(arreglo[0] == "OK")
-            {
-                this.valorAlerta = arreglo[1];
-                this.showAlert = true;
-                setTimeout(() => {
-                    location.reload();
-                }, 1000);
-
-            }else{
-                this.valorAlerta = arreglo[1];
-                this.showAlert = true;
             }
         },
         hideAlert() {

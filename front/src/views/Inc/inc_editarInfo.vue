@@ -14,29 +14,29 @@
                                                 <div class="col-sm-6">
                                                     <label for="firstName" class="form-label" _msttexthash="76193" _msthash="27">Nombre</label>
                                                     <input type="text" class="form-control" id="firstName" placeholder="" maxlength="45" v-model="nombres" required/>
-                                                    <div class="invalid-feedback" _msttexthash="637039" _msthidden="1" _msthash="28">
-                                                        Valid first name is required.
+                                                    <div ref="nombres" class="invalid-feedback" _msttexthash="637039" _msthidden="1" _msthash="28">
+                                                        El nombre es obligatorio.
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <label for="lastName" class="form-label" _msttexthash="112346" _msthash="29">Apellido Paterno</label>
                                                     <InputText type="text" class="form-control" id="lastName" placeholder="" maxlength="45" v-model="apellidoPaterno" required/>
-                                                    <div class="invalid-feedback" _msttexthash="592748" _msthidden="1" _msthash="30">
-                                                        Valid last name is required.
+                                                    <div ref="apellidoPaterno" class="invalid-feedback" _msttexthash="592748" _msthidden="1" _msthash="30">
+                                                        El apellido paterno es obligatorio.
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <label for="firstName" class="form-label" _msttexthash="76193" _msthash="27">Aapellido Materno</label>
                                                     <InputText type="text" class="form-control" id="lastName2" placeholder="" maxlength="45" v-model="apellidoMaterno" required/>
-                                                    <div class="invalid-feedback" _msttexthash="637039" _msthidden="1" _msthash="28">
-                                                        Valid first name is required.
+                                                    <div ref="apellidoMaterno" class="invalid-feedback" _msttexthash="637039" _msthidden="1" _msthash="28">
+                                                        El apellido materno es obligatorio.
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <label for="firstName" class="form-label" _msttexthash="76193" _msthash="27">Fecha de Nacimiento</label>
                                                     <InputText type="date" class="form-control" id="lastName2" placeholder="" v-model="fechaNacimiento" required/>
-                                                    <div class="invalid-feedback" _msttexthash="637039" _msthidden="1" _msthash="28">
-                                                        Valid first name is required.
+                                                    <div ref="fechaNacimiento" class="invalid-feedback" _msttexthash="637039" _msthidden="1" _msthash="28">
+                                                        La fecha de nacimiento es obligataoria.
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">
@@ -45,15 +45,15 @@
                                                         <option value="" _msttexthash="101647" _msthash="43">Elegir...</option>
                                                         <option v-for="tipoDocumento in tiposDocumentos" :key="tipoDocumento.id" :value="tipoDocumento.id">{{tipoDocumento.nombre}}</option>
                                                     </select>
-                                                    <div class="invalid-feedback" _msttexthash="685542" _msthidden="1" _msthash="45">
-                                                        Please select a valid country.
+                                                    <div ref="tipoDocumento" class="invalid-feedback" _msttexthash="685542" _msthidden="1" _msthash="45">
+                                                        El tipo de documento es obligataorio.
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <label for="firstName" class="form-label" _msttexthash="76193" _msthash="27">Nro. de Documento</label>
                                                     <InputText type="text" class="form-control" id="lastName2" placeholder="" maxlength="8" v-model="nroDocumento" required/>
-                                                    <div class="invalid-feedback" _msttexthash="637039" _msthidden="1" _msthash="28">
-                                                        Valid first name is required.
+                                                    <div ref="nroDocumento" class="invalid-feedback" _msttexthash="637039" _msthidden="1" _msthash="28">
+                                                        El numero de documento es obligatorio.
                                                     </div>
                                                 </div>            
                                                 <div class="col-sm">
@@ -61,25 +61,25 @@
                                                     <div class="input-group has-validation">
                                                         <span class="input-group-text">@</span>
                                                         <input v-model="correo" type="email" class="form-control" id="correo" placeholder="Correo" maxlength="150" required="">
-                                                        <div class="invalid-feedback">
-                                                            Your username is required.
+                                                        <div ref="correo" class="invalid-feedback">
+                                                            El correo electronico es obligatorio.
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="row mt-1 g-3">
+                                            <div class="row g-3 mt-1">
                                                 <div class="col-sm-6">
                                                     <label for="email" class="form-label" _msttexthash="731406" _msthash="34">Contraseña <span class="text-body-secondary" _istranslated="1"></span></label>
-                                                    <input v-model="password" type="password" class="form-control" id="password" placeholder="**********"  maxlength="10" _mstplaceholder="274417" _msthash="35">
-                                                    <div class="invalid-feedback" _msttexthash="1993589" _msthidden="1" _msthash="36">
-                                                        Please enter a valid email address for shipping updates.
+                                                    <input autocomplete="off" v-model="password" type="password" class="form-control" id="password" placeholder="**********"  maxlength="10" _mstplaceholder="274417" _msthash="35">
+                                                    <div ref="password" class="invalid-feedback" _msttexthash="1993589" _msthidden="1" _msthash="36">
+                                                        Las contraseñas no coinciden.
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <label for="email" class="form-label" _msttexthash="731406" _msthash="34">Repetir Contraseña <span class="text-body-secondary" _istranslated="1"></span></label>
-                                                    <input v-model="passwordR" type="password" class="form-control" id="passwordR" placeholder="**********"  maxlength="10" _mstplaceholder="274417" _msthash="35">
-                                                    <div class="invalid-feedback" _msttexthash="1993589" _msthidden="1" _msthash="36">
-                                                        Please enter a valid email address for shipping updates.
+                                                    <input autocomplete="off" v-model="passwordR" type="password" class="form-control" id="passwordR" placeholder="**********"  maxlength="10" _mstplaceholder="274417" _msthash="35">
+                                                    <div ref="passwordR" class="invalid-feedback" _msttexthash="1993589" _msthidden="1" _msthash="36">
+                                                        Las contraseñas no coinciden.
                                                     </div>
                                                 </div>
                                             </div>
@@ -101,6 +101,8 @@
 <script>
 import axios from 'axios';
 import CryptoJS from 'crypto-js';
+var error = 0;
+var passwMD5 = "";
 
 export default {
   name: "inc_editarInfo",
@@ -127,21 +129,11 @@ export default {
   methods: {
     async getPersona() {
         const baseUrl = 'http://localhost:8080/';
-        const request = await axios({
-            method: "POST",
-            url: baseUrl + "getOperador",
-            data: {
-                "id": "1"
-            },
-            headers: {
-                "Content-Type": "application/json"
-            }
-        })
-
+        const request = await axios.get( baseUrl + 'getOperador/'+1);
         const responseTipoDocumento = await axios.get( baseUrl + 'getTiposDocumentos');
         this.tiposDocumentos = responseTipoDocumento.data;
 
-        this.persona           = request.data[0];
+        this.persona           = request.data;
         this.nombres            = this.persona.nombres;
         this.apellidoPaterno    = this.persona.apellidoPaterno;
         this.apellidoMaterno    = this.persona.apellidoMaterno;
@@ -151,50 +143,90 @@ export default {
         this.correo             = this.persona.correo;
     },
     async updatePersona(){
-        const baseUrl = 'http://localhost:8080/';
+        Object.keys(this.$refs).forEach((refKey) => {
+            const elements = this.$refs[refKey];
+            if (!Array.isArray(elements)) {
+                elements.classList.remove("mostrarObligatorio");
+            }
+        });
 
-        if(this.password != null && this.password != ""){
+        if (this.nombres == null || this.nombres == "") {
+            this.$refs.nombres.classList.add("mostrarObligatorio");
+            error = 1;
+        }
+        if (this.apellidoPaterno == null || this.apellidoPaterno == "") {
+            this.$refs.apellidoPaterno.classList.add("mostrarObligatorio");
+            error = 1;
+        }
+        if (this.apellidoMaterno == null || this.apellidoMaterno == "") {
+            this.$refs.apellidoMaterno.classList.add("mostrarObligatorio");
+            error = 1;
+        }
+        if (this.tipoDocumento == null || this.tipoDocumento == "") {
+            this.$refs.tipoDocumento.classList.add("mostrarObligatorio");
+            error = 1;
+        }
+        if (this.nroDocumento == null || this.nroDocumento == "") {
+            this.$refs.nroDocumento.classList.add("mostrarObligatorio");
+            error = 1;
+        }
+        if (this.fechaNacimiento == null || this.fechaNacimiento == "") {
+            this.$refs.fechaNacimiento.classList.add("mostrarObligatorio");
+            error = 1;
+        }
+        if (this.correo == null || this.correo == "") {
+            this.$refs.correo.classList.add("mostrarObligatorio");
+            error = 1;
+        }
+        if (this.password != null && this.password != ""){
             if(this.password === this.passwordR){
-                this.password = CryptoJS.MD5(this.password).toString();
+                passwMD5 = CryptoJS.MD5(this.password).toString();
             }else{
-                this.valorAlerta = "Las contraseñas no coinciden.";
+                this.$refs.password.classList.add("mostrarObligatorio");
+                this.$refs.passwordR.classList.add("mostrarObligatorio");
+                error = 1;
+            }
+        }
+
+        if(error == 0){
+            const baseUrl   = 'http://localhost:8080/';
+            
+
+            const request = await axios({
+                method: "PUT",
+                url: baseUrl + "updatePersona",
+                data: {
+                    "id"                : this.id,
+                    "nombres"           : this.nombres,
+                    "apellidoPaterno"   : this.apellidoPaterno,
+                    "apellidoMaterno"   : this.apellidoMaterno,
+                    "tipoDocumento"     : this.tipoDocumento,
+                    "nroDocumento"      : this.nroDocumento,
+                    "fechaNacimiento"   : this.fechaNacimiento,
+                    "correo"            : this.correo,
+                    "password"          : passwMD5,
+                },
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+
+            var respuesta =  request.data.split("|");
+            if(respuesta[0] == "OK")
+            {
+                this.valorAlerta = respuesta[1];
                 this.showAlert = true;
-                return
+                setTimeout(() => {
+                    location.reload();
+                }, 1000);
+
+            }else{
+                this.valorAlerta = respuesta[1];
+                this.showAlert = true;
             }
         }
 
-        const request = await axios({
-            method: "POST",
-            url: baseUrl + "updatePersona",
-            data: {
-                "id"                : this.id,
-                "nombres"           : this.nombres,
-                "apellidoPaterno"   : this.apellidoPaterno,
-                "apellidoMaterno"   : this.apellidoMaterno,
-                "tipoDocumento"     : this.tipoDocumento,
-                "nroDocumento"      : this.nroDocumento,
-                "fechaNacimiento"   : this.fechaNacimiento,
-                "correo"            : this.correo,
-                "password"          : this.password,
-            },
-            headers: {
-                "Content-Type": "application/json"
-            }
-        })
-
-        var respuesta =  request.data.split("|");
-        if(respuesta[0] == "OK")
-        {
-            this.valorAlerta = respuesta[1];
-            this.showAlert = true;
-            setTimeout(() => {
-                location.reload();
-            }, 1000);
-
-        }else{
-            this.valorAlerta = respuesta[1];
-            this.showAlert = true;
-        }
+        
     },
     mostrarEdit(){
         this.show = true;
@@ -211,6 +243,9 @@ export default {
 </script>
 
 <style>
+.mostrarObligatorio{
+  display: block !important;
+}
 
 .divSombraAlerta{
   width: 100%;
