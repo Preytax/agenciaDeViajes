@@ -180,6 +180,7 @@ var axios = require('axios');
 var error = 0;
 
 export default{
+    inject: ['BASE_URL_AXIOS','BASE_URL'],
     components: {
         inc_head,
     },
@@ -206,9 +207,7 @@ export default{
     props: [],
     mounted: async function() {
 
-        const baseUrl = 'http://localhost:8080/';
-
-        const responseTipoDocumento = await axios.get( baseUrl + 'getTiposDocumentos');
+        const responseTipoDocumento = await axios.get( this.BASE_URL_AXIOS + 'getTiposDocumentos');
         this.tiposDocumentos = responseTipoDocumento.data;
     },
     methods: {
@@ -288,11 +287,9 @@ export default{
                 password : CryptoJS.MD5(this.password).toString()
             };
 
-            const baseUrl = "http://localhost:8080/";
-
             const request = await axios({
                 method: "POST",
-                url: baseUrl + "saveOperador",
+                url: this.BASE_URL_AXIOS + "saveOperador",
                 data: newOperador,
                 headers: {
                     "Content-Type": "application/json"

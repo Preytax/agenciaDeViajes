@@ -9,35 +9,35 @@
                     <div class="row g-3">
                         <div class="col-sm-6">
                             <label for="firstName" class="form-label" _msttexthash="76193" _msthash="27">Nombre</label>
-                            <InputText type="text" class="form-control" id="firstName" placeholder="" maxlength="45" v-model="nombres" required/>
+                            <input type="text" class="form-control" id="nombres" placeholder="" maxlength="45" v-model="nombres" required/>
                             <div ref="nombres" class="invalid-feedback" _msttexthash="637039" _msthidden="1" _msthash="28">
                                 El nombre es obligatorio.
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <label for="lastName" class="form-label" _msttexthash="112346" _msthash="29">Apellido Paterno</label>
-                            <InputText type="text" class="form-control" id="lastName" placeholder="" maxlength="45" v-model="apellidoPaterno" required/>
+                            <input type="text" class="form-control" id="apellidoPaterno" placeholder="" maxlength="45" v-model="apellidoPaterno" required/>
                             <div ref="apellidoPaterno" class="invalid-feedback" _msttexthash="592748" _msthidden="1" _msthash="30">
                                 El apellido paterno es obligatorio.
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <label for="firstName" class="form-label" _msttexthash="76193" _msthash="27">Aapellido Materno</label>
-                            <InputText type="text" class="form-control" id="lastName2" placeholder="" maxlength="45" v-model="apellidoMaterno" required/>
+                            <input type="text" class="form-control" id="apellidoMaterno" placeholder="" maxlength="45" v-model="apellidoMaterno" required/>
                             <div ref="apellidoMaterno" class="invalid-feedback" _msttexthash="637039" _msthidden="1" _msthash="28">
                                 El apellido materno es obligatorio.
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <label for="firstName" class="form-label" _msttexthash="76193" _msthash="27">Fecha de Nacimiento</label>
-                            <InputText type="date" class="form-control" id="lastName2" placeholder="" v-model="fechaNacimiento" required/>
+                            <input type="date" class="form-control" id="fechaNacimiento" placeholder="" v-model="fechaNacimiento" required/>
                             <div ref="fechaNacimiento" class="invalid-feedback" _msttexthash="637039" _msthidden="1" _msthash="28">
                                 La fecha de nacimiento es obligataoria.
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <label for="country" class="form-label" _msttexthash="60047" _msthash="42">Tipo de Documento</label>
-                            <select class="form-select" id="country" outlined v-model="tipoDocumento">
+                            <select class="form-select" id="tipoDocumento" outlined v-model="tipoDocumento">
                                 <option value="" _msttexthash="101647" _msthash="43">Elegir...</option>
                                 <option v-for="tipoDocumento in tiposDocumentos" :key="tipoDocumento.id" :value="tipoDocumento.id">{{tipoDocumento.nombre}}</option>
                             </select>
@@ -47,14 +47,14 @@
                         </div>
                         <div class="col-sm-6">
                             <label for="firstName" class="form-label" _msttexthash="76193" _msthash="27">Nro. de Documento</label>
-                            <InputText type="text" class="form-control" id="lastName2" placeholder="" maxlength="8" v-model="nroDocumento" required/>
+                            <input type="text" class="form-control" id="nroDocumento" placeholder="" maxlength="8" v-model="nroDocumento" required/>
                             <div ref="nroDocumento" class="invalid-feedback" _msttexthash="637039" _msthidden="1" _msthash="28">
                                 El numero de documento es obligatorio.
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <label for="state" class="form-label" _msttexthash="76037" _msthash="46">Perfil</label>
-                            <select class="form-select" id="state" v-model="idPerfil">
+                            <select class="form-select" id="idPerfil" v-model="idPerfil">
                                 <option value="" selected>Elegir...</option>
                                 <template v-for="perfil in perfiles">
                                     <option  v-if="perfil.id == 2 || perfil.id == 4" :key="perfil.id" :value="perfil.id">{{perfil.nombre}}</option>
@@ -113,7 +113,9 @@ import CryptoJS from 'crypto-js';
 var axios = require('axios');
 var error = 0;
 
+
 export default{
+    inject: ['BASE_URL_AXIOS','BASE_URL'],
     components: {
         inc_head,
     },
@@ -137,12 +139,10 @@ export default{
     props: [],
     mounted: async function() {
 
-        const baseUrl = 'http://localhost:8080/';
-        
-        const responsePerfil = await axios.get( baseUrl + 'getPerfiles');
+        const responsePerfil = await axios.get( this.BASE_URL_AXIOS + 'getPerfiles');
         this.perfiles = responsePerfil.data;
 
-        const responseTipoDocumento = await axios.get( baseUrl + 'getTiposDocumentos');
+        const responseTipoDocumento = await axios.get( this.BASE_URL_AXIOS + 'getTiposDocumentos');
         this.tiposDocumentos = responseTipoDocumento.data;
     },
     methods: {
@@ -204,11 +204,10 @@ export default{
                     password : CryptoJS.MD5(this.password).toString()
                 };
 
-                const baseUrl = "http://localhost:8080/";
 
                 const request = await axios({
                     method: "POST",
-                    url: baseUrl + "saveOperador",
+                    url: this.BASE_URL_AXIOS + "saveOperador",
                     data: newOperador,
                     headers: {
                         "Content-Type": "application/json"

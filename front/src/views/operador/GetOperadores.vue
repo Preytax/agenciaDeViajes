@@ -33,7 +33,7 @@
               <Column field="id" header="Id" style="min-width: 12rem"></Column>
               <Column field="idPerfil" header="Perfil" style="min-width: 12rem">
                 <template #body="datosTiposPerlies">
-                  <span>{{ perfiles[datosTiposPerlies.data.tipoDocumento] }}</span>
+                  <span>{{ perfiles[datosTiposPerlies.data.idPerfil] }}</span>
                 </template>
               </Column>
               <Column field="nombres" header="Nombres" style="min-width: 12rem">
@@ -75,6 +75,7 @@
   import { FilterMatchMode, FilterOperator } from 'primevue/api';
 
   export default {
+    inject: ['BASE_URL_AXIOS','BASE_URL'],
     components: {
       DataTable,
       Column,
@@ -113,14 +114,12 @@
     },
     mounted: async function() {
 
-      const baseUrl = 'http://localhost:8080/';
-
-      const response = await axios.get( baseUrl + 'getOperadores');
+      const response = await axios.get( this.BASE_URL_AXIOS + 'getOperadores');
       this.operadores = response.data;
       this.loading = false;
 
       /* REORDENAMIENTO DE TIPOS DE DOCUEMNTOS */
-      const responseTipoDocumento = await axios.get( baseUrl + 'getTiposDocumentos');
+      const responseTipoDocumento = await axios.get( this.BASE_URL_AXIOS + 'getTiposDocumentos');
       var auxTiposDocumentos = {};
 
       for (const op of responseTipoDocumento.data) {
@@ -129,9 +128,9 @@
       this.tiposDocumentos = auxTiposDocumentos;
 
       /*REORDENAMIENTO DE TIPOS DE PERFILES */
-      const responsePerfil = await axios.get( baseUrl + 'getPerfiles');
+      const responsePerfil = await axios.get( this.BASE_URL_AXIOS + 'getPerfiles');
       var auxTipoPerfiles = {};
-
+      
       for (const op of responsePerfil.data) {
         auxTipoPerfiles[op.id] = op.nombre;
       }

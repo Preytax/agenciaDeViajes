@@ -99,7 +99,7 @@
                 <a class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2" @click="addOperador" href="#">Registrarse</a>
                 <div class="d-flex align-items-center justify-content-center">
                   <p class="fs-4 mb-0 fw-bold">&#191;Ya tienes una cuenta&#63;</p>
-                  <a class="text-primary fw-bold ms-2" :href="baseUrl + 'login'">Iniciar Sesi&oacute;n</a>
+                  <a class="text-primary fw-bold ms-2" :href="`${BASE_URL}login`">Iniciar Sesi&oacute;n</a>
                 </div>
               </div>
             </div>
@@ -111,16 +111,18 @@
 </template>
 
 <script>
+//import { inject } from 'vue';
 import CryptoJS from 'crypto-js';
 var axios = require('axios');
 var error = 0;
 
 export default{
-    inject: ['baseUrl'],
+    inject: ['BASE_URL_AXIOS','BASE_URL'],
     components: {
     },
     data(){
         return {
+            //BASE_URL_AXIOS: {inject: ['baseUrl2'] },
             idPerfil: null,
             nombres: null,
             apellidoPaterno: null,
@@ -141,10 +143,7 @@ export default{
     },
     props: [],
     mounted: async function() {
-
-        const baseUrl = 'http://localhost:8080/';
-
-        const responseTipoDocumento = await axios.get( baseUrl + 'getTiposDocumentos');
+        const responseTipoDocumento = await axios.get( this.BASE_URL_AXIOS +'getTiposDocumentos');
         this.tiposDocumentos = responseTipoDocumento.data;
     },
     methods: {
@@ -212,12 +211,9 @@ export default{
                     correo : this.correo,
                     password : CryptoJS.MD5(this.password).toString()
                 };
-
-                const baseUrl = "http://localhost:8080/";
-
                 const request = await axios({
                     method: "POST",
-                    url: baseUrl + "saveOperador",
+                    url: this.BASE_URL_AXIOS + "saveOperador",
                     data: newOperador,
                     headers: {
                         "Content-Type": "application/json"

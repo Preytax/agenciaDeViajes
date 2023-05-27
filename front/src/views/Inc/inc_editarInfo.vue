@@ -105,139 +105,137 @@ var error = 0;
 var passwMD5 = "";
 
 export default {
-  name: "inc_editarInfo",
-  data() {
-    return {
-        title: 'Operadores',
-        id: "1",
-        persona: null,
-        nombres: null,
-        apellidoPaterno: null,
-        apellidoMaterno: null,
-        tipoDocumento: null,
-        nroDocumento: null,
-        fechaNacimiento: null,
-        correo: null,
-        password: null,
-        passwordR: null,
-        url: window.location.href,
-        tiposDocumentos: null,
-        showAlert: false,
-        show: false,
-    }
-  },
-  methods: {
-    async getPersona() {
-        const baseUrl = 'http://localhost:8080/';
-        const request = await axios.get( baseUrl + 'getOperador/'+1);
-        const responseTipoDocumento = await axios.get( baseUrl + 'getTiposDocumentos');
-        this.tiposDocumentos = responseTipoDocumento.data;
-
-        this.persona           = request.data;
-        this.nombres            = this.persona.nombres;
-        this.apellidoPaterno    = this.persona.apellidoPaterno;
-        this.apellidoMaterno    = this.persona.apellidoMaterno;
-        this.tipoDocumento      = this.persona.tipoDocumento;
-        this.nroDocumento       = this.persona.nroDocumento;
-        this.fechaNacimiento    = this.persona.fechaNacimiento;
-        this.correo             = this.persona.correo;
+    inject: ['BASE_URL_AXIOS','BASE_URL'],
+    name: "inc_editarInfo",
+    data() {
+        return {
+            title: 'Operadores',
+            id: "1",
+            persona: null,
+            nombres: null,
+            apellidoPaterno: null,
+            apellidoMaterno: null,
+            tipoDocumento: null,
+            nroDocumento: null,
+            fechaNacimiento: null,
+            correo: null,
+            password: null,
+            passwordR: null,
+            url: window.location.href,
+            tiposDocumentos: null,
+            showAlert: false,
+            show: false,
+        }
     },
-    async updatePersona(){
-        Object.keys(this.$refs).forEach((refKey) => {
-            const elements = this.$refs[refKey];
-            if (!Array.isArray(elements)) {
-                elements.classList.remove("mostrarObligatorio");
-            }
-        });
+    methods: {
+        async getPersona() {
+            const request = await axios.get( this.BASE_URL_AXIOS + 'getOperador/'+1);
+            const responseTipoDocumento = await axios.get( this.BASE_URL_AXIOS + 'getTiposDocumentos');
+            this.tiposDocumentos = responseTipoDocumento.data;
 
-        if (this.nombres == null || this.nombres == "") {
-            this.$refs.nombres.classList.add("mostrarObligatorio");
-            error = 1;
-        }
-        if (this.apellidoPaterno == null || this.apellidoPaterno == "") {
-            this.$refs.apellidoPaterno.classList.add("mostrarObligatorio");
-            error = 1;
-        }
-        if (this.apellidoMaterno == null || this.apellidoMaterno == "") {
-            this.$refs.apellidoMaterno.classList.add("mostrarObligatorio");
-            error = 1;
-        }
-        if (this.tipoDocumento == null || this.tipoDocumento == "") {
-            this.$refs.tipoDocumento.classList.add("mostrarObligatorio");
-            error = 1;
-        }
-        if (this.nroDocumento == null || this.nroDocumento == "") {
-            this.$refs.nroDocumento.classList.add("mostrarObligatorio");
-            error = 1;
-        }
-        if (this.fechaNacimiento == null || this.fechaNacimiento == "") {
-            this.$refs.fechaNacimiento.classList.add("mostrarObligatorio");
-            error = 1;
-        }
-        if (this.correo == null || this.correo == "") {
-            this.$refs.correo.classList.add("mostrarObligatorio");
-            error = 1;
-        }
-        if (this.password != null && this.password != ""){
-            if(this.password === this.passwordR){
-                passwMD5 = CryptoJS.MD5(this.password).toString();
-            }else{
-                this.$refs.password.classList.add("mostrarObligatorio");
-                this.$refs.passwordR.classList.add("mostrarObligatorio");
+            this.persona           = request.data;
+            this.nombres            = this.persona.nombres;
+            this.apellidoPaterno    = this.persona.apellidoPaterno;
+            this.apellidoMaterno    = this.persona.apellidoMaterno;
+            this.tipoDocumento      = this.persona.tipoDocumento;
+            this.nroDocumento       = this.persona.nroDocumento;
+            this.fechaNacimiento    = this.persona.fechaNacimiento;
+            this.correo             = this.persona.correo;
+        },
+        async updatePersona(){
+            Object.keys(this.$refs).forEach((refKey) => {
+                const elements = this.$refs[refKey];
+                if (!Array.isArray(elements)) {
+                    elements.classList.remove("mostrarObligatorio");
+                }
+            });
+
+            if (this.nombres == null || this.nombres == "") {
+                this.$refs.nombres.classList.add("mostrarObligatorio");
                 error = 1;
             }
-        }
-
-        if(error == 0){
-            const baseUrl   = 'http://localhost:8080/';
-            
-
-            const request = await axios({
-                method: "PUT",
-                url: baseUrl + "updatePersona",
-                data: {
-                    "id"                : this.id,
-                    "nombres"           : this.nombres,
-                    "apellidoPaterno"   : this.apellidoPaterno,
-                    "apellidoMaterno"   : this.apellidoMaterno,
-                    "tipoDocumento"     : this.tipoDocumento,
-                    "nroDocumento"      : this.nroDocumento,
-                    "fechaNacimiento"   : this.fechaNacimiento,
-                    "correo"            : this.correo,
-                    "password"          : passwMD5,
-                },
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            })
-
-            var respuesta =  request.data.split("|");
-            if(respuesta[0] == "OK")
-            {
-                this.valorAlerta = respuesta[1];
-                this.showAlert = true;
-                setTimeout(() => {
-                    location.reload();
-                }, 1000);
-
-            }else{
-                this.valorAlerta = respuesta[1];
-                this.showAlert = true;
+            if (this.apellidoPaterno == null || this.apellidoPaterno == "") {
+                this.$refs.apellidoPaterno.classList.add("mostrarObligatorio");
+                error = 1;
             }
-        }
+            if (this.apellidoMaterno == null || this.apellidoMaterno == "") {
+                this.$refs.apellidoMaterno.classList.add("mostrarObligatorio");
+                error = 1;
+            }
+            if (this.tipoDocumento == null || this.tipoDocumento == "") {
+                this.$refs.tipoDocumento.classList.add("mostrarObligatorio");
+                error = 1;
+            }
+            if (this.nroDocumento == null || this.nroDocumento == "") {
+                this.$refs.nroDocumento.classList.add("mostrarObligatorio");
+                error = 1;
+            }
+            if (this.fechaNacimiento == null || this.fechaNacimiento == "") {
+                this.$refs.fechaNacimiento.classList.add("mostrarObligatorio");
+                error = 1;
+            }
+            if (this.correo == null || this.correo == "") {
+                this.$refs.correo.classList.add("mostrarObligatorio");
+                error = 1;
+            }
+            if (this.password != null && this.password != ""){
+                if(this.password === this.passwordR){
+                    passwMD5 = CryptoJS.MD5(this.password).toString();
+                }else{
+                    this.$refs.password.classList.add("mostrarObligatorio");
+                    this.$refs.passwordR.classList.add("mostrarObligatorio");
+                    error = 1;
+                }
+            }
 
-        
+            if(error == 0){
+                
+                const request = await axios({
+                    method: "PUT",
+                    url: this.BASE_URL_AXIOS + "updatePersona",
+                    data: {
+                        "id"                : this.id,
+                        "nombres"           : this.nombres,
+                        "apellidoPaterno"   : this.apellidoPaterno,
+                        "apellidoMaterno"   : this.apellidoMaterno,
+                        "tipoDocumento"     : this.tipoDocumento,
+                        "nroDocumento"      : this.nroDocumento,
+                        "fechaNacimiento"   : this.fechaNacimiento,
+                        "correo"            : this.correo,
+                        "password"          : passwMD5,
+                    },
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                })
+
+                var respuesta =  request.data.split("|");
+                if(respuesta[0] == "OK")
+                {
+                    this.valorAlerta = respuesta[1];
+                    this.showAlert = true;
+                    setTimeout(() => {
+                        location.reload();
+                    }, 1000);
+
+                }else{
+                    this.valorAlerta = respuesta[1];
+                    this.showAlert = true;
+                }
+            }
+
+            
+        },
+        mostrarEdit(){
+            this.show = true;
+        },
+        ocultarEdit(){
+            this.show = false;
+        },
+        hideAlert() {
+            this.showAlert = false;
+        }
     },
-    mostrarEdit(){
-        this.show = true;
-    },
-    ocultarEdit(){
-        this.show = false;
-    },
-    hideAlert() {
-        this.showAlert = false;
-    }
-  },
 };
 
 </script>

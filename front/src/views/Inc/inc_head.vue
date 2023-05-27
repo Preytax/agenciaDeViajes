@@ -76,7 +76,7 @@
               <span class="hide-menu">AUTH</span>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" :href="baseUrl + 'login'" aria-expanded="false">
+              <a class="sidebar-link" :href="`${BASE_URL}login`" aria-expanded="false">
                 <span>
                   <i class="ti ti-login"></i>
                 </span>
@@ -84,7 +84,7 @@
               </a>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" :href="baseUrl + 'registrarse'" aria-expanded="false">
+              <a class="sidebar-link" :href="`${BASE_URL}registrarse`" aria-expanded="false">
                 <span>
                   <i class="ti ti-user-plus"></i>
                 </span>
@@ -173,7 +173,7 @@
                       <i class="ti ti-list-check fs-6"></i>
                       <p class="mb-0 fs-3">My Task</p>
                     </a>
-                    <a :href="baseUrl + 'login'" class="btn btn-outline-primary mx-3 mt-2 d-block">Logout</a>
+                    <a :href="`${BASE_URL}login`" class="btn btn-outline-primary mx-3 mt-2 d-block">Logout</a>
                   </div>
                 </div>
               </li>
@@ -240,7 +240,7 @@ import $ from 'jquery';
 
 
 export default {
-  inject: ['baseUrl'],
+  inject: ['BASE_URL','PAGE_URL'],
   name: "inc_head",
   components:{
     inc_editarInfo
