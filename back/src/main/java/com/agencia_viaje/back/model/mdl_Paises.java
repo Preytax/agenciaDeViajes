@@ -22,9 +22,9 @@ public class mdl_Paises {
     public mdl_Paises() {
     }
 
-    public mdl_Paises(int id, int id_departamento, String nombre) {
+    public mdl_Paises(int id, int id_departamento,String nombre) {
         this.id = id;
-        this.id_departamento = id_departamento;
+        this.id_departamento=id_departamento;
         this.nombre = nombre;
     }
 
@@ -36,19 +36,19 @@ public class mdl_Paises {
         this.nombre = nombre;
     }
 
-    public int getId_departamento() {
-        return id_departamento;
-    }
-
-    public void setId_departamento(int id_departamento) {
-        this.id_departamento = id_departamento;
-    }
-
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getId_departamento() {
+        return id_departamento;
+    }
+
+    public void setId_departamento(int id_departamento) {
+        this.id_departamento = id_departamento;
     }
 }

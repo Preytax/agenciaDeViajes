@@ -8,32 +8,21 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="agv_transportes")
-public class mdl_Transportes {
+@Table(name="agv_modo_transportes")
+public class mdl_ModoTransporte {
     @Id
     @Column(name="id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name="id_modo_transporte")
-    private int id_modo_transporte;
     @Column(name="nombre")
     private String nombre;
 
-    public mdl_Transportes() {
+    public mdl_ModoTransporte(){
     }
 
-    public mdl_Transportes(int id, int id_modo_transporte, String nombre) {
+    public mdl_ModoTransporte(int id, String nombre){
         this.id = id;
-        this.id_modo_transporte = id_modo_transporte;
         this.nombre = nombre;
-    }
-
-    public int getId_modo_transporte() {
-        return id_modo_transporte;
-    }
-
-    public void setId_modo_transporte(int id_modo_transporte) {
-        this.id_modo_transporte = id_modo_transporte;
     }
 
     public int getId() {
@@ -51,5 +40,6 @@ public class mdl_Transportes {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
+
     
 }

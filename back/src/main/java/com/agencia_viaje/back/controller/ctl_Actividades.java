@@ -23,7 +23,6 @@ public class ctl_Actividades {
     List<mdl_Actividades> getActividades(){
         List<mdl_Actividades> listActividades =null;
         listActividades = servicio.getActividades();
-
         return listActividades;
     }
 }

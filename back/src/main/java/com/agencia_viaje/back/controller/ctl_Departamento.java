@@ -1,28 +1,27 @@
 package com.agencia_viaje.back.controller;
-import java.util.List;
 
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.agencia_viaje.back.model.mdl_Destinos;
-import com.agencia_viaje.back.service.svc_Destinos;
+import com.agencia_viaje.back.model.mdl_Departamento;
+import com.agencia_viaje.back.service.svc_Departamentos;
 
 @Controller
 @RestController
-public class ctl_Destinos {
+
+public class ctl_Departamento {
     @Autowired
-    svc_Destinos servicio;
+    svc_Departamentos servicio;
 
-    @GetMapping("/getDestinos")
+    @GetMapping("/getDepartamento")
     @ResponseStatus(HttpStatus.CREATED)
-    List<mdl_Destinos> getActividades(){
-        List<mdl_Destinos> listDestinos =null;
-        listDestinos = servicio.getDestinos();
-
-        return listDestinos;
+    List<mdl_Departamento> getDepartamento(){
+        List<mdl_Departamento> listDepartamento = null;
+        listDepartamento = servicio.getDepartamento();
+        return listDepartamento;
     }
 }

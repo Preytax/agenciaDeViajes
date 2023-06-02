@@ -27,7 +27,5 @@ public class rpt_actividades implements itf_rct_actividades{
         )
         );
         return listActividades;
-        
     }
-    
 }

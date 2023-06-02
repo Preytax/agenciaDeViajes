@@ -13,7 +13,7 @@ public class rpt_paises implements itf_rct_paises{
 
     @Autowired
     private JdbcTemplate JdbcTemplate;
-    String table = "agv_actividades";
+    String table = "agv_paises";
     
     @Override
     public List<mdl_Paises> getPaises() {
@@ -23,7 +23,7 @@ public class rpt_paises implements itf_rct_paises{
         listPaises =JdbcTemplate.query(query,
         (rs, rowNum) -> new mdl_Paises(
             rs.getInt("ID"),
-            rs.getInt("ID_DEPARTAMENTO"),
+            rs.getInt("ID_Departamento"),
             rs.getString("Nombre")
         )
         );
