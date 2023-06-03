@@ -24,6 +24,9 @@
                             <label for="inputEmail4" class="form-label">Elegir Departamento</label>
                             <select class="form-select" aria-label="Default select example">
                                 <option selected>Seleccionar</option>
+                                <option v-for="departamento in departamentos" :key="departamento.id" :value="departamento.id">
+                                    {{ departamento.nombre }}
+                                </option>
                             </select>
                         </div>
                         <div class="col-md-6">
@@ -55,12 +58,15 @@
                         </div>
                         <div class="col-md-6">
                             <label for="inputEmail4" class="form-label">Elegir el tipo Transporte</label>
-                            <select class="form-select" aria-label="Default select example">
-                                <option selected>Seleccionar</option>
+                            <select v-model="modoDeTranposte" @change="tansporte" class="form-select" aria-label="Default select example">
+                                <option value="0" selected>Seleccionar</option>
+                                <option v-for="modoTranposte in modoTranpostes" :key="modoTranposte.id" :value="modoTranposte.id">
+                                    {{ modoTranposte.nombre }}
+                                </option>
                             </select>
                         </div>
                         <div class="col-md-6">
-                            <label for="inputEmail4" class="form-label">Elegir Transporte</label>
+                            <label for="inputEmail4" class="form-label">Agencia de Transporte</label>
                             <select class="form-select" aria-label="Default select example">
                                 <option selected>Seleccionar</option>
                                 <option v-for="transporte in transportes" :key="transporte.id" :value="transporte.id">
@@ -106,12 +112,13 @@ export default {
     },
     data() {
         return {
+            modoDeTranposte: null,
             paises: null,
             departamentos: null,
             cuidades: null,
             actividades: null,
             hoteles: null,
-            tipoTranpostes: null,
+            modoTranpostes: null,
             transportes: null,
             fechaInicio: null,
             fechaFinal: null,
@@ -121,21 +128,23 @@ export default {
     mounted: async function () {
         const responsePais = await axios.get("http://localhost:8080/getPaises");
         this.paises = responsePais.data;
-        //const responseDepartamento = await axios.get("http://localhost:8080/getDepartamento");
-        //this.departamentos = responseDepartamento.data;
+        const responseDepartamento = await axios.get("http://localhost:8080/getDepartamento");
+        this.departamentos = responseDepartamento.data;
         const responseCuidad = await axios.get("http://localhost:8080/getCiudades");
         this.cuidades = responseCuidad.data;
         const responseActividad = await axios.get("http://localhost:8080/getActividades");
         this.actividades = responseActividad.data;
         const responseHotel = await axios.get("http://localhost:8080/getHoteles");
         this.hoteles = responseHotel.data;
-        //const responseTipoTransporte = await axios.get("http://localhost:8080/getTipoTransporte");
-        //this.tipoTranpostes = responseTipoTransporte.data;
-        const responseTransporte = await axios.get("http://localhost:8080/getTransportes");
-        this.transportes = responseTransporte.data;
+        const responseTipoTransporte = await axios.get("http://localhost:8080/getTipoTransporte");
+        this.modoTranpostes = responseTipoTransporte.data;
     },
     props: [],
     methods: {
+        async tansporte(){
+            const responseTransporte = await axios.get("http://localhost:8080/getTransportes/"+this.modoDeTranposte);
+            this.transportes = responseTransporte.data;
+        },
         async addPaqueteEstandar() {
             Object.keys(this.$refs).forEach((refKey) => {
                 const elements = this.$refs[refKey];

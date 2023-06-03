@@ -18,14 +18,14 @@ public class rpt_modoTransporte implements itf_rct_modotransporte {
     @Override
     public List<mdl_ModoTransporte> getTipoTransporte() {
         List<mdl_ModoTransporte> listTipoTransportes = null;
-        String query = "SELECTO * FROM " + table;
+        String query = "SELECT * FROM " + table;
 
         listTipoTransportes = JdbcTemplate.query(query,
                 (rs, rowNum) -> new mdl_ModoTransporte(
                     rs.getInt("ID"),
-                    rs.getString("Nombre")
+                    rs.getString("NOMBRE")
                 )
-                );
+            );
         return listTipoTransportes;
     }
 }

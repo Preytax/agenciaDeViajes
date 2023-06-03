@@ -16,9 +16,9 @@ public class rpt_transportes implements itf_rct_transportes{
     String table = "agv_transportes";
     
     @Override
-    public List<mdl_Transportes> getTransportes() {
+    public List<mdl_Transportes> getTransportes(int id_modo_transporte) {
         List<mdl_Transportes> listTransportes=null;
-        String query ="SELECT * FROM " +table;
+        String query ="SELECT * FROM " + table + " WHERE id_modo_transporte = " + id_modo_transporte;
 
         listTransportes =JdbcTemplate.query(query,
         (rs, rowNum) -> new mdl_Transportes(

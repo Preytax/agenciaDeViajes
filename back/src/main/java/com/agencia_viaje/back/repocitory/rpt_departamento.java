@@ -17,13 +17,13 @@ public class rpt_departamento implements itf_rct_departamento {
     @Override
     public List<mdl_Departamento> getDepartamento(){
         List<mdl_Departamento> listDepartamento=null;
-        String query ="SELECT * FROM "+table;
+        String query ="SELECT * FROM " + table;
 
         listDepartamento = jdbcTemplate.query(query,
         (rs, rowNum)-> new mdl_Departamento(
            rs.getInt("ID"), 
-           rs.getInt("ID_Ciudades"),
-           rs.getString("Nombre")
+           rs.getInt("ID_CIUDAD"),
+           rs.getString("NOMBRE")
         )
         );
         return listDepartamento;

@@ -11,6 +11,7 @@ import com.agencia_viaje.back.repocitory.itf_rct_departamento;
 public class svc_Departamentos implements itf_rct_departamento {
     @Autowired
     itf_rct_departamento repositorio;
+    
     @Override
     public List<mdl_Departamento> getDepartamento(){
         return repositorio.getDepartamento();
