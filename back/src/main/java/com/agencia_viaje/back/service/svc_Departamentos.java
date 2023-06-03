@@ -13,7 +13,7 @@ public class svc_Departamentos implements itf_rct_departamento {
     itf_rct_departamento repositorio;
     
     @Override
-    public List<mdl_Departamento> getDepartamento(){
-        return repositorio.getDepartamento();
+    public List<mdl_Departamento> getDepartamento(int id_modo_pais){
+        return repositorio.getDepartamento(id_modo_pais);
     }
 }

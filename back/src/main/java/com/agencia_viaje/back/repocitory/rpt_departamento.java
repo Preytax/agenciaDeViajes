@@ -15,14 +15,14 @@ public class rpt_departamento implements itf_rct_departamento {
     String table = "agv_departamentos";
 
     @Override
-    public List<mdl_Departamento> getDepartamento(){
+    public List<mdl_Departamento> getDepartamento(int id_modo_pais){
         List<mdl_Departamento> listDepartamento=null;
-        String query ="SELECT * FROM " + table;
+        String query ="SELECT * FROM " + table +" where id_pais = "+id_modo_pais;
 
         listDepartamento = jdbcTemplate.query(query,
         (rs, rowNum)-> new mdl_Departamento(
            rs.getInt("ID"), 
-           rs.getInt("ID_CIUDAD"),
+           rs.getInt("ID_PAIS"),
            rs.getString("NOMBRE")
         )
         );

@@ -16,7 +16,7 @@ import com.agencia_viaje.back.service.itf_paquetes;
 
 @Controller
 @RestController
-public class ctl_crearPaquetes {
+public class ctl_Paquetes {
     @Autowired
     itf_paquetes servicio;
 
@@ -33,12 +33,26 @@ public class ctl_crearPaquetes {
     @ResponseStatus(HttpStatus.CREATED)
     String savePaquete(@RequestBody mdl_Paquetes paquetes){
         String mensaje = "ER|Existe un error interno y no pudo registrarse.";
-
         {
             mensaje = "ER|No se pudo registrar al operador";
-            int registro = servicio.savePaquete(paquetes);
 
-            if(registro != 0){
+            mdl_Paquetes paquete = new mdl_Paquetes();
+            paquete.setIdmodo(paquetes.getIdmodo());
+            paquete.setIdusuario(paquetes.getIdusuario());
+            paquete.setIdpais(paquetes.getIdpais());
+            paquete.setIddepartamento(paquetes.getIddepartamento());
+            paquete.setIdciudad(paquetes.getIdciudad());
+            paquete.setIdhotel(paquetes.getIdhotel());
+            paquete.setIdactividades(paquetes.getIdactividades());
+            paquete.setIdmodotransporte(paquetes.getIdmodotransporte());
+            paquete.setIdtransporte(paquetes.getIdtransporte());
+            paquete.setFechaInicio(paquetes.getFechaInicio());
+            paquete.setFechaFinal(paquetes.getFechaFinal());
+            paquete.setMonto(paquetes.getMonto());
+            paquete.setIpRegistra(paquetes.capturarIp());
+            paquete.setUsuarioRegistra(paquetes.getUsuarioRegistra());
+
+            if(servicio.savePaqueteJPA(paquete)){
                 mensaje = "OK|Se registro el operador con exito";
             }
         }

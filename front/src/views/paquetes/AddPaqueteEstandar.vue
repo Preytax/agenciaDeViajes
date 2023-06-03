@@ -11,9 +11,10 @@
                         Creacion de Paquetes Estandar
                     </h2>
                     <form class="row g-3">
-                        <div class="col-md-6">
-                            <label for="inputEmail4" class="form-label">Elegir Pais:</label>
-                            <select class="form-select" aria-label="Default select example">
+                        <div class="col-md-6"> <!--Pais-->
+                            <label for="inputEmail4" class="form-label">Elegir Pais</label>
+                            <select v-model="paises1" @change="paisesr" class="form-select"
+                                aria-label="Default select example">
                                 <option selected>Seleccionar</option>
                                 <option v-for="pais in paises" :key="pais.id" :value="pais.id">
                                     {{ pais.nombre }}
@@ -22,16 +23,19 @@
                         </div>
                         <div class="col-md-6">
                             <label for="inputEmail4" class="form-label">Elegir Departamento</label>
-                            <select class="form-select" aria-label="Default select example">
+                            <select v-model="departamento2" @change="ciudad5" class="form-select"
+                                aria-label="Default select example">
                                 <option selected>Seleccionar</option>
-                                <option v-for="departamento in departamentos" :key="departamento.id" :value="departamento.id">
+                                <option v-for="departamento in departamentos" :key="departamento.id"
+                                    :value="departamento.id">
                                     {{ departamento.nombre }}
                                 </option>
                             </select>
                         </div>
                         <div class="col-md-6">
                             <label for="inputEmail4" class="form-label">Elegir Ciudad</label>
-                            <select class="form-select" aria-label="Default select example">
+                            <select v-model="cuidades2" @change="hotelactividades" class="form-select"
+                                aria-label="Default select example">
                                 <option selected>Seleccionar</option>
                                 <option v-for="ciudad in cuidades" :key="ciudad.id" :value="ciudad.id">
                                     {{ ciudad.nombre }}
@@ -40,7 +44,7 @@
                         </div>
                         <div class="col-md-6">
                             <label for="inputEmail4" class="form-label">Elegir Hotel</label>
-                            <select class="form-select" aria-label="Default select example">
+                            <select v-model="hoteles2" class="form-select" aria-label="Default select example">
                                 <option selected>Seleccionar</option>
                                 <option v-for="hotel in hoteles" :key="hotel.id" :value="hotel.id">
                                     {{ hotel.nombre }}
@@ -49,48 +53,44 @@
                         </div>
                         <div class="col-md-12">
                             <label for="inputEmail4" class="form-label">Elegir Activades</label>
-                            <select class="form-select" aria-label="Default select example">
+                            <select v-model="actividades2" class="form-select" aria-label="Default select example">
                                 <option selected>Seleccionar</option>
                                 <option v-for="actividad in actividades" :key="actividad.id" :value="actividad.id">
                                     {{ actividad.nombre }}
                                 </option>
                             </select>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6"> <!--Tipo-Transporte-->
                             <label for="inputEmail4" class="form-label">Elegir el tipo Transporte</label>
-                            <select v-model="modoDeTranposte" @change="tansporte" class="form-select" aria-label="Default select example">
+                            <select v-model="modoDeTransporte" @change="tansporte" class="form-select"
+                                aria-label="Default select example">
                                 <option value="0" selected>Seleccionar</option>
-                                <option v-for="modoTranposte in modoTranpostes" :key="modoTranposte.id" :value="modoTranposte.id">
-                                    {{ modoTranposte.nombre }}
+                                <option v-for="modoTransporte in modoTransportes" :key="modoTransporte.id"
+                                    :value="modoTransporte.id">
+                                    {{ modoTransporte.nombre }}
                                 </option>
                             </select>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6"> <!--Agencia-Transporte-->
                             <label for="inputEmail4" class="form-label">Agencia de Transporte</label>
-                            <select class="form-select" aria-label="Default select example">
+                            <select v-model="transportes1" class="form-select" aria-label="Default select example">
                                 <option selected>Seleccionar</option>
                                 <option v-for="transporte in transportes" :key="transporte.id" :value="transporte.id">
                                     {{ transporte.nombre }}
                                 </option>
                             </select>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6"> <!--Fecha Final-->
                             <label for="inputEmail4" class="form-label">Elegir Fecha de Inicio</label>
-                            <input type="date" class="form-control" id="" placeholder="">
+                            <input v-model="fechaInicio" type="date" class="form-control" id="" placeholder="">
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6"> <!--Fecha Final-->
                             <label for="inputEmail4" class="form-label">Elegir Fecha Final</label>
-                            <input type="date" class="form-control" id="" placeholder="">
+                            <input v-model="fechaFinal" type="date" class="form-control" id="" placeholder="">
                         </div>
-                        <div class="col-md-6">
-                            <label for="inputEmail4" class="form-label">Elegir Tipo de Moneda</label>
-                            <select class="form-select" aria-label="Default select example">
-                                <option selected>Seleccionar</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6">
-                            <label for="inputEmail4" class="form-label">Moto Total</label>
-                            <input type="text" class="form-control" id="" placeholder="Ingrese Monto">
+                        <div class="col-md-12"> <!--Monto-->
+                            <label for="inputEmail4" class="form-label">Monto Total</label>
+                            <input v-model="monto" type="text" class="form-control" id="" placeholder="Ingrese Monto">
                         </div>
                     </form>
                     <hr class="my-4" />
@@ -115,90 +115,109 @@ export default {
             modoDeTranposte: null,
             paises: null,
             departamentos: null,
+            departamento2: null,
             cuidades: null,
+            cuidades2: null,
             actividades: null,
+            actividades2: null,
             hoteles: null,
-            modoTranpostes: null,
+            hoteles2: null,
+            modoTransportes: null,
+            transportes1: null,
             transportes: null,
             fechaInicio: null,
             fechaFinal: null,
+            monto: null,
             showAlert: null,
         };
     },
     mounted: async function () {
         const responsePais = await axios.get("http://localhost:8080/getPaises");
         this.paises = responsePais.data;
-        const responseDepartamento = await axios.get("http://localhost:8080/getDepartamento");
-        this.departamentos = responseDepartamento.data;
-        const responseCuidad = await axios.get("http://localhost:8080/getCiudades");
-        this.cuidades = responseCuidad.data;
-        const responseActividad = await axios.get("http://localhost:8080/getActividades");
-        this.actividades = responseActividad.data;
-        const responseHotel = await axios.get("http://localhost:8080/getHoteles");
-        this.hoteles = responseHotel.data;
         const responseTipoTransporte = await axios.get("http://localhost:8080/getTipoTransporte");
-        this.modoTranpostes = responseTipoTransporte.data;
+        this.modoTransportes = responseTipoTransporte.data;
     },
     props: [],
     methods: {
-        async tansporte(){
-            const responseTransporte = await axios.get("http://localhost:8080/getTransportes/"+this.modoDeTranposte);
+        async paisesr() {
+            const responseDepartamento = await axios.get("http://localhost:8080/getDepartamento/" + this.paises1);
+            this.departamentos = responseDepartamento.data;
+        },
+
+        async tansporte() {
+            const responseTransporte = await axios.get("http://localhost:8080/getTransportes/" + this.modoDeTransporte);
             this.transportes = responseTransporte.data;
         },
+
+        async ciudad5() {
+            const responseCuidad = await axios.get("http://localhost:8080/getCiudades/" + this.departamento2);
+            this.cuidades = responseCuidad.data;
+        },
+
+        async hotelactividades() {
+            const responseHotel = await axios.get("http://localhost:8080/getHoteles/" + this.cuidades2);
+            this.hoteles = responseHotel.data;
+            const responseActividad = await axios.get("http://localhost:8080/getActividades/" + this.cuidades2);
+            this.actividades = responseActividad.data;
+        },
+
         async addPaqueteEstandar() {
             Object.keys(this.$refs).forEach((refKey) => {
                 const elements = this.$refs[refKey];
                 if (!Array.isArray(elements)) {
-                    elements.classList.remove("mostrarObligatorio");
+                    //elements.classList.remove("mostrarObligatorio");
                 }
             });
             if (this.paises == null) {
                 this.showAlert = true;
-                this.$refs.pais.classList.add("mostrarObligatorio");
+                //this.$refs.pais.classList.add("mostrarObligatorio");
                 error = 1;
             }
             if (this.departamentos == null) {
                 this.showAlert = true;
-                this.$refs.departamentos.classList.add("mostrarObligatorio");
+                //this.$refs.departamentos.classList.add("mostrarObligatorio");
                 error = 1;
             }
             if (this.cuidades == null) {
                 this.showAlert = true;
-                this.$refs.cuidades.classList.add("mostrarObligatorio");
+                //this.$refs.cuidades.classList.add("mostrarObligatorio");
                 error = 1;
             }
             if (this.actividades == null) {
                 this.showAlert = true;
-                this.$refs.actividades.classList.add("mostrarObligatorio");
+                //this.$refs.actividades.classList.add("mostrarObligatorio");
                 error = 1;
             }
             if (this.hoteles == null) {
                 this.showAlert = true;
-                this.$refs.hoteles.classList.add("mostrarObligatorio");
+                //this.$refs.hoteles.classList.add("mostrarObligatorio");
                 error = 1;
             }
-            if (this.tipoTransportes == null) {
+            if (this.modoTransportes == null) {
                 this.showAlert = true;
-                this.$refs.tipoTransportes.classList.add("mostrarObligatorio");
+                //this.$refs.modoTransporte.classList.add("mostrarObligatorio");
                 error = 1;
             }
             if (this.transportes == null) {
                 this.showAlert = true;
-                this.$refs.transportes.classList.add("mostrarObligatorio");
+                //this.$refs.transportes.classList.add("mostrarObligatorio");
                 error = 1;
             }
-            if (error != 0) {
+            if (error == 0) {
                 const newPaqueteEstandar = {
-                    idpaquete: this.idpaquete,
-                    paises: this.paises,
-                    //departamentos: this.departamentos,
-                    cuidades: this.cuidades,
-                    actividades: this.actividades,
-                    hoteles: this.hoteles,
-                    //tipoTranpostes: this.tipoTranpostes,
-                    transportes: this.transportes,
+                    idmodo: 1,
+                    idusuario: 213412,
+                    idpais: this.paises1,
+                    iddepartamento: this.departamento2,
+                    idciudad: this.cuidades2,
+                    idactividades: this.actividades2,
+                    idhotel: this.hoteles2,
+                    idmodotransporte: this.modoDeTransporte,
+                    idtransporte: this.transportes1,
                     fechaInicio: this.fechaInicio,
                     fechaFinal: this.fechaFinal,
+                    monto: this.monto,
+                    usuarioRegistra: 1,
                 };
 
                 const baseUrl = "http://localhost:8080/";
@@ -212,17 +231,16 @@ export default {
                     },
                 })
 
-                var arreglo =  request.data.split("|");
+                var arreglo = request.data.split("|");
 
-                if(arreglo[0] == "OK")
-                {
+                if (arreglo[0] == "OK") {
                     this.valorAlerta = arreglo[1];
                     this.showAlert = true;
                     setTimeout(() => {
                         location.reload();
                     }, 1000);
 
-                }else{
+                } else {
                     this.valorAlerta = arreglo[1];
                     this.showAlert = true;
                 }

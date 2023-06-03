@@ -16,13 +16,14 @@ public class rpt_actividades implements itf_rct_actividades{
     String table = "agv_actividades";
     
     @Override
-    public List<mdl_Actividades> getActividades() {
+    public List<mdl_Actividades> getActividades(int id_modo_ciudad2) {
         List<mdl_Actividades> listActividades=null;
-        String query ="SELECT * FROM " +table;
+        String query ="SELECT * FROM " +table+" WHERE id_ciudad = "+id_modo_ciudad2;
 
         listActividades =JdbcTemplate.query(query,
         (rs, rowNum) -> new mdl_Actividades(
             rs.getInt("ID"),
+            rs.getInt("ID_CIUDAD"),
             rs.getString("Nombre")
         )
         );

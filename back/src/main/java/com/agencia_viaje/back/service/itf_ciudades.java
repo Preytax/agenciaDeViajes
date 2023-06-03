@@ -5,5 +5,5 @@ import java.util.List;
 import com.agencia_viaje.back.model.mdl_Ciudades;
 
 public interface itf_ciudades {
-    public List<mdl_Ciudades> getCiudades();
+    public List<mdl_Ciudades> getCiudades(int id_modo_departamento);
 }

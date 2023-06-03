@@ -9,81 +9,107 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "agv_paquetes")
+@AllArgsConstructor
+@NoArgsConstructor
 public class mdl_Paquetes {
 
     @Id
     @Column(name = "id")
+    @Getter @Setter
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Column(name = "id_modo")
+    @Getter @Setter
+    private int idmodo;
+
     @Column(name = "id_usuario")
+    @Getter @Setter
     private int idusuario;
+
     @Column(name = "id_pais")
+    @Getter @Setter
     private int idpais;
+
     @Column(name = "id_departamento")
+    @Getter @Setter
     private int iddepartamento;
+
     @Column(name = "id_ciudad")
+    @Getter @Setter
     private int idciudad;
+
     @Column(name = "id_actividades")
+    @Getter @Setter
     private int idactividades;
+
     @Column(name = "id_hoteles")
+    @Getter @Setter
     private int idhotel;
+
     @Column(name = "id_modo_transporte")
+    @Getter @Setter
     private int idmodotransporte;
+
     @Column(name = "id_transporte")
+    @Getter @Setter
     private int idtransporte;
-    @Column(name = "fechaInicio")
+
+    @Column(name = "fecha_Inicio")
+    @Getter @Setter
     private String fechaInicio;
-    @Column(name = "fechaFinal")
+
+    @Column(name = "fecha_final")
+    @Getter @Setter
     private String fechaFinal;
+
     @Column(name = "usuario_registra")
+    @Getter @Setter
     private int usuarioRegistra;
+
+    @Column(name = "monto")
+    @Getter @Setter
+    private int monto;
+
     @Column(name = "usuario_modifica")
+    @Getter @Setter
     private int usuarioModifica;
+
     @Column(name = "usuario_elimina")
+    @Getter @Setter
     private int usuarioElimina;
+
     @Column(name = "fecha_registra")
-    private Date fechaRegistra;
+    @Getter @Setter
+    private String fechaRegistra;
+
     @Column(name = "fecha_modifica")
-    private Date fechaModifica;
+    @Getter @Setter
+    private String fechaModifica;
+
     @Column(name = "fecha_elimina")
-    private Date fechaElimina;
+    @Getter @Setter
+    private String fechaElimina;
+
     @Column(name = "ip_registra")
+    @Getter @Setter
     private String ipRegistra;
+
     @Column(name = "ip_modifica")
+    @Getter @Setter
     private String ipModifica;
+
     @Column(name = "ip_elimina")
+    @Getter @Setter
     private String ipElimina;
 
-    public mdl_Paquetes() {
-    }
-
-    public mdl_Paquetes(int id, int idusuario, int idpais, int iddepartamento, int idciudad, int idactividades,
-            int idhotel, int idmodotransporte, int idtransporte, String fechaInicio,
-            String fechaFinal) {
-        this.id = id;
-        this.idusuario = idusuario;
-        this.idpais = idpais;
-        this.iddepartamento = iddepartamento;
-        this.idciudad = idciudad;
-        this.idactividades = idactividades;
-        this.idhotel = idhotel;
-        this.idmodotransporte = idmodotransporte;
-        this.idtransporte = idtransporte;
-        this.fechaInicio = fechaInicio;
-        this.fechaFinal = fechaFinal;
-        // this.usuarioRegistra= usuarioRegistra;
-        // this.usuarioModifica= usuarioModifica;
-        // this.usuarioElimina= usuarioElimina;
-        // this.fechaRegistra= fechaRegistra;
-        // this.fechaModifica= fechaModifica;
-        // this.fechaElimina= fechaElimina;
-        // this.ipRegistra= ipRegistra;
-        // this.ipModifica= ipModifica;
-        // this.ipElimina= ipElimina;
-    }
 
     public String capturarIp() {
         String miVariable = "";
@@ -94,94 +120,6 @@ public class mdl_Paquetes {
             miVariable = "null";
         }
         return miVariable;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-    
-    public int getIdusuario() {
-        return idusuario;
-    }
-
-    public void setIdusuario(int idusuario) {
-        this.idusuario = idusuario;
-    }
-
-    public int getIdpais() {
-        return idpais;
-    }
-
-    public void setIdpais(int idpais) {
-        this.idpais = idpais;
-    }
-
-    public int getIddepartamento() {
-        return iddepartamento;
-    }
-
-    public void setIddepartamento(int iddepartamento) {
-        this.iddepartamento = iddepartamento;
-    }
-
-    public int getIdciudad() {
-        return idciudad;
-    }
-
-    public void setIdciudad(int idciudad) {
-        this.idciudad = idciudad;
-    }
-
-    public int getIdactividades() {
-        return idactividades;
-    }
-
-    public void setIdactividades(int idactividades) {
-        this.idactividades = idactividades;
-    }
-
-    public int getIdhotel() {
-        return idhotel;
-    }
-
-    public void setIdhotel(int idhotel) {
-        this.idhotel = idhotel;
-    }
-
-    public int getIdmodotransporte() {
-        return idmodotransporte;
-    }
-
-    public void setIdmodotransporte(int idmodotransporte) {
-        this.idmodotransporte = idmodotransporte;
-    }
-
-    public int getIdtransporte() {
-        return idtransporte;
-    }
-
-    public void setIdtransporte(int idtransporte) {
-        this.idtransporte = idtransporte;
-    }
-
-    public String getFechaInicio() {
-        return fechaInicio;
-    }
-
-    public void setFechaInicio(String fechaInicio) {
-        this.fechaInicio = fechaInicio;
-    }
-
-    public String getFechaFinal() {
-        return fechaFinal;
-    }
-
-    public void setFechaFinal(String fechaFinal) {
-        this.fechaFinal = fechaFinal;
-    }
+    }   
 
 }

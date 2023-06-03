@@ -12,4 +12,7 @@ public interface itf_paquetes {
 
     public int savePaquete(mdl_Paquetes request);
 
+    /* QUERY CON JPA */
+    public Boolean savePaqueteJPA(mdl_Paquetes request);
+    /* END QUERY CON JPA */
 }

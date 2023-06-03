@@ -12,12 +12,12 @@ import jakarta.persistence.Table;
 
 public class mdl_Departamento {
     @Id
-    @Column(name="id")
+    @Column(name="ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "id_ciudad")
+    @Column(name = "ID_PAIS")
     private int id_ciudad;
-    @Column(name="nombre")
+    @Column(name="NOMBRE")
     private String nombre;
 
     public mdl_Departamento(){

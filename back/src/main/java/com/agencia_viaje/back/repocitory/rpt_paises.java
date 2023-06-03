@@ -23,7 +23,6 @@ public class rpt_paises implements itf_rct_paises{
         listPaises =JdbcTemplate.query(query,
         (rs, rowNum) -> new mdl_Paises(
             rs.getInt("ID"),
-            rs.getInt("ID_Departamento"),
             rs.getString("Nombre")
         )
         );
