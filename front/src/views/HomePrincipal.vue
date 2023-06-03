@@ -10,8 +10,8 @@
                         <img src="@/assets/images/paquetes/cuzco.jpg" class="card-img-top" alt="...">
                         <div class="card-body">
                             <h5 class="card-title">{{paquete.idpais + " - " + paquete.idciudad}}</h5>
-                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                            <p class="card-text">{{ paquete.descripcion }}</p>
+                            <p class="card-text"><small class="text-muted">S/.{{ paquete.monto }}</small></p>
                         </div>
                         </div>
                     </div>
@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import inc_head from "../Inc/inc_head";
+import inc_head from "./Inc/inc_head";
 import CryptoJS from 'crypto-js';
 var axios = require('axios');
 var error = 0;

@@ -1,10 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
 //import HomeView from '../views/HomeView.vue'
-import AddOperador from '@/views/operador/AddOperador.vue'
-import GetOperadores from '@/views/operador/GetOperadores.vue'
+import AddPersona from '@/views/persona/AddPersona.vue'
+import GetPersonas from '@/views/persona/GetPersonas.vue'
 import CreatePaquetes from '@/views/paquetes/AddPaquetePersonalizado.vue'
 import GetPaquetes from '@/views/paquetes/GetPaquetes.vue'
-import sesion from '@/views/sesion/login-register.vue'
+import sesion from '@/views/HomePrincipal.vue'
 import Login from '@/views/sesion/LogIn.vue'
 import Register from '@/views/sesion/RegisterIn.vue'
 import AddPaqueteEstandar from '@/views/paquetes/AddPaqueteEstandar.vue'
@@ -29,9 +29,9 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/perfilUser.vue')
   },
   {
-    path: '/admin/operador/add',
-    name: 'AddOperador',
-    component: AddOperador,
+    path: '/admin/persona/add',
+    name: 'AddPersona',
+    component: AddPersona,
   },
   {
     path: '/login',
@@ -44,9 +44,9 @@ const routes = [
     component: Register,
   },
   {
-    path: '/admin/operador/get',
+    path: '/admin/persona/get',
     name: 'GetOperador',
-    component: GetOperadores,
+    component: GetPersonas,
   },
   {
     path: '/cliente/addPaquete',

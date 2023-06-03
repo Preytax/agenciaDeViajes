@@ -219,14 +219,14 @@
             </li>
             -->
             <li class="nav-item" role="presentation">
-              <router-link to="/admin/operador/add">
+              <router-link to="/admin/persona/add">
                 <button :class="{ 'active': url === 'add'}" class="nav-link rounded-5" id="contact-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="false">
                   Registrar Operador
                 </button>
               </router-link>
             </li>
             <li class="nav-item" role="presentation">
-              <router-link to="/admin/operador/get">
+              <router-link to="/admin/persona/get">
                 <button :class="{ 'active': url === 'get'}" class="nav-link rounded-5" id="contact-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="false">
                   Listar Personas
                 </button>
