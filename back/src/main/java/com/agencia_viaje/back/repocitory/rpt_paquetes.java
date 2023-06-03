@@ -18,16 +18,41 @@ public class rpt_paquetes implements itf_rct_paquetes{
     @Override
     public List<mdl_Paquetes> getPaquetes() {
         List<mdl_Paquetes> listPaq = null;
-        /*String query = "SELECT * FROM " + table;
+        String query = ""+
+            "SELECT " + 
+                table + ".id, "+
+                table + ".id_modo, "+
+                table + ".id_usuario, "+
+                table + ".id_departamento, "+
+                table + ".id_actividades, "+
+                table + ".id_hoteles, "+
+                table + ".id_modo_transporte, "+
+                table + ".id_transporte, "+
+                table + ".fecha_inicio, "+
+                table + ".fecha_final, "+
+                table + ".monto, "+
+                " agv_paises.nombre AS pais, "+
+                " agv_ciudades.nombre AS ciudad "+
+            
+            " FROM " + table +
+            
+            " INNER JOIN agv_paises ON " +
+                " agv_paises.id = " + table + ".id_pais" +
+
+            " INNER JOIN agv_ciudades ON " +
+                " agv_ciudades.id = " + table + ".id_ciudad " +
+                
+            " WHERE " + table + ".estado = 1";
+
 
         listPaq =JdbcTemplate.query(query,
             (rs, rowNum) -> new mdl_Paquetes(
                 rs.getInt("ID"),
                 rs.getInt("ID_MODO"),
                 rs.getInt("ID_USUARIO"),
-                rs.getInt("ID_PAIS"),
+                rs.getString("PAIS"),
                 rs.getInt("ID_DEPARTAMENTO"),
-                rs.getInt("ID_CIUDAD"),
+                rs.getString("CIUDAD"),
                 rs.getInt("ID_ACTIVIDADES"),
                 rs.getInt("ID_HOTELES"),
                 rs.getInt("ID_MODO_TRANSPORTE"),
@@ -36,20 +61,19 @@ public class rpt_paquetes implements itf_rct_paquetes{
                 rs.getString("FECHA_FINAL"),
                 rs.getInt("MONTO")
             )
-        );*/
+        );
         return listPaq;
     }
 
     @Override
     public int savePaquete(mdl_Paquetes request) {
         try {
-            System.out.println("---");
+            
             int registros = JdbcTemplate.update(
                 "INSERT INTO " + table
                         + " (id_usuario,id_modo,id_pais,id_departamento,id_ciudad,id_actividades,id_hoteles,id_modo_transporte,id_transporte,fecha_inicio,fecha_final,monto) VALUES (?,?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                        1,1,1,1,1,1,1,1,1,1,1,1);
-               // request.getIdusuario(),request.getIdmodo(),request.getIdpais(), request.getIddepartamento(), request.getIdciudad(), request.getIdactividades(), request.getIdhotel(), request.getIdmodotransporte(),request.getIdtransporte(),request.getFechaInicio(),request.getFechaFinal(),request.getMonto());
-System.out.println("llego");
+               request.getIdusuario(),request.getIdmodo(),request.getIdpais(), request.getIddepartamento(), request.getIdciudad(), request.getIdactividades(), request.getIdhotel(), request.getIdmodotransporte(),request.getIdtransporte(),request.getFechaInicio(),request.getFechaFinal(),request.getMonto());
+
             if (registros != 0) {
                 return registros;
             }

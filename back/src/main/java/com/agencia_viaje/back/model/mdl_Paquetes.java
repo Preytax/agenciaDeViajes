@@ -1,7 +1,5 @@
 package com.agencia_viaje.back.model;
 
-import java.sql.Date;
-
 import java.net.InetAddress;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -36,7 +34,7 @@ public class mdl_Paquetes {
 
     @Column(name = "id_pais")
     @Getter @Setter
-    private int idpais;
+    private String idpais;
 
     @Column(name = "id_departamento")
     @Getter @Setter
@@ -44,7 +42,7 @@ public class mdl_Paquetes {
 
     @Column(name = "id_ciudad")
     @Getter @Setter
-    private int idciudad;
+    private String idciudad;
 
     @Column(name = "id_actividades")
     @Getter @Setter
@@ -109,6 +107,25 @@ public class mdl_Paquetes {
     @Column(name = "ip_elimina")
     @Getter @Setter
     private String ipElimina;
+
+                
+    public mdl_Paquetes(int id, int idmodo, int idusuario, String idpais, int iddepartamento, String idciudad,
+            int idactividades, int idhotel, int idmodotransporte, int idtransporte, String fechaInicio,
+            String fechaFinal, int monto) {
+        this.id = id;
+        this.idmodo = idmodo;
+        this.idusuario = idusuario;
+        this.idpais = idpais;
+        this.iddepartamento = iddepartamento;
+        this.idciudad = idciudad;
+        this.idactividades = idactividades;
+        this.idhotel = idhotel;
+        this.idmodotransporte = idmodotransporte;
+        this.idtransporte = idtransporte;
+        this.fechaInicio = fechaInicio;
+        this.fechaFinal = fechaFinal;
+        this.monto = monto;
+    }
 
 
     public String capturarIp() {

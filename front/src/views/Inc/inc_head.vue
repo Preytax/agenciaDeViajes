@@ -27,7 +27,23 @@
                 <span class="hide-menu">Dashboard</span>
               </a>
             </li>
-            <li class="nav-small-cap">
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="./index.html" aria-expanded="false">
+                <span>
+                  <i class="ti ti-layout-dashboard"></i>
+                </span>
+                <span class="hide-menu">Dashboard</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="./index.html" aria-expanded="false">
+                <span>
+                  <i class="ti ti-layout-dashboard"></i>
+                </span>
+                <span class="hide-menu">Dashboard</span>
+              </a>
+            </li>
+            <!--<li class="nav-small-cap">
               <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
               <span class="hide-menu">UI COMPONENTS</span>
             </li>
@@ -110,9 +126,9 @@
                 </span>
                 <span class="hide-menu">Sample Page</span>
               </a>
-            </li>
+            </li>-->
           </ul>
-          <div class="unlimited-access hide-menu bg-light-primary position-relative mb-7 mt-5 rounded">
+          <!--<div class="unlimited-access hide-menu bg-light-primary position-relative mb-7 mt-5 rounded">
             <div class="d-flex">
               <div class="unlimited-access-title me-3">
                 <h6 class="fw-semibold fs-4 mb-6 text-dark w-85">Upgrade to pro</h6>
@@ -122,7 +138,7 @@
                 <img src="@/assets/images/backgrounds/rocket.png" alt="" class="img-fluid">
               </div>
             </div>
-          </div>
+          </div>-->
         </nav>
         <!-- End Sidebar navigation -->
       </div>
@@ -225,7 +241,7 @@
             </li>
             <li class="nav-item" role="presentation">
               <router-link to="/cliente/addPaqueteEstandar">
-                <button :class="{ 'active': url === 'addPaquete'}" class="nav-link rounded-5" id="contact-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="false">
+                <button :class="{ 'active': url === 'addPaqueteEstandar'}" class="nav-link rounded-5" id="contact-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="false">
                   Crear Paquetes Estandar
                 </button>
               </router-link>

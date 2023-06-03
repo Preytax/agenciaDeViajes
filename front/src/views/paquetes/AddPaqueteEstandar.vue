@@ -15,7 +15,7 @@
                             <label for="inputEmail4" class="form-label">Elegir Pais</label>
                             <select v-model="paises1" @change="paisesr" class="form-select"
                                 aria-label="Default select example">
-                                <option selected>Seleccionar</option>
+                                <option value="0" selected>Seleccionar</option>
                                 <option v-for="pais in paises" :key="pais.id" :value="pais.id">
                                     {{ pais.nombre }}
                                 </option>
@@ -25,7 +25,7 @@
                             <label for="inputEmail4" class="form-label">Elegir Departamento</label>
                             <select v-model="departamento2" @change="ciudad5" class="form-select"
                                 aria-label="Default select example">
-                                <option selected>Seleccionar</option>
+                                <option value="0" selected>Seleccionar</option>
                                 <option v-for="departamento in departamentos" :key="departamento.id"
                                     :value="departamento.id">
                                     {{ departamento.nombre }}
@@ -36,7 +36,7 @@
                             <label for="inputEmail4" class="form-label">Elegir Ciudad</label>
                             <select v-model="cuidades2" @change="hotelactividades" class="form-select"
                                 aria-label="Default select example">
-                                <option selected>Seleccionar</option>
+                                <option value="0" selected>Seleccionar</option>
                                 <option v-for="ciudad in cuidades" :key="ciudad.id" :value="ciudad.id">
                                     {{ ciudad.nombre }}
                                 </option>
@@ -45,7 +45,7 @@
                         <div class="col-md-6">
                             <label for="inputEmail4" class="form-label">Elegir Hotel</label>
                             <select v-model="hoteles2" class="form-select" aria-label="Default select example">
-                                <option selected>Seleccionar</option>
+                                <option value="0" selected>Seleccionar</option>
                                 <option v-for="hotel in hoteles" :key="hotel.id" :value="hotel.id">
                                     {{ hotel.nombre }}
                                 </option>
@@ -54,7 +54,7 @@
                         <div class="col-md-12">
                             <label for="inputEmail4" class="form-label">Elegir Activades</label>
                             <select v-model="actividades2" class="form-select" aria-label="Default select example">
-                                <option selected>Seleccionar</option>
+                                <option value="0" selected>Seleccionar</option>
                                 <option v-for="actividad in actividades" :key="actividad.id" :value="actividad.id">
                                     {{ actividad.nombre }}
                                 </option>
@@ -74,7 +74,7 @@
                         <div class="col-md-6"> <!--Agencia-Transporte-->
                             <label for="inputEmail4" class="form-label">Agencia de Transporte</label>
                             <select v-model="transportes1" class="form-select" aria-label="Default select example">
-                                <option selected>Seleccionar</option>
+                                <option value="0" selected>Seleccionar</option>
                                 <option v-for="transporte in transportes" :key="transporte.id" :value="transporte.id">
                                     {{ transporte.nombre }}
                                 </option>

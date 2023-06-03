@@ -4,171 +4,19 @@
     <div class="body-wrapper">
         <div class="container-fluid" data-bd-theme="dark">
             <div class="card">
-                <div class="card-body">
-                   <!-- Pills navs -->
-                    <ul class="nav nav-pills nav-justified mb-3" id="ex1" role="tablist">
-                        <li class="nav-item" role="presentation">
-                            <a :class="{ 'show active': navLogin}" @click="showLogin" class="nav-link" id="tab-login" data-mdb-toggle="pill" href="#pills-login" role="tab"
-                            aria-controls="pills-login" aria-selected="true">Iniciar Sesi&oacute;n</a>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <a :class="{ 'show active': navRegister}" @click="showRegister" class="nav-link" id="tab-register" data-mdb-toggle="pill" href="#pills-register" role="tab"
-                            aria-controls="pills-register" aria-selected="false">Registrarse</a>
-                        </li>
-                    </ul>
-                    <!-- Pills navs -->
-
-                    <!-- Pills content -->
-                    <div class="tab-content">
-                        <div :class="{ 'show active': tabLogin}" class="tab-pane fade" id="pills-login" role="tabpanel" aria-labelledby="tab-login">
-                            <form>
-                                <div class="text-center mb-3">
-                                    <p>Sign in with:</p>
-                                    <button type="button" class="btn btn-link btn-floating mx-1">
-                                    <i class="fab fa-facebook-f"></i>
-                                    </button>
-
-                                    <button type="button" class="btn btn-link btn-floating mx-1">
-                                    <i class="fab fa-google"></i>
-                                    </button>
-
-                                    <button type="button" class="btn btn-link btn-floating mx-1">
-                                    <i class="fab fa-twitter"></i>
-                                    </button>
-
-                                    <button type="button" class="btn btn-link btn-floating mx-1">
-                                    <i class="fab fa-github"></i>
-                                    </button>
-                                </div>
-
-                                <p class="text-center">or:</p>
-
-                                <!-- Email input -->
-                                <div class="form-outline mb-4">
-                                    <input type="email" id="loginName" class="form-control" />
-                                    <label class="form-label" for="loginName">Email or username</label>
-                                </div>
-
-                                <!-- Password input -->
-                                <div class="form-outline mb-4">
-                                    <input type="password" id="loginPassword" class="form-control" />
-                                    <label class="form-label" for="loginPassword">Password</label>
-                                </div>
-
-                                <!-- 2 column grid layout -->
-                                <div class="row mb-4">
-                                    <div class="col-md-6 d-flex justify-content-center">
-                                        <!-- Checkbox -->
-                                        <div class="form-check mb-3 mb-md-0">
-                                            <input class="form-check-input" type="checkbox" value="" id="loginCheck" checked />
-                                            <label class="form-check-label" for="loginCheck"> Remember me </label>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6 d-flex justify-content-center">
-                                        <!-- Simple link -->
-                                        <a href="#!">Forgot password?</a>
-                                    </div>
-                                </div>
-
-                                <!-- Submit button -->
-                                <button type="submit" class="btn btn-primary btn-block mb-4">Sign in</button>
-
-                                <!-- Register buttons -->
-                                <div class="text-center">
-                                    <p>Not a member? <a href="#!">Register</a></p>
-                                </div>
-                            </form>
+                <template v-for="paquete in paquetes" :key="paquete.id">
+                    <div class="card-body">
+                        <div class="card mb-3">
+                        <img src="@/assets/images/paquetes/cuzco.jpg" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">{{paquete.idpais + " - " + paquete.idciudad}}</h5>
+                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
                         </div>
-                        <div :class="{ 'show active': tabResgiter}" class="tab-pane fade" id="pills-register" role="tabpanel" aria-labelledby="tab-register">
-                            <div class="row g-3">
-                                <div class="col-sm-6">
-                                    <label for="firstName" class="form-label" _msttexthash="76193" _msthash="27">Nombre</label>
-                                    <InputText type="text" class="form-control" id="firstName" placeholder="" maxlength="45" v-model="nombres" required/>
-                                    <div class="invalid-feedback" _msttexthash="637039" _msthidden="1" _msthash="28">
-                                        Valid first name is required.
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <label for="lastName" class="form-label" _msttexthash="112346" _msthash="29">Apellido Paterno</label>
-                                    <InputText type="text" class="form-control" id="lastName" placeholder="" maxlength="45" v-model="apellidoPaterno" required/>
-                                    <div class="invalid-feedback" _msttexthash="592748" _msthidden="1" _msthash="30">
-                                        Valid last name is required.
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <label for="firstName" class="form-label" _msttexthash="76193" _msthash="27">Aapellido Materno</label>
-                                    <InputText type="text" class="form-control" id="lastName2" placeholder="" maxlength="45" v-model="apellidoMaterno" required/>
-                                    <div class="invalid-feedback" _msttexthash="637039" _msthidden="1" _msthash="28">
-                                        Valid first name is required.
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <label for="firstName" class="form-label" _msttexthash="76193" _msthash="27">Fecha de Nacimiento</label>
-                                    <InputText type="date" class="form-control" id="lastName2" placeholder="" v-model="fechaNacimiento" required/>
-                                    <div class="invalid-feedback" _msttexthash="637039" _msthidden="1" _msthash="28">
-                                        Valid first name is required.
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <label for="country" class="form-label" _msttexthash="60047" _msthash="42">Tipo de Documento</label>
-                                    <select class="form-select" id="country" outlined v-model="tipoDocumento">
-                                        <option value="" _msttexthash="101647" _msthash="43">Elegir...</option>
-                                        <option v-for="tipoDocumento in tiposDocumentos" :key="tipoDocumento.id" :value="tipoDocumento.id">{{tipoDocumento.nombre}}</option>
-                                    </select>
-                                    <div class="invalid-feedback" _msttexthash="685542" _msthidden="1" _msthash="45">
-                                        Please select a valid country.
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <label for="firstName" class="form-label" _msttexthash="76193" _msthash="27">Nro. de Documento</label>
-                                    <InputText type="text" class="form-control" id="lastName2" placeholder="" maxlength="8" v-model="nroDocumento" required/>
-                                    <div class="invalid-feedback" _msttexthash="637039" _msthidden="1" _msthash="28">
-                                        Valid first name is required.
-                                    </div>
-                                </div>            
-                                <div class="col-sm-6">
-                                    <label for="username" class="form-label">Correo Electronico</label>
-                                    <div class="input-group has-validation">
-                                        <span class="input-group-text">@</span>
-                                        <input v-model="correo" type="email" class="form-control" id="correo" placeholder="Correo" maxlength="150" required="">
-                                        <div class="invalid-feedback">
-                                            Your username is required.
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <label for="email" class="form-label" _msttexthash="731406" _msthash="34">Contraseña <span class="text-body-secondary" _istranslated="1"></span></label>
-                                    <input v-model="password" type="password" class="form-control" id="password" placeholder="**********"  maxlength="10" _mstplaceholder="274417" _msthash="35">
-                                    <div class="invalid-feedback" _msttexthash="1993589" _msthidden="1" _msthash="36">
-                                        Please enter a valid email address for shipping updates.
-                                    </div>
-                                </div>
-                            </div>
-
-                            <hr class="my-4">
-
-                            <!--
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="same-address">
-                                <label class="form-check-label" for="same-address" _msttexthash="2733666" _msthash="52">La dirección de envío es la misma que mi dirección de facturación</label>
-                            </div>
-
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="save-info">
-                                <label class="form-check-label" for="save-info" _msttexthash="1399762" _msthash="53">Guarde esta información para la próxima vez</label>
-                            </div>
-
-                            <hr class="my-4">
-                            -->
-
-                            <a class="w-100 btn btn-primary btn-lg" @click="addOperador" href="#">Registrar</a>
                         </div>
                     </div>
-                    <!-- Pills content -->
-                </div>
+                </template>
             </div>
-                
         </div>
     </div>
 </template>
@@ -186,6 +34,13 @@ export default{
     },
     data(){
         return {
+            paquetes: [
+                {
+                    id: "123",
+                    ciudad: "Lima",
+                    pais: "Peru"
+                }
+            ],
             idPerfil: null,
             nombres: null,
             apellidoPaterno: null,
@@ -206,6 +61,9 @@ export default{
     },
     props: [],
     mounted: async function() {
+
+        const responsePaquetes = await axios.get( this.BASE_URL_AXIOS + 'getPaquetes');
+        this.paquetes = responsePaquetes.data;
 
         const responseTipoDocumento = await axios.get( this.BASE_URL_AXIOS + 'getTiposDocumentos');
         this.tiposDocumentos = responseTipoDocumento.data;
