@@ -1,2 +1,2 @@
-# BD
-back/src/main/resources/application.properties
+### Aplication propierties ###
+/application.properties
