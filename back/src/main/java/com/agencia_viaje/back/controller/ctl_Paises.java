@@ -19,7 +19,7 @@ public class ctl_Paises {
 
     @GetMapping("/getPaises")
     @ResponseStatus(HttpStatus.CREATED)
-    List<mdl_Paises> getActividades(){
+    List<mdl_Paises> getPaises(){
         List<mdl_Paises> listPaises =null;
         listPaises = servicio.getPaises();
 

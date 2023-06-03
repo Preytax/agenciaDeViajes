@@ -15,8 +15,8 @@ public class svc_Ciudades implements itf_rct_ciudades {
     itf_rct_ciudades repocitorio;
 
     @Override
-    public List<mdl_Ciudades> getCiudades() {
-        return repocitorio.getCiudades();
+    public List<mdl_Ciudades> getCiudades(int id_modo_departamento) {
+        return repocitorio.getCiudades(id_modo_departamento);
     }
 
 }

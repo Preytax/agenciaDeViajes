@@ -15,8 +15,8 @@ public class svc_Hoteles implements itf_rct_hoteles {
     itf_rct_hoteles repositorio;
 
     @Override
-    public List<mdl_Hoteles> getHoteles() {
-        return repositorio.getHoteles();
+    public List<mdl_Hoteles> getHoteles(int id_modo_ciudad1) {
+        return repositorio.getHoteles(id_modo_ciudad1);
     }
 
 }

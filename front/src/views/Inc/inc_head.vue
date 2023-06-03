@@ -223,6 +223,14 @@
                 </button>
               </router-link>
             </li>
+            <li class="nav-item" role="presentation">
+              <router-link to="/cliente/addPaqueteEstandar">
+                <button :class="{ 'active': url === 'addPaquete'}" class="nav-link rounded-5" id="contact-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="false">
+                  Crear Paquetes Estandar
+                </button>
+              </router-link>
+            </li>
+            
           </ul>
         </div>
       </div>

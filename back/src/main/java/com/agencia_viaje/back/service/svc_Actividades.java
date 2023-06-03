@@ -15,8 +15,8 @@ public class svc_Actividades implements itf_rct_actividades{
     itf_rct_actividades repocitorio;
     
     @Override
-    public List<mdl_Actividades> getActividades() {
-        return repocitorio.getActividades();
+    public List<mdl_Actividades> getActividades(int id_modo_ciudad2) {
+        return repocitorio.getActividades(id_modo_ciudad2);
     }
     
 }

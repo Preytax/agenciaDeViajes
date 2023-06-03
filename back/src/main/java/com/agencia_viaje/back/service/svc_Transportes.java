@@ -15,8 +15,8 @@ public class svc_Transportes implements itf_rct_transportes {
     itf_rct_transportes repositorio;
 
     @Override
-    public List<mdl_Transportes> getTransportes() {
-        return repositorio.getTransportes();
+    public List<mdl_Transportes> getTransportes(int id_modo_transporte) {
+        return repositorio.getTransportes(id_modo_transporte);
     }
 
 }

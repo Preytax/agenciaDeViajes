@@ -15,13 +15,14 @@ public class rpt_hoteles implements itf_rct_hoteles{
     String table = "agv_hoteles";
 
     @Override
-    public List<mdl_Hoteles> getHoteles() {
+    public List<mdl_Hoteles> getHoteles(int id_modo_ciudad1) {
         List<mdl_Hoteles> listHoteles=null;
-        String query ="SELECT * FROM " +table;
+        String query ="SELECT * FROM " +table+" WHERE id_ciudad = "+id_modo_ciudad1;
 
         listHoteles =JdbcTemplate.query(query,
         (rs, rowNum) -> new mdl_Hoteles(
             rs.getInt("ID"),
+            rs.getInt("ID_CIUDAD"),
             rs.getString("Nombre")
         )
         );

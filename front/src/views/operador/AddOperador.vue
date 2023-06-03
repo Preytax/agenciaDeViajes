@@ -204,7 +204,6 @@ export default{
                     password : CryptoJS.MD5(this.password).toString()
                 };
 
-
                 const request = await axios({
                     method: "POST",
                     url: this.BASE_URL_AXIOS + "saveOperador",

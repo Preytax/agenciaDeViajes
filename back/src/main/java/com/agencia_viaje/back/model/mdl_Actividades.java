@@ -11,17 +11,20 @@ import jakarta.persistence.Table;
 @Table(name= "agv_actividades")
 public class mdl_Actividades {
     @Id
-    @Column(name="id")
+    @Column(name="ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name="nombre")
+    @Column(name = "ID_CIUDAD")
+    private int id_ciudad;
+    @Column(name="NOMBRE")
     private String nombre;
 
     public mdl_Actividades() {
     }
 
-    public mdl_Actividades(int id, String nombre) {
+    public mdl_Actividades(int id, int id_ciudad, String nombre) {
         this.id=id;
+        this.id_ciudad=id_ciudad;
         this.nombre=nombre;
     }
 
@@ -39,5 +42,14 @@ public class mdl_Actividades {
     public void setNombre(String nombre){
         this.nombre = nombre;
     }
+
+    public int getId_ciudad() {
+        return id_ciudad;
+    }
+
+    public void setId_ciudad(int id_ciudad) {
+        this.id_ciudad = id_ciudad;
+    }
+    
 }
 

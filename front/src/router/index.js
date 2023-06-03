@@ -2,11 +2,12 @@ import { createRouter, createWebHistory } from 'vue-router'
 //import HomeView from '../views/HomeView.vue'
 import AddOperador from '@/views/operador/AddOperador.vue'
 import GetOperadores from '@/views/operador/GetOperadores.vue'
-import CreatePaquetes from '@/views/paquetespersonalizados/CreatePaquetes.vue'
-import GetPaquetes from '@/views/paquetespersonalizados/GetPaquetes.vue'
+import CreatePaquetes from '@/views/paquetes/AddPaquetePersonalizado.vue'
+import GetPaquetes from '@/views/paquetes/GetPaquetes.vue'
 import sesion from '@/views/sesion/login-register.vue'
 import Login from '@/views/sesion/LogIn.vue'
 import Register from '@/views/sesion/RegisterIn.vue'
+import AddPaqueteEstandar from '@/views/paquetes/AddPaqueteEstandar.vue'
 
 const routes = [
   {
@@ -56,6 +57,11 @@ const routes = [
     path: '/cliente/getPaquete',
     name: 'GetPaquetes',
     component: GetPaquetes,
+  },
+  {
+    path: '/cliente/addPaqueteEstandar',
+    name: 'AddPaqueteEstandar',
+    component: AddPaqueteEstandar,
   }
 ]
 
