@@ -1,15 +1,10 @@
 <template>
   <inc_head/>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <a>Este es el perfil</a>
 </template>
 
 <script>
-// @ is an alias to /src
-import inc_head from "../Inc/inc_head";
-import HelloWorld from '@/components/HelloWorld.vue'
+import inc_head from "../Inc/inc_head.vue";
 
 export default {
   beforeRouteEnter(to, from, next) {
@@ -21,10 +16,15 @@ export default {
       next();
       }
   },
-  name: 'HomeView',
-  components: {
-    HelloWorld,
+  components:{
     inc_head
+  },
+  methods: {
+    inc_head
+  },
+  mounted() {
+
   }
-}
+};
+
 </script>

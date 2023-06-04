@@ -78,10 +78,12 @@
     beforeRouteEnter(to, from, next) {
         // Verificar si la variable de sesión existe
         if (!localStorage.getItem('id')) {
-        // Redirigir a la página de inicio de sesión
-        next('/login');
+            // Redirigir a la página de inicio de sesión
+            next('/login');
+        } else if(localStorage.getItem('id_perfil') != 1){
+            next('/home');
         } else {
-        next();
+            next();
         }
     },
     inject: ['BASE_URL_AXIOS','BASE_URL'],

@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-//import HomeView from '../views/HomeView.vue'
+import HomeOperador from '@/views/HomeOperador.vue'
 import AddPersona from '@/views/persona/AddPersona.vue'
 import GetPersonas from '@/views/persona/GetPersonas.vue'
 import CreatePaquetes from '@/views/paquetes/AddPaquetePersonalizado.vue'
@@ -21,15 +21,20 @@ const routes = [
     component: sesion,
   },
   {
+    path: '/HomeOperador',
+    name: 'HomeOperador',
+    component: HomeOperador,
+  },
+  {
     path: '/perfil',
     name: 'perfil',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/perfilUser.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/persona/perfilUser.vue')
   },
   {
-    path: '/admin/persona/add',
+    path: '/operador/add',
     name: 'AddPersona',
     component: AddPersona,
   },
@@ -44,22 +49,22 @@ const routes = [
     component: Register,
   },
   {
-    path: '/admin/persona/get',
+    path: '/operador/get',
     name: 'GetOperador',
     component: GetPersonas,
   },
   {
-    path: '/cliente/addPaquete',
+    path: '/paquete/add',
     name: 'CreatePaquetes',
     component: CreatePaquetes,
   },
   {
-    path: '/cliente/getPaquete',
+    path: '/paquete/get',
     name: 'GetPaquetes',
     component: GetPaquetes,
   },
   {
-    path: '/cliente/addPaqueteEstandar',
+    path: '/paquete/addEstandar',
     name: 'AddPaqueteEstandar',
     component: AddPaqueteEstandar,
   }

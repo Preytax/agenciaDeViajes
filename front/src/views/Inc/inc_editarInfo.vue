@@ -110,7 +110,7 @@ export default {
     data() {
         return {
             title: 'Operadores',
-            id: "1",
+            id: localStorage.getItem('id'),
             persona: null,
             nombres: null,
             apellidoPaterno: null,
@@ -129,7 +129,7 @@ export default {
     },
     methods: {
         async getPersona() {
-            const request = await axios.get( this.BASE_URL_AXIOS + 'getOperador/'+1);
+            const request = await axios.get( this.BASE_URL_AXIOS + 'getOperador/'+this.id);
             const responseTipoDocumento = await axios.get( this.BASE_URL_AXIOS + 'getTiposDocumentos');
             this.tiposDocumentos = responseTipoDocumento.data;
 

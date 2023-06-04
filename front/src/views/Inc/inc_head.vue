@@ -20,13 +20,36 @@
               <span class="hide-menu">Home</span>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="./index.html" aria-expanded="false">
+              <a class="sidebar-link"  :href="`${BASE_URL}HomeOperador`" aria-expanded="false">
                 <span>
                   <i class="ti ti-layout-dashboard"></i>
                 </span>
-                <span class="hide-menu">Dashboard</span>
+                <span class="hide-menu">Home</span>
               </a>
             </li>
+            <template v-if="id_perfil == 1">
+              <li class="nav-small-cap">
+                <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+                <span class="hide-menu">Configuracion</span>
+              </li>
+              <li class="sidebar-item">
+                <a class="sidebar-link" :href="`${BASE_URL}operador/add`" aria-expanded="false">
+                  <span>
+                    <i class="ti ti-layout-dashboard"></i>
+                  </span>
+                  <span class="hide-menu">Operadores</span>
+                </a>
+              </li>
+              <li class="sidebar-item">
+                <a class="sidebar-link" :href="`${BASE_URL}paquete/addEstandar`" aria-expanded="false">
+                  <span>
+                    <i class="ti ti-layout-dashboard"></i>
+                  </span>
+                  <span class="hide-menu">Paquetes</span>
+                </a>
+              </li>
+            </template>
+            
             <!--<li class="nav-small-cap">
               <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
               <span class="hide-menu">UI COMPONENTS</span>
@@ -183,16 +206,9 @@
       </header>
       <!--  Header End -->
       <div class="container-fluid">
-        <div class="card">
+        <div v-show="urlRouter != 'HomeOperador' && urlRouter != 'perfil'" class="card">
           <ul class="nav nav-pills nav-fill gap-2 p-1 small bg-primary rounded-5 shadow-sm" id="pillNav2" role="tablist" 
             style="--bs-nav-link-color: var(--bs-white); --bs-nav-pills-link-active-color: var(--bs-primary); --bs-nav-pills-link-active-bg: var(--bs-white);">
-            <li class="nav-item" role="presentation">
-              <router-link to="/home">
-                <button :class="{ 'active': url === 'home'}" class="nav-link rounded-5" id="home-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="true">
-                  Home
-                </button>
-              </router-link>
-            </li>
             <!--
             <li class="nav-item" role="presentation">
               <router-link to="/about">
@@ -202,34 +218,49 @@
               </router-link>
             </li>
             -->
-            <li class="nav-item" role="presentation">
-              <router-link to="/admin/persona/add">
-                <button :class="{ 'active': url === 'add'}" class="nav-link rounded-5" id="contact-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="false">
-                  Registrar Operador
-                </button>
-              </router-link>
-            </li>
-            <li class="nav-item" role="presentation">
-              <router-link to="/admin/persona/get">
-                <button :class="{ 'active': url === 'get'}" class="nav-link rounded-5" id="contact-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="false">
-                  Listar Personas
-                </button>
-              </router-link>
-            </li>
-            <li class="nav-item" role="presentation">
-              <router-link to="/cliente/addPaquete">
-                <button :class="{ 'active': url === 'addPaquete'}" class="nav-link rounded-5" id="contact-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="false">
-                  Crear Paquetes Personalizados
-                </button>
-              </router-link>
-            </li>
-            <li class="nav-item" role="presentation">
-              <router-link to="/cliente/addPaqueteEstandar">
-                <button :class="{ 'active': url === 'addPaqueteEstandar'}" class="nav-link rounded-5" id="contact-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="false">
-                  Crear Paquetes Estandar
-                </button>
-              </router-link>
-            </li>
+            <template v-if="id_perfil == 1">
+              <template v-if="urlRouter == 'operador'">
+                <li class="nav-item" role="presentation">
+                  <router-link to="/operador/add">
+                    <button :class="{ 'active': urlEvento === 'add'}" class="nav-link rounded-5" id="contact-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="false">
+                      Registrar Operador
+                    </button>
+                  </router-link>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <router-link to="/operador/get">
+                    <button :class="{ 'active': urlEvento === 'get'}" class="nav-link rounded-5" id="contact-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="false">
+                      Listar Personas
+                    </button>
+                  </router-link>
+                </li>
+              </template>
+              <template v-if="urlRouter == 'paquete'">
+                <li class="nav-item" role="presentation">
+                  <router-link to="/paquete/addEstandar">
+                    <button :class="{ 'active': urlEvento === 'addEstandar'}" class="nav-link rounded-5" id="contact-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="false">
+                      Crear Paquetes Estandar
+                    </button>
+                  </router-link>
+                </li>
+              </template>
+            </template>
+            <template v-else-if="id_perfil == 3">
+              <li class="nav-item" role="presentation">
+                <router-link to="/home">
+                  <button :class="{ 'active': urlEvento === 'home'}" class="nav-link rounded-5" id="home-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="true">
+                    Home
+                  </button>
+                </router-link>
+              </li>
+              <li class="nav-item" role="presentation">
+                <router-link to="/paquete/add">
+                  <button :class="{ 'active': urlEvento === 'addPaquete'}" class="nav-link rounded-5" id="contact-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="false">
+                    Crear Paquetes Personalizados
+                  </button>
+                </router-link>
+              </li>
+            </template>
             
           </ul>
         </div>
@@ -255,8 +286,11 @@ export default {
   },
   data() {
     return {
+      id_perfil: localStorage.getItem('id_perfil'),
       title: 'Operadores',
-      url: window.location.href
+      url: window.location.href,
+      urlRouter: "",
+      urlEvento: ""
     };
   },
   methods: {
@@ -274,8 +308,10 @@ export default {
     },
   },
   mounted() {
-    this.url = this.url.slice(this.url.lastIndexOf('/') + 1);
+    this.urlRouter = this.$route.path.split("/")[1];
+    this.urlEvento = this.url.slice(this.url.lastIndexOf('/') + 1);
     // Admin Panel settings
+    console.log(this.urlRouter);
 
     //****************************
     /* This is for the mini-sidebar if width is less than 1170*/

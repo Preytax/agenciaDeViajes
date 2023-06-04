@@ -40,7 +40,7 @@ public class ctl_persona {
     @GetMapping("/getOperador/{id}")
     @ResponseStatus(HttpStatus.OK)
     mdl_persona getOperador(@PathVariable Long id) {
-        return servicio.getPersonaJPA(1);
+        return servicio.getPersonaJPA(id);
     }
 
     @PostMapping("/saveOperador")
@@ -55,7 +55,9 @@ public class ctl_persona {
                 !operador.getNroDocumento().equals("") && !operador.getNroDocumento().isEmpty() &&
                 !operador.getFechaNacimiento().equals("") && !operador.getFechaNacimiento().isEmpty() &&
                 !operador.getCorreo().equals("") && !operador.getCorreo().isEmpty() &&
-                !operador.getPassword().equals("") && !operador.getPassword().isEmpty()) {
+                !operador.getPassword().equals("") && !operador.getPassword().isEmpty()
+            ) 
+        {
             mensaje = "ER|No se pudo registrar al operador";
 
             mdl_persona persona = new mdl_persona();
