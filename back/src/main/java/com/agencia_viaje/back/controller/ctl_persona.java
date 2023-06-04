@@ -58,8 +58,15 @@ public class ctl_persona {
                 !operador.getPassword().equals("") && !operador.getPassword().isEmpty()
             ) 
         {
-            mensaje = "ER|No se pudo registrar al operador";
+            mensaje = "ER|No se pudo registrar al operador.";
 
+            if(servicio.confirmarCorreo(operador.getCorreo()) == false){
+                return "ER|El correo ya esta registrado.";
+            }
+            else if(servicio.confirmarNroDocumento(operador.getNroDocumento()) == false){
+                return "ER|El Nro de docuemento ya esta registrado.";
+            }
+            
             mdl_persona persona = new mdl_persona();
 
             persona.setIdPerfil(operador.getIdPerfil());
@@ -71,13 +78,13 @@ public class ctl_persona {
             persona.setFechaNacimiento(operador.getFechaNacimiento());
             persona.setCorreo(operador.getCorreo());
             persona.setPassword(operador.getPassword());
-            persona.setUsuarioRegistra("1");//recibir de sesion
+            persona.setUsuarioRegistra(operador.getId()+"");
             persona.setEstado("1");
             persona.setIpRegistra(operador.capturarIp());
 
             if (servicio.savePersonaJPA(persona)) {
-                mensaje = "OK|" + ((operador.getIdPerfil() == "2") ? "Se registro el operador con exito"
-                        : "Su registro ha sido exitoso");
+                mensaje = "OK|" + ((operador.getIdPerfil() == "2") ? "Se registro el operador con exito."
+                        : "Su registro ha sido exitoso.");
             }
         }
 
@@ -95,7 +102,14 @@ public class ctl_persona {
                 !operador.getNroDocumento().equals("") && !operador.getNroDocumento().isEmpty() &&
                 !operador.getFechaNacimiento().equals("") && !operador.getFechaNacimiento().isEmpty() &&
                 !operador.getCorreo().equals("") && !operador.getCorreo().isEmpty()) {
-            mensaje = "ER|No se pudo actualizar la información";
+            mensaje = "ER|No se pudo actualizar la información.";
+
+            if(servicio.confirmarCorreo(operador.getCorreo()) == false){
+                return "ER|El correo ya esta registrado.";
+            }
+            else if(servicio.confirmarNroDocumento(operador.getNroDocumento()) == false){
+                return "ER|El Nro de docuemento ya esta registrado.";
+            }
 
             mdl_persona persona = new mdl_persona();
 
@@ -112,14 +126,37 @@ public class ctl_persona {
                 persona.setPassword(operador.getPassword());
             }
 
-            persona.setUsuarioModifica("1");//recibir de sesion
+            persona.setUsuarioModifica(operador.getId()+"");
             persona.setFechaModifica(operador.capturaraFecha());
             persona.setIpModifica(operador.capturarIp());
 
             if (servicio.updatePersonajdbc(persona) != 0) {
                 mensaje = "OK|"
-                        + ((operador.getIdPerfil() == "2") ? "Se actualizó; la informción del operador"
-                                : "Su informción se ha actualizado");
+                        + ((operador.getIdPerfil() == "2") ? "Se actualizó; la informción del operador."
+                                : "Su informción se ha actualizado.");
+            }
+        }
+
+        return mensaje;
+    }
+
+    @PutMapping("/actualizarEstadoPersona")
+    @ResponseStatus(HttpStatus.OK)
+    String actualizarEstadoPersona(@RequestBody mdl_persona datosPersona) {
+        String mensaje = "ER|Existe un error interno y no pudo actualizar.";
+        boolean confirmacion = false;
+        if (datosPersona.getId() != 0 && datosPersona.getEstado() != "") {
+            mensaje = "ER|No se pudo actualizar la información.";
+
+            if(datosPersona.getEstado().equals("1")){
+                confirmacion = servicio.suspenderPersona(datosPersona.getId()+"");
+            }
+            else if(datosPersona.getEstado().equals("0")){
+                confirmacion = servicio.habilitarPersona(datosPersona.getId()+"");
+            }
+
+            if (confirmacion) {
+                mensaje = "OK|Se actualizó el estado.";
             }
         }
 

@@ -39,7 +39,7 @@
                   </div>
                   <div class="col-sm-6">
                       <label for="firstName" class="form-label" _msttexthash="76193" _msthash="27">Fecha de Nacimiento</label>
-                      <InputText type="date" class="form-control" id="lastName2" placeholder="" v-model="fechaNacimiento" required/>
+                      <InputText type="date" class="form-control" id="fecha" placeholder="" v-model="fechaNacimiento" :max="maxDate" required/>
                       <div ref="fechaNacimiento" class="invalid-feedback" _msttexthash="637039" _msthidden="1" _msthash="28">
                           La fecha de Nacimiento es obligatoria.
                       </div>
@@ -56,7 +56,7 @@
                   </div>
                   <div class="col-sm-6">
                       <label for="firstName" class="form-label" _msttexthash="76193" _msthash="27">Nro. de Documento</label>
-                      <InputText type="text" class="form-control" id="lastName2" placeholder="" maxlength="8" v-model="nroDocumento" required/>
+                      <InputText type="text" class="form-control" id="nrodocumento" placeholder="" maxlength="8" v-model="nroDocumento" required/>
                       <div ref="nroDocumento" class="invalid-feedback" _msttexthash="637039" _msthidden="1" _msthash="28">
                           El nro. de documento es obligatorio.
                       </div>
@@ -145,6 +145,24 @@ export default{
     mounted: async function() {
         const responseTipoDocumento = await axios.get( this.BASE_URL_AXIOS +'getTiposDocumentos');
         this.tiposDocumentos = responseTipoDocumento.data;
+    },
+    computed: {
+        maxDate() {
+            const now = new Date();
+            const year = now.getFullYear();
+            let month = now.getMonth() + 1;
+            let day = now.getDate();
+
+            if (month < 10) {
+                month = '0' + month;
+            }
+
+            if (day < 10) {
+                day = '0' + day;
+            }
+
+            return `${year}-${month}-${day}`;
+        },
     },
     methods: {
         async showLogin(){

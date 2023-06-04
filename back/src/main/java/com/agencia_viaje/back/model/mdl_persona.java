@@ -109,6 +109,11 @@ public class mdl_persona {
         this.apellidoMaterno = apellidoMaterno;
     }
 
+    public mdl_persona(int id, String estado) {
+        this.id = id;
+        this.estado = estado;
+    }
+
     public String capturarIp() {
         String miVariable = "";
         try {

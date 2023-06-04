@@ -120,7 +120,7 @@ export default{
         if (!localStorage.getItem('id')) {
             // Redirigir a la página de inicio de sesión
             next('/login');
-        } else if(localStorage.getItem('id_perfil') != 1){
+        } else if(localStorage.getItem('id_perfil') != 1 && localStorage.getItem('id_perfil') != 4){
             next('/home');
         } else {
             next();
@@ -132,6 +132,7 @@ export default{
     },
     data(){
         return {
+            id: localStorage.getItem('id'),
             idPerfil: null,
             nombres: null,
             apellidoPaterno: null,
@@ -204,6 +205,7 @@ export default{
             }
             if(error == 0){
                 const newOperador = {
+                    id: this.id,
                     idPerfil : this.idPerfil,
                     nombres : this.nombres,
                     apellidoPaterno : this.apellidoPaterno,

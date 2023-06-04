@@ -52,6 +52,46 @@ public class rpt_persona implements itf_rct_persona {
     }
 
     @Override
+    public boolean confirmarCorreo(String correo){
+        String query = "SELECT id, id_perfil, nombres, apellido_paterno, apellido_materno FROM " + table + " WHERE correo = '" + correo +"' AND estado = 1";
+        List<mdl_persona> datosPersona = null;
+        datosPersona = JdbcTemplate.query(query,
+            (rs, rowNum) -> new mdl_persona(
+                rs.getInt("ID"),
+                rs.getString("ID_PERFIL"),
+                rs.getString("NOMBRES"),
+                rs.getString("APELLIDO_PATERNO"),
+                rs.getString("APELLIDO_MATERNO")
+            )
+        );
+
+        if(datosPersona.isEmpty()){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean confirmarNroDocumento(String dni){
+        String query = "SELECT id, id_perfil, nombres, apellido_paterno, apellido_materno FROM " + table + " WHERE nro_documento = '" + dni +"' AND estado = 1";
+        List<mdl_persona> datosPersona = null;
+        datosPersona = JdbcTemplate.query(query,
+            (rs, rowNum) -> new mdl_persona(
+                rs.getInt("ID"),
+                rs.getString("ID_PERFIL"),
+                rs.getString("NOMBRES"),
+                rs.getString("APELLIDO_PATERNO"),
+                rs.getString("APELLIDO_MATERNO")
+            )
+        );
+
+        if(datosPersona.isEmpty()){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
     public List<mdl_persona> singIn(String correo, String password) {
         String query = "SELECT id, id_perfil, nombres, apellido_paterno, apellido_materno FROM " + table + " WHERE correo='" + correo +"' AND password='" + password + "' AND estado = 1";
         List<mdl_persona> datosPersona = null;
@@ -65,5 +105,43 @@ public class rpt_persona implements itf_rct_persona {
             )
         );
         return datosPersona;
+    }
+
+    @Override
+    public boolean suspenderPersona(String id) {
+        try {
+            String query = "UPDATE " + table + " SET estado = 0  WHERE id = ?";
+
+            int registros = JdbcTemplate.update(query, id);
+                
+            if (registros != 0) {
+                return true;
+            }
+
+        } catch (
+
+        Exception e) {
+            return false;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean habilitarPersona(String id) {
+        try {
+            String query = "UPDATE " + table + " SET estado = 1  WHERE id = ?";
+
+            int registros = JdbcTemplate.update(query, id);
+                
+            if (registros != 0) {
+                return true;
+            }
+
+        } catch (
+
+        Exception e) {
+            return false;
+        }
+        return false;
     }
 }

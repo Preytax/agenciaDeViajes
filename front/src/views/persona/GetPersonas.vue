@@ -1,4 +1,5 @@
 <template>
+    <div class="mp_row_Alert" v-if="showAlert">{{valorAlerta}}<i @click="hideAlert"></i></div>
     <inc_head/>
     <div class="body-wrapper">
       <div class="container-fluid">
@@ -58,8 +59,14 @@
               <Column field="usuarioRegistra" header="Usuario Registra" style="min-width: 12rem"></Column>
               <Column field="fechaRegistro" header="Fecha Registro" style="min-width: 12rem"></Column>
               <Column field="ipRegistra" header="ip" style="min-width: 12rem"></Column>
-              
-              <Column :rowEditor="true" style="width: 10%; min-width: 8rem" bodyStyle="text-align:center"></Column>
+
+              <Column field="id" header="Acciones" style="min-width: 12rem">
+                  <template #body="datosId">
+                    <button v-if="datosId.data.estado == 1" type="button" @click="suspender(datosId,datosId.data.id, datosId.data.estado)" class="btn btn-warning">Suspender</button>
+                    <button v-if="datosId.data.estado == 0" type="button" @click="suspender(datosId,datosId.data.id, datosId.data.estado)" class="btn btn-success">Habilitar</button>
+                </template>
+              </Column>
+              <!--<Column :rowEditor="true" style="width: 10%; min-width: 8rem" bodyStyle="text-align:center"></Column>-->
             </DataTable>
           </div>
         </div>
@@ -68,8 +75,7 @@
 </template>
   <script>
   import inc_head from "../Inc/inc_head";
-  import DataTable from 'primevue/datatable';
-  import Column from 'primevue/column';
+  import { DataTable, Column } from 'primevue/datatable';
   import InputText from 'primevue/inputtext';
   import axios from 'axios';
   import { FilterMatchMode, FilterOperator } from 'primevue/api';
@@ -80,7 +86,7 @@
         if (!localStorage.getItem('id')) {
             // Redirigir a la página de inicio de sesión
             next('/login');
-        } else if(localStorage.getItem('id_perfil') != 1){
+        } else if(localStorage.getItem('id_perfil') != 1  && localStorage.getItem('id_perfil') != 4){
             next('/home');
         } else {
             next();
@@ -100,6 +106,7 @@
         statuses : {0: 'Deshabilitado', 1:'Habilitado', 2:'Eliminado'},
         loading: true,
         operadores: null,
+        showAlert: false,
         title: 'Operadores',
         filters: {
             global: { 
@@ -149,6 +156,39 @@
 
     },
     methods: {
+      async suspender(dataP, id, estado) {
+        const request = await axios({
+            method: "PUT",
+            url: this.BASE_URL_AXIOS + "actualizarEstadoPersona",
+            data: {
+                "id"                : id,
+                "estado"            : estado,
+            },
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+
+        var respuesta =  request.data.split("|");
+        if(respuesta[0] == "OK")
+        {
+            this.valorAlerta = respuesta[1];
+            this.showAlert = true;
+            if(estado == 0){
+              dataP.data.estado = 1;
+            }
+            else if(estado == 1){
+              dataP.data.estado = 0;
+            }
+
+        }else{
+            this.valorAlerta = respuesta[1];
+            this.showAlert = true;
+        }
+      },
+      hideAlert() {
+        this.showAlert = false;
+      },
       clearFilter() {
         this.$refs.search.$el.value = ''; //Limpiar el inputText
         this.filters.global.value = null; // Restablecer el valor del filtro global // Restablecer el valor del filtro nroDocumento

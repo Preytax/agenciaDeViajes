@@ -27,27 +27,31 @@
                 <span class="hide-menu">Home</span>
               </a>
             </li>
-            <template v-if="id_perfil == 1">
+            <template v-if="id_perfil == 1 || id_perfil == 2 || id_perfil == 4">
               <li class="nav-small-cap">
                 <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
                 <span class="hide-menu">Configuracion</span>
               </li>
-              <li class="sidebar-item">
-                <a class="sidebar-link" :href="`${BASE_URL}operador/add`" aria-expanded="false">
-                  <span>
-                    <i class="ti ti-layout-dashboard"></i>
-                  </span>
-                  <span class="hide-menu">Operadores</span>
-                </a>
-              </li>
-              <li class="sidebar-item">
-                <a class="sidebar-link" :href="`${BASE_URL}paquete/addEstandar`" aria-expanded="false">
-                  <span>
-                    <i class="ti ti-layout-dashboard"></i>
-                  </span>
-                  <span class="hide-menu">Paquetes</span>
-                </a>
-              </li>
+              <template v-if="id_perfil == 1 || id_perfil == 4">
+                <li class="sidebar-item">
+                  <a class="sidebar-link" :href="`${BASE_URL}operador/add`" aria-expanded="false">
+                    <span>
+                      <i class="ti ti-layout-dashboard"></i>
+                    </span>
+                    <span class="hide-menu">Operadores</span>
+                  </a>
+                </li>
+              </template>
+              <template v-if="id_perfil == 2  || id_perfil == 4">
+                <li class="sidebar-item">
+                  <a class="sidebar-link" :href="`${BASE_URL}paquete/addEstandar`" aria-expanded="false">
+                    <span>
+                      <i class="ti ti-layout-dashboard"></i>
+                    </span>
+                    <span class="hide-menu">Paquetes</span>
+                  </a>
+                </li>
+              </template>
             </template>
             
             <!--<li class="nav-small-cap">
@@ -218,7 +222,7 @@
               </router-link>
             </li>
             -->
-            <template v-if="id_perfil == 1">
+            <template v-if="id_perfil == 1 || id_perfil == 4">
               <template v-if="urlRouter == 'operador'">
                 <li class="nav-item" role="presentation">
                   <router-link to="/operador/add">
@@ -235,6 +239,8 @@
                   </router-link>
                 </li>
               </template>
+            </template>
+            <template v-if="id_perfil == 2 || id_perfil == 4">
               <template v-if="urlRouter == 'paquete'">
                 <li class="nav-item" role="presentation">
                   <router-link to="/paquete/addEstandar">
@@ -248,7 +254,7 @@
             <template v-else-if="id_perfil == 3">
               <li class="nav-item" role="presentation">
                 <router-link to="/home">
-                  <button :class="{ 'active': urlEvento === 'home'}" class="nav-link rounded-5" id="home-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="true">
+                  <button :class="{ 'active': urlEvento === 'Home'}" class="nav-link rounded-5" id="home-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="true">
                     Home
                   </button>
                 </router-link>
@@ -261,7 +267,6 @@
                 </router-link>
               </li>
             </template>
-            
           </ul>
         </div>
       </div>
@@ -311,7 +316,6 @@ export default {
     this.urlRouter = this.$route.path.split("/")[1];
     this.urlEvento = this.url.slice(this.url.lastIndexOf('/') + 1);
     // Admin Panel settings
-    console.log(this.urlRouter);
 
     //****************************
     /* This is for the mini-sidebar if width is less than 1170*/

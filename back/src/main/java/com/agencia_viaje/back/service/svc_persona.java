@@ -16,6 +16,16 @@ public class svc_persona implements itf_persona {
     itf_rct_persona repocitory;
 
     @Override
+    public boolean confirmarNroDocumento(String correo) {
+        return repocitory.confirmarNroDocumento(correo);
+    }
+
+    @Override
+    public boolean confirmarCorreo(String  dni) {
+        return repocitory.confirmarCorreo(dni);
+    }
+
+    @Override
     public int updatePersonajdbc(mdl_persona request) {
         return repocitory.updatePersonajdbc(request);
     }
@@ -23,6 +33,16 @@ public class svc_persona implements itf_persona {
     @Override
     public List<mdl_persona> singIn(String correo, String password) {
         return repocitory.singIn(correo, password);
+    }
+
+    @Override
+    public boolean suspenderPersona(String id) {
+        return repocitory.suspenderPersona(id);
+    }
+
+    @Override
+    public boolean habilitarPersona(String id) {
+        return repocitory.habilitarPersona(id);
     }
     /* END QUERY CON JDBC */
 
