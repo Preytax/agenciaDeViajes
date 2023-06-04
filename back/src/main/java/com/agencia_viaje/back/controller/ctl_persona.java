@@ -31,10 +31,15 @@ public class ctl_persona {
         return listOpe;
     }
 
+    @GetMapping("/singIn/{correo}/{password}")
+    @ResponseStatus(HttpStatus.OK)
+    List<mdl_persona>  singIn(@PathVariable String correo, @PathVariable String password) {
+        return servicio.singIn(correo, password);
+    }
+
     @GetMapping("/getOperador/{id}")
     @ResponseStatus(HttpStatus.OK)
     mdl_persona getOperador(@PathVariable Long id) {
-        System.out.println(id);
         return servicio.getPersonaJPA(1);
     }
 

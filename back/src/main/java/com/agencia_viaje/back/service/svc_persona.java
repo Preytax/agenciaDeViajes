@@ -19,6 +19,11 @@ public class svc_persona implements itf_persona {
     public int updatePersonajdbc(mdl_persona request) {
         return repocitory.updatePersonajdbc(request);
     }
+
+    @Override
+    public List<mdl_persona> singIn(String correo, String password) {
+        return repocitory.singIn(correo, password);
+    }
     /* END QUERY CON JDBC */
 
     /*
@@ -68,4 +73,5 @@ public class svc_persona implements itf_persona {
         }
     }
     /* END QUERY CON JPA */
+
 }

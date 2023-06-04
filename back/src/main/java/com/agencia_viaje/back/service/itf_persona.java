@@ -9,6 +9,7 @@ public interface itf_persona {
 
     /* QUERY CON JDBC */
     public int updatePersonajdbc(mdl_persona request);
+    public List<mdl_persona> singIn(String correo, String password);
     /* END QUERY CON JDBC */
 
     /* --------------------------------------------------------------------------------------------- */

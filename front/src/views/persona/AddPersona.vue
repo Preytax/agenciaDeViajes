@@ -115,6 +115,15 @@ var error = 0;
 
 
 export default{
+    beforeRouteEnter(to, from, next) {
+        // Verificar si la variable de sesión existe
+        if (!localStorage.getItem('id')) {
+        // Redirigir a la página de inicio de sesión
+        next('/login');
+        } else {
+        next();
+        }
+    },
     inject: ['BASE_URL_AXIOS','BASE_URL'],
     components: {
         inc_head,

@@ -107,6 +107,15 @@ var axios = require("axios");
 var error = 0;
 
 export default {
+    beforeRouteEnter(to, from, next) {
+        // Verificar si la variable de sesión existe
+        if (!localStorage.getItem('id')) {
+        // Redirigir a la página de inicio de sesión
+        next('/login');
+        } else {
+        next();
+        }
+    },
     components: {
         inc_head
     },

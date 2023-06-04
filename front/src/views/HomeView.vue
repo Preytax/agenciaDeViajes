@@ -12,6 +12,15 @@ import inc_head from "../Inc/inc_head";
 import HelloWorld from '@/components/HelloWorld.vue'
 
 export default {
+  beforeRouteEnter(to, from, next) {
+      // Verificar si la variable de sesión existe
+      if (!localStorage.getItem('id')) {
+      // Redirigir a la página de inicio de sesión
+      next('/login');
+      } else {
+      next();
+      }
+  },
   name: 'HomeView',
   components: {
     HelloWorld,

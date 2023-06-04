@@ -27,22 +27,6 @@
                 <span class="hide-menu">Dashboard</span>
               </a>
             </li>
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="./index.html" aria-expanded="false">
-                <span>
-                  <i class="ti ti-layout-dashboard"></i>
-                </span>
-                <span class="hide-menu">Dashboard</span>
-              </a>
-            </li>
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="./index.html" aria-expanded="false">
-                <span>
-                  <i class="ti ti-layout-dashboard"></i>
-                </span>
-                <span class="hide-menu">Dashboard</span>
-              </a>
-            </li>
             <!--<li class="nav-small-cap">
               <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
               <span class="hide-menu">UI COMPONENTS</span>
@@ -189,7 +173,7 @@
                       <i class="ti ti-list-check fs-6"></i>
                       <p class="mb-0 fs-3">My Task</p>
                     </a>
-                    <a :href="`${BASE_URL}login`" class="btn btn-outline-primary mx-3 mt-2 d-block">Logout</a>
+                    <a @click="singOut()" class="btn btn-outline-primary mx-3 mt-2 d-block">Logout</a>
                   </div>
                 </div>
               </li>
@@ -276,7 +260,14 @@ export default {
     };
   },
   methods: {
-    
+    async singOut(){
+      localStorage.removeItem('id');
+      localStorage.removeItem('id_perfil');
+      localStorage.removeItem('nombres');
+      localStorage.removeItem('apellido_paterno');
+      localStorage.removeItem('apellido_materno');
+      window.location.href = this.BASE_URL;
+    },
     mostrarEdit(){
       this.$refs.ref_incEditarInfo.mostrarEdit();
       this.$refs.ref_incEditarInfo.getPersona();

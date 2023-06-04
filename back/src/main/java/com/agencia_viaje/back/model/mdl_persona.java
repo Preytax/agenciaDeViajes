@@ -101,6 +101,14 @@ public class mdl_persona {
     @Column(name = "IP_ELIMINA")
     private String ipElimina;
 
+    public mdl_persona(int id, String idPerfil, String nombres, String apellidoPaterno, String apellidoMaterno) {
+        this.id = id;
+        this.idPerfil = idPerfil;
+        this.nombres = nombres;
+        this.apellidoPaterno = apellidoPaterno;
+        this.apellidoMaterno = apellidoMaterno;
+    }
+
     public String capturarIp() {
         String miVariable = "";
         try {

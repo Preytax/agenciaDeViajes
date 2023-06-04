@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import com.agencia_viaje.back.model.mdl_persona;
+import java.util.List;
 
 @Repository
 public class rpt_persona implements itf_rct_persona {
@@ -48,5 +49,21 @@ public class rpt_persona implements itf_rct_persona {
             return 0;
         }
         return 0;
+    }
+
+    @Override
+    public List<mdl_persona> singIn(String correo, String password) {
+        String query = "SELECT id, id_perfil, nombres, apellido_paterno, apellido_materno FROM " + table + " WHERE correo='" + correo +"' AND password='" + password + "' AND estado = 1";
+        List<mdl_persona> datosPersona = null;
+        datosPersona =JdbcTemplate.query(query,
+            (rs, rowNum) -> new mdl_persona(
+                rs.getInt("ID"),
+                rs.getString("ID_PERFIL"),
+                rs.getString("NOMBRES"),
+                rs.getString("APELLIDO_PATERNO"),
+                rs.getString("APELLIDO_MATERNO")
+            )
+        );
+        return datosPersona;
     }
 }
