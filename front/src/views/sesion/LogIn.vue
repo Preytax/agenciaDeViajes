@@ -19,11 +19,11 @@
                   </div>
                   <div class="mb-4">
                     <label for="exampleInputPassword1" class="form-label">Constraseña</label>
-                    <input v-model="password" type="password" class="form-control" id="exampleInputPassword1">
+                    <input v-model="password" type="password" class="form-control" :maxlength="10" id="exampleInputPassword1">
                   </div>
                   <div class="d-flex align-items-center justify-content-between mb-4">
                     <div class="form-check">
-                      <input class="form-check-input primary" type="checkbox" value="" id="flexCheckChecked" checked>
+                      <input class="form-check-input primary" type="checkbox" value="" id="flexCheckChecked" v-model="recordarCuenta" checked>
                       <label class="form-check-label text-dark" for="flexCheckChecked">
                         Recordar cuenta
                       </label>
@@ -62,20 +62,47 @@ export default {
       correo: "",
       password: "",
       alerta_credenciales: false,
-      alerta_campos: false
+      alerta_campos: false,
+      recordarCuenta: false
     }
   },
   mounted() {
-
+    if(localStorage.getItem('hash') && localStorage.getItem('besh') ){
+      this.recordarCuenta = true
+      this.correo = localStorage.getItem('hash');
+      this.password = "**-*-*-*-*";
+    }
   },
   methods: {
     async singIn(){
+      var passwordMD5 = CryptoJS.MD5(this.password).toString()
+
       if(this.correo == "" || this.password == ""){
         this.alerta_credenciales = false;
         this.alerta_campos = true;
 
       }else{
-        const responseTipoDocumento = await axios.get( this.BASE_URL_AXIOS +'singIn/'+this.correo+'/'+CryptoJS.MD5(this.password).toString());
+        if(this.recordarCuenta){
+          if(!localStorage.getItem('hash') && !localStorage.getItem('besh')){
+            localStorage.setItem('hash', this.correo);
+            localStorage.setItem('besh', CryptoJS.MD5(this.password).toString());
+          }else{
+            if(this.password != "**-*-*-*-*"){
+              this.alerta_credenciales = true;
+              localStorage.removeItem('hash');
+              localStorage.removeItem('besh');
+              return
+            }
+            passwordMD5 = localStorage.getItem('besh');
+          }
+          
+
+        }else{
+          localStorage.removeItem('hash');
+          localStorage.removeItem('besh');
+        }
+
+        const responseTipoDocumento = await axios.get( this.BASE_URL_AXIOS +'singIn/'+this.correo+'/'+passwordMD5);
         this.datosPersona = responseTipoDocumento.data;
 
         if(this.datosPersona != ""){
@@ -91,7 +118,6 @@ export default {
         } else {
           this.alerta_campos = false;
           this.alerta_credenciales = true;
-
         }
       }
     }

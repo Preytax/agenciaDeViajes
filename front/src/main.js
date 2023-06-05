@@ -41,25 +41,20 @@ app.component('CryptoJS', CryptoJS);
 
 
 /* DATATABLES */
-import "primevue/resources/themes/lara-light-indigo/theme.css";
-import "primevue/resources/primevue.min.css";
-import 'primeicons/primeicons.css';
-import 'primevue/resources/themes/saga-blue/theme.css';
+import PrimeVue from 'primevue/config';
 import 'primevue/resources/primevue.min.css';
+import 'primevue/resources/themes/saga-blue/theme.css';
+import 'primeicons/primeicons.css';
+//import "primevue/resources/themes/lara-light-indigo/theme.css";
+//import 'primevue/resources/themes/saga-blue/theme.css';
+
 // eslint-disable-next-line vue/multi-word-component-names
 import Dropdown from 'primevue/dropdown';
-import Calendar from 'primevue/calendar';
-import { Button } from "primevue/button"
-import PrimeVue from 'primevue/config';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';  
 import InputText from 'primevue/inputtext';
 // eslint-disable-next-line vue/multi-word-component-names
 app.component('Dropdown', Dropdown);
-// eslint-disable-next-line vue/multi-word-component-names
-app.component('Calendar', Calendar);
-// eslint-disable-next-line vue/multi-word-component-names
-app.component('Button', Button);
 app.component('DataTable', DataTable);
 // eslint-disable-next-line vue/multi-word-component-names
 app.component('Column', Column);

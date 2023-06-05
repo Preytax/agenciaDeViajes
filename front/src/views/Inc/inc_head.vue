@@ -284,7 +284,7 @@ import $ from 'jquery';
 
 
 export default {
-  inject: ['BASE_URL','PAGE_URL'],
+  inject: ['BASE_URL'],
   name: "inc_head",
   components:{
     inc_editarInfo

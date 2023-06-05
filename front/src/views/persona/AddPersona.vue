@@ -30,7 +30,7 @@
                         </div>
                         <div class="col-sm-6">
                             <label for="firstName" class="form-label" _msttexthash="76193" _msthash="27">Fecha de Nacimiento</label>
-                            <input type="date" class="form-control" id="fechaNacimiento" placeholder="" v-model="fechaNacimiento" required/>
+                            <input type="date" class="form-control" id="fechaNacimiento" placeholder="" v-model="fechaNacimiento" :max="maxDate" required/>
                             <div ref="fechaNacimiento" class="invalid-feedback" _msttexthash="637039" _msthidden="1" _msthash="28">
                                 La fecha de nacimiento es obligataoria.
                             </div>
@@ -72,6 +72,9 @@
                                 <input v-model="correo" type="email" class="form-control" id="correo" placeholder="Correo" maxlength="150" required="">
                                 <div ref="correo" class="invalid-feedback">
                                     El correo electronico es obligatorio.
+                                </div>
+                                <div ref="correoValido" class="invalid-feedback">
+                                    Ingrese un correo electronico valido.
                                 </div>
                             </div>
                         </div>
@@ -129,6 +132,24 @@ export default{
     inject: ['BASE_URL_AXIOS','BASE_URL'],
     components: {
         inc_head,
+    },
+    computed: {
+        maxDate() {
+            const now = new Date();
+            const year = now.getFullYear();
+            let month = now.getMonth() + 1;
+            let day = now.getDate();
+
+            if (month < 10) {
+                month = '0' + month;
+            }
+
+            if (day < 10) {
+                day = '0' + day;
+            }
+
+            return `${year}-${month}-${day}`;
+        },
     },
     data(){
         return {
@@ -199,6 +220,10 @@ export default{
                 this.$refs.correo.classList.add("mostrarObligatorio");
                 error = 1;
             }
+            else if(this.validateEmail(this.correo)){
+                this.$refs.correoValido.classList.add("mostrarObligatorio");
+                error = 1;
+            }
             if (this.password == null || this.password == "") {
                 this.$refs.password.classList.add("mostrarObligatorio");
                 error = 1;
@@ -240,6 +265,14 @@ export default{
                     this.valorAlerta = arreglo[1];
                     this.showAlert = true;
                 }
+            }
+        },
+        validateEmail(email) {
+            const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!regex.test(email)) {
+                return true;
+            } else {
+                return false;
             }
         },
         hideAlert() {
