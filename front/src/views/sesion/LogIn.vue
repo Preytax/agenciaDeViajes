@@ -55,6 +55,15 @@ import CryptoJS from 'crypto-js';
 var axios = require('axios');
 
 export default {
+  beforeRouteEnter(to, from, next) {
+    // Verificar si la variable de sesión existe
+    if (localStorage.getItem('id')) {
+    // Redirigir a la página de inicio de sesión
+    next('/home');
+    } else {
+    next();
+    }
+  },
   inject: ['BASE_URL_AXIOS','BASE_URL'],
   data() {
     return {
