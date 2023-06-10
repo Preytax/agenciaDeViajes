@@ -53,10 +53,12 @@
                         </div>
                         <div class="col-md-12">
                             <label for="inputEmail4" class="form-label">Elegir Activades</label>
-                            <input class="form-check-input" type="checkbox" value="" id="Actividades">
-                            <label class="form-check-label" for="Actividades">
-                                
-                            </label>
+                            <input class="form-check-input" type="checkbox" value="" id="Actividades" v-model="showData" />
+                            <div v-if="showData">
+                                <ul>
+                                    <li v-for="actividad in actividades" :key="actividad.id">{{ actividad.nombre }}</li>
+                                </ul>
+                            </div>
                         </div>
                         <div class="col-md-6"> <!--Tipo-Transporte-->
                             <label for="inputEmail4" class="form-label">Elegir el tipo Transporte</label>
@@ -153,11 +155,27 @@ export default{
             modoTransportes: null,
             transportes1: null,
             transportes: null,
+            cantidadPersonas: null,
             fechaInicio: null,
             fechaFinal: null,
             monto: null,
             showAlert: null,
         };
+    },
+    watch: {
+        showData(newValue) {
+            if(newValue) {
+                axios.get('BASE_URL_AXIOS +' /getActividades)
+                .then(response => {
+                    this.actividades =response.data;
+                })
+                .catch (error => {
+                    console.error(error);
+                });
+            } else {
+                this.actividades = [];
+            }
+        }
     },
     mounted: async function () {
         const responsePais = await axios.get("http://localhost:8080/getPaises");
