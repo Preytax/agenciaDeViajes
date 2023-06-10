@@ -1,72 +1,128 @@
 <template>
-    <div class="mp_row_Alert" v-if="showAlert">Falta completar datos obligatorios.<i @click="hideAlert"></i></div>
-    <h1 class="titulo">Creación del Paquete</h1>
-    <div class="CracionPaquetes">
-        <div>
-            <ul>
-                <li ref="Pais">
-                    <label>Elegir país: </label>
-                    <select v-model="pais">
-                        <option v-for="pais in paises" :key="pais.id" :value="pais.id">{{pais.nombre}}</option>
-                    </select>
-                </li>
-                <li ref="Ciudad">
-                    <label>Elegir ciudad: </label>
-                    <select v-model="ciudad">
-                        <option v-for="ciudad in ciudades" :key="ciudad.id" :value="ciudad.id">{{ciudad.nombre}}</option>
-                    </select>
-                </li>
-                <li ref="Destino">
-                    <label>Elegir destino: </label>
-                    <select v-model="destino">
-                        <option v-for="destino in destinos" :key="destino.id" :value="destino.id">{{destino.nombre}}</option>
-                    </select>
-                </li>
-                <li ref="Actividades">
-                    <label>Eligir actividades: </label>
-                    <select v-model="actividad">
-                        <option v-for="actividad in actividades" :key="actividad.id" :value="actividad.id">{{actividad.nombre}}</option>
-                    </select>
-                </li>
-                <li ref="Hotel">
-                    <label>Elegir hotel: </label>
-                    <select v-model="hotel">
-                        <option v-for="hotel in hoteles" :key="hotel.id" :value="hotel.id">{{hotel.nombre}}</option>
-                    </select>
-                </li>
-                <li ref="MedioTransporte">
-                    <label>Elegir medio de transporte: </label>
-                    <select v-model="transporte">
-                        <option v-for="transporte in transportes" :key="transporte.id" :value="transporte.id">{{transporte.nombre}}</option>
-                    </select>
-                </li>
-                <li ref="fechaInicio">
-                    <label>Fecha de inicio: </label>
-                    <input type="date">
-                </li>
-                <li ref="fechaCierre">
-                    <label>Fecha de cierre: </label>
-                    <input type="date">
-                </li>
-                <li ref="montoTotal">
-                    <label>Monto total: </label>
-                    <input type="textarea">
-                </li>
-            </ul>
-        </div>
+    <inc_head />
+    <div class="mp_row_Alert" v-if="showAlert">
+        {{ valorAlerta }}<i @click="hideAlert"></i>
     </div>
-    <div class="divOpciones">
-        <ul>
-            <li><a class="addAGVOperador" @click="addOperador" href="#">Guardar Paquete</a></li>
-            <li><a href="/vista">Cancelar</a></li>
-        </ul>
+    <div class="body-wrapper">
+        <div class="container-fluid" data-bd-theme="dark">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="mb-4" _msttexthash="318188" _msthash="6">
+                        Creación de Paquetes Personalizados
+                    </h2>
+                    <form class="row g-3">
+                        <div class="col-md-6">
+                            <label for="inputEmail4" class="form-label">Elegir País</label>
+                            <select v-model="paises1" @change="paisesr" class="form-select"
+                                aria-label="Default select example">
+                                <option value="0" selected>Seleccionar</option>
+                                <option v-for="pais in paises" :key="pais.id" :value="pais.id">
+                                    {{ pais.nombre }}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="inputEmail4" class="form-label">Elegir Departamento</label>
+                            <select v-model="departamento2" @change="ciudad5" class="form-select"
+                                aria-label="Default select example">
+                                <option value="0" selected>Seleccionar</option>
+                                <option v-for="departamento in departamentos" :key="departamento.id"
+                                    :value="departamento.id">
+                                    {{ departamento.nombre }}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="inputEmail4" class="form-label">Elegir Ciudad</label>
+                            <select v-model="cuidades2" @change="hotelactividades" class="form-select"
+                                aria-label="Default select example">
+                                <option value="0" selected>Seleccionar</option>
+                                <option v-for="ciudad in cuidades" :key="ciudad.id" :value="ciudad.id">
+                                    {{ ciudad.nombre }}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="inputEmail4" class="form-label">Elegir Hotel</label>
+                            <select v-model="hoteles2" class="form-select" aria-label="Default select example">
+                                <option value="0" selected>Seleccionar</option>
+                                <option v-for="hotel in hoteles" :key="hotel.id" :value="hotel.id">
+                                    {{ hotel.nombre }}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="inputEmail4" class="form-label">Elegir Activades</label>
+                            <input class="form-check-input" type="checkbox" value="" id="Actividades">
+                            <label class="form-check-label" for="Actividades">
+                                
+                            </label>
+                        </div>
+                        <div class="col-md-6"> <!--Tipo-Transporte-->
+                            <label for="inputEmail4" class="form-label">Elegir el tipo Transporte</label>
+                            <select v-model="modoDeTransporte" @change="tansporte" class="form-select"
+                                aria-label="Default select example">
+                                <option value="0" selected>Seleccionar</option>
+                                <option v-for="modoTransporte in modoTransportes" :key="modoTransporte.id"
+                                    :value="modoTransporte.id">
+                                    {{ modoTransporte.nombre }}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col-md-6"> <!--Agencia-Transporte-->
+                            <label for="inputEmail4" class="form-label">Agencia de Transporte</label>
+                            <select v-model="transportes1" class="form-select" aria-label="Default select example">
+                                <option value="0" selected>Seleccionar</option>
+                                <option v-for="transporte in transportes" :key="transporte.id" :value="transporte.id">
+                                    {{ transporte.nombre }}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="inputEmail4" class="form-label">Cantidad de Personas</label>
+                            <input v-model="cantidadPersonas" type="number" class="form-control">
+                        </div>
+                        <br>
+                        <br>
+                        <!--<div class="col-md-6">
+                            <label for="inputEmail4" class="form-label">Tipo de Habitación</label>
+                            <option value="0" selected>Seleccionar</option>
+                            <option value="1">Personal</option>
+                            <option value="2">Familiar</option>
+                        </div>-->
+                        <br>
+                        <br>
+                        <div class="col-md-6"> <!--Fecha Final-->
+                            <label for="inputEmail4" class="form-label">Elegir Fecha de Inicio</label>
+                            <input v-model="fechaInicio" type="date" class="form-control" id="" placeholder="">
+                        </div>
+                        <div class="col-md-6"> <!--Fecha Final-->
+                            <label for="inputEmail4" class="form-label">Elegir Fecha Final</label>
+                            <input v-model="fechaFinal" type="date" class="form-control" id="" placeholder="">
+                        </div>
+                        <div class="col-md-12"> <!--Monto-->
+                            <label for="inputEmail4" class="form-label">Monto Total</label>
+                            <textarea class="form-control" id="montoFinal" placeholder="Monto Final"></textarea>
+                        </div>
+                    </form>
+                    <hr class="my-4" />
+                    <a class="w-100 btn btn-primary btn-lg" @click="addPaquetePersonalizado" href="#">Guardar Paquete</a>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
+import inc_head from "../Inc/inc_head";
+import { createApp, reactive } from 'vue';
 var axios = require('axios');
 var error = 0;
 
+const appData = reactive({
+    checkboxValue: false,
+    checkbox: null,
+})
 export default{
     beforeRouteEnter(to, from, next) {
         // Verificar si la variable de sesión existe
@@ -74,286 +130,153 @@ export default{
             // Redirigir a la página de inicio de sesión
             next('/login');
         } else if(localStorage.getItem('id_perfil') != 3){
-            next('/HomeOperador');
+            next('/home');
         } else {
             next();
         }
     },
+    components: {
+        inc_head
+    },
     data(){
         return {
+            modoDeTranposte: null,
             paises: null,
-            Destino: null,
-            Actividades: null,
-            Hotel: null,
-            MedioTransporte: null,
-            montoTotal: null,
+            departamentos: null,
+            departamento2: null,
+            cuidades: null,
+            cuidades2: null,
+            actividades: null,
+            actividades2: null,
+            hoteles: null,
+            hoteles2: null,
+            modoTransportes: null,
+            transportes1: null,
+            transportes: null,
             fechaInicio: null,
-            fechaCierre: null,
-            showAlert: false,
-            destinos: null
-        }
+            fechaFinal: null,
+            monto: null,
+            showAlert: null,
+        };
+    },
+    mounted: async function () {
+        const responsePais = await axios.get("http://localhost:8080/getPaises");
+        this.paises = responsePais.data;
+        const responseTipoTransporte = await axios.get("http://localhost:8080/getTipoTransporte");
+        this.modoTransportes = responseTipoTransporte.data;
     },
     props: [],
     methods: {
-        async getDestinos(){
-            const response = await axios.get('http://localhost:8080/getDestinos');
-            this.destino = response.data;
+        async paisesr() {
+            const responseDepartamento = await axios.get("http://localhost:8080/getDepartamento/" + this.paises1);
+            this.departamentos = responseDepartamento.data;
         },
-        async getPaises(){
-            const response = await axios.get('http://localhost:8080/getPaises');
-            this.paises = response.data;
+
+        async tansporte() {
+            const responseTransporte = await axios.get("http://localhost:8080/getTransportes/" + this.modoDeTransporte);
+            this.transportes = responseTransporte.data;
         },
-        async getCiudad(){
-            const response = await axios.get('http://localhost:8080/getCiudades');
-            this.ciudad = response.data;
+
+        async ciudad5() {
+            const responseCuidad = await axios.get("http://localhost:8080/getCiudades/" + this.departamento2);
+            this.cuidades = responseCuidad.data;
         },
-        async getHoteles(){
-            const response = await axios.get('http://localhost:8080/getHoteles');
-            this.hotel = response.data;
+
+        async hotelactividades() {
+            const responseHotel = await axios.get("http://localhost:8080/getHoteles/" + this.cuidades2);
+            this.hoteles = responseHotel.data;
+            const responseActividad = await axios.get("http://localhost:8080/getActividades/" + this.cuidades2);
+            this.actividades = responseActividad.data;
         },
-        async getActividades(){
-            const response = await axios.get('http://localhost:8080/getActividades');
-            this.destinos = response.data;
-        },
-        async getTransporte(){
-            const response = await axios.get('http://localhost:8080/getTransportes');
-            this.transporte = response.data;
-        },
-        async CreatePaquetes(){
+        
+        async addPaquetePersonalizado() {
             Object.keys(this.$refs).forEach((refKey) => {
                 const elements = this.$refs[refKey];
                 if (!Array.isArray(elements)) {
-                elements.classList.remove("notValid-Requerid");
+                    //elements.classList.remove("mostrarObligatorio");
                 }
             });
-           
             if (this.paises == null) {
                 this.showAlert = true;
-                this.$refs.pais.classList.add("notValid-Requerid");
+                //this.$refs.pais.classList.add("mostrarObligatorio");
                 error = 1;
             }
-            if (this.ciudad == null) {
+            if (this.departamentos == null) {
                 this.showAlert = true;
-                this.$refs.ciudad.classList.add("notValid-Requerid");
+                //this.$refs.departamentos.classList.add("mostrarObligatorio");
                 error = 1;
             }
-            if (this.destino == null) {
+            if (this.cuidades == null) {
                 this.showAlert = true;
-                this.$refs.destino.classList.add("notValid-Requerid");
+                //this.$refs.cuidades.classList.add("mostrarObligatorio");
                 error = 1;
             }
-            if (this.Actividades == null) {
+            if (this.actividades == null) {
                 this.showAlert = true;
-                this.$refs.Actividades.classList.add("notValid-Requerid");
+                //this.$refs.actividades.classList.add("mostrarObligatorio");
                 error = 1;
             }
-            if (this.MedioTransporte == null) {
+            if (this.hoteles == null) {
                 this.showAlert = true;
-                this.$refs.MedioTransporte.classList.add("notValid-Requerid");
+                //this.$refs.hoteles.classList.add("mostrarObligatorio");
                 error = 1;
             }
-            if (this.ho == null) {
+            if (this.modoTransportes == null) {
                 this.showAlert = true;
-                this.$refs.hotel.classList.add("notValid-Requerid");
+                //this.$refs.modoTransporte.classList.add("mostrarObligatorio");
                 error = 1;
             }
-            if (this.fechaInicio == null) {
+            if (this.transportes == null) {
                 this.showAlert = true;
-                this.$refs.fechaInicio.classList.add("notValid-Requerid");
+                //this.$refs.transportes.classList.add("mostrarObligatorio");
                 error = 1;
             }
-            if (this.fechaCierre == null) {
-                this.showAlert = true;
-                this.$refs.fechaCierre.classList.add("notValid-Requerid");
-                error = 1;
-            }
-            if(error != 0){
-               return;
-            }
-            const newPaquete = {
-                id : this.id,
-                idDestino : this.idDestino,
-                idhotel : this.idhotel,
-                Actividades : this.Actividades,
-                MedioTransporte : this.MedioTransporte,
-                fechaInicio : this.fechaInicio,
-                fechaCierre : this.fechaCierre
-            };
+            if (error == 0) {
+                const newPaqueteEstandar = {
+                    idmodo: 1,
+                    idusuario: 213412,
+                    idpais: this.paises1,
+                    iddepartamento: this.departamento2,
+                    idciudad: this.cuidades2,
+                    idactividades: this.actividades2,
+                    idhotel: this.hoteles2,
+                    idmodotransporte: this.modoDeTransporte,
+                    idtransporte: this.transportes1,
+                    fechaInicio: this.fechaInicio,
+                    fechaFinal: this.fechaFinal,
+                    monto: this.monto,
+                    usuarioRegistra: 1,
+                };
 
-            const baseUrl = "http://localhost:8080/";
+                const baseUrl = "http://localhost:8080/";
 
-            await axios({
-                method: "POST",
-                url: baseUrl + "savePaquete",
-                data: newPaquete,
-                headers: {
-                    "Content-Type": "application/json"
+                const request = await axios({
+                    method: "POST",
+                    url: baseUrl + "savePaquete",
+                    data: newPaqueteEstandar,
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                })
+
+                var arreglo = request.data.split("|");
+
+                if (arreglo[0] == "OK") {
+                    this.valorAlerta = arreglo[1];
+                    this.showAlert = true;
+                    setTimeout(() => {
+                        location.reload();
+                    }, 1000);
+
+                } else {
+                    this.valorAlerta = arreglo[1];
+                    this.showAlert = true;
                 }
-            })
-            .then(()=>{
-                console.log("Paquete creado");
-                
-            })
-            .catch(err => console.log(err));
+            }
         },
         hideAlert() {
             this.showAlert = false;
-        }
-    }
-}
+        },
+    },
+};
 </script>
-
-<style>
-.mp_row_Alert
-{
-    font: 14px/14px HelveticaNeue_Light;
-    color: #fff;
-    background: #404040;
-    border-radius: 4px;
-    padding: 30px 28px;
-    position: fixed;
-    width: 35%;
-    z-index: 99999999;
-    bottom: 6%;
-    padding-right: 60px;
-	left:0;
-	right:0;
-	margin:0 auto;
-}
-
-.mp_row_Alert i
-{
-	background-image: url("https://dev2.manpower-powertrade.com/images/types-form/icon-close-alert.svg");
-    background-repeat: no-repeat;
-    background-position: 95%;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    cursor: pointer;
-}
-
-.notValid-Requerid input[type="text"],
-.notValid-Requerid input[type="number"],
-.notValid-Requerid input[type="date"],
-.notValid-Requerid select
-{
-	border: 1px solid #FC5352 !important;
-}
-
-.notValid-Requerid label
-{
-	color:#FC5352 !important;
-}
-
-.notValid-Requerid .check-view-password {
-    background: url("https://dev2.manpower-powertrade.com/images/login/view_iconError.svg") no-repeat;
-    background-size: contain;
-    background-position: center;
-}
-
-.titulo{
-    margin-left: 50px;
-}
-
-.divDatosRegistro{
-    width: 80%; 
-    position: relative;
-}
-
-.divDatosRegistro div{
-    width: 800px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin: 10px 0 0 -205px;   
-}
-
-.divDatosRegistro div ul{
-    list-style: none; 
-    display: flex;
-    flex-flow: row wrap;
-}
-
-.divDatosRegistro div ul li{
-    width: 30%;
-    margin-right: 20%;
-    margin-bottom: 35px;
-    position: relative;
-}
-
-.divDatosRegistro div ul li input{
-    width: 100%;
-    font: 14px/14px HelveticaNeue_Light;
-    color: #67686E;
-    height: 32px;
-    border: 1px solid #BBBBBD;
-    box-shadow: 0px 7px 64px rgba(0, 0, 0, 0.07);
-    padding: 0 16px;
-    border-radius: 3px;
-}
-
-.divDatosRegistro div ul li select{
-    width: 100%;
-    font: 14px/14px HelveticaNeue_Light;
-    color: #67686E;
-    height: 32px;
-    border: 1px solid #BBBBBD;
-    box-shadow: 0px 7px 64px rgba(0, 0, 0, 0.07);
-    padding: 0 16px;
-    border-radius: 3px;
-}
-
-.divOpciones{
-    margin: 0;
-    margin-top: 200px;
-    margin-left: 50px;
-    margin-bottom: 20px;
-    background-color: blue;
-    width: 400px;
-    height: 50px;
-    border-radius: 30px;
-    position: absolute;
-    bottom: 0px;
-}
-
-.divOpciones ul{
-    list-style: none;
-}
-
-.divOpciones ul li {
-    margin-top: -5px;
-    float: left;
-    width: 140px;
-    height: 30px;
-    background-color: white;
-    border-radius: 30px;
-    line-height: 30px;
-    text-align: center;
-}
-
-.divOpciones ul li:not(:first-of-type){
-    margin-left: 20px;
-}
-
-.divOpciones ul li a {
-    text-decoration: none;
-    color: black;
-}
-
-table {
-    width: 100%;
-    border: 1px solid #000;
- }
- 
- th, td {
-    width: 25%;
-    text-align: left;
-    vertical-align: top;
-    border: 1px solid #000;
-    border-collapse: collapse;
-    padding: 0.3em;
- }
-</style>
