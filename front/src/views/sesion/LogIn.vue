@@ -38,6 +38,10 @@
                     <p class="fs-4 mb-0 fw-bold">&#191;Aun no estas registrado&#63;</p>
                     <a class="text-primary fw-bold ms-2" :href="`${BASE_URL}registrarse`">Crear cuenta</a>
                   </div>
+                  <div class="d-flex align-items-center justify-content-center">
+                    <p class="fs-4 mb-0 fw-bold">&#191;Necesitas ayuda&#63;</p>
+                    <a class="text-primary fw-bold ms-2" href="https://wa.link/os65ht">Escribenos</a>
+                  </div>
               </div>
               <div v-show="alerta_recapchat" class="alert alert-warning" role="alert">
                 Complete el capchat

@@ -177,6 +177,7 @@
           <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
             <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
               <!--<a href="https://adminmart.com/product/modernize-free-bootstrap-admin-dashboard/" target="_blank" class="btn btn-primary">Download Free</a>-->
+              <span>{{ correo }}</span>
               <li class="nav-item dropdown">
                 <a class="nav-link nav-icon-hover" href="#" id="drop2" data-bs-toggle="dropdown"
                   aria-expanded="false">
@@ -292,6 +293,7 @@ export default {
   data() {
     return {
       id_perfil: localStorage.getItem('id_perfil'),
+      correo: localStorage.getItem('correo'),
       title: 'Operadores',
       url: window.location.href,
       urlRouter: "",
