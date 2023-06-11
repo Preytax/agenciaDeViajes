@@ -26,11 +26,11 @@
               </template>
       
               <template #empty>
-                Sin datos de usuarios.
+                Sin datos de clientes.
               </template>
       
               <template #loading>
-                Cargando datos de usuarios. Por favor espere.
+                Cargando datos de clientes. Por favor espere.
               </template>
       
               <Column field="id" header="Id" style="min-width: 2rem"></Column>
@@ -83,30 +83,12 @@
 
               <Column field="id" header="Acciones" style="min-width: 12rem">
                   <template #body="datosId">
-                    <button v-show="datosId.data.estado == 1" type="button" @click="suspender(datosId.data.id, datosId.data.estado)" class="btn btn-warning">Deshabilitar</button>
-                    <button v-show="datosId.data.estado == 0" type="button" @click="suspender(datosId.data.id, datosId.data.estado)" class="btn btn-success">Habilitar</button>
-                    <button type="button" @click="modalEliminar(datosId.data.id, datosId.data.correo)" class="btn btn-danger btn-eliminar">Eliminar</button>
+                    <button v-if="datosId.data.estado == 1" type="button" @click="suspender(datosId,datosId.data.id, datosId.data.estado)" class="btn btn-warning">Suspender</button>
+                    <button v-if="datosId.data.estado == 0" type="button" @click="suspender(datosId,datosId.data.id, datosId.data.estado)" class="btn btn-success">Habilitar</button>
                 </template>
               </Column>
               <!--<Column :rowEditor="true" style="width: 10%; min-width: 8rem" bodyStyle="text-align:center"></Column>-->
             </DataTable>
-          </div>
-        </div>
-      </div>
-      <div v-show="showModalEliminar" class="modal" tabindex="-1" style="display: block;">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Eliminaci&oacute;n de Usuario</h5>
-              <button type="button" @click="hideModalEliminar()" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              <p>&#191;Quiere eliminar al usuario {{ datosEliminar.correo }}&#63;</p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" @click="hideModalEliminar()" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-              <button type="button" @click="eliminarPersona(datosEliminar.id)" class="btn btn-danger btn-eliminar">Eliminar</button>
-            </div>
           </div>
         </div>
       </div>
@@ -142,15 +124,13 @@
     },
     data() {
       return {
-        showModalEliminar: false,
-        datosEliminar: {},
         tiposDocumentos : {},
         perfiles : {},
-        statuses : {0: 'Deshabilitado', 1:'Habilitado', 2:'Eliminado'},
+        statuses : {0: 'Suspendido', 1:'Habilitado', 2:'Eliminado'},
         loading: true,
         operadores: null,
         showAlert: false,
-        title: 'Usuarios Creados',
+        title: 'Clientes Registrados',
         filters: {
           global: { 
             value: null, matchMode: FilterMatchMode.CONTAINS 
@@ -210,42 +190,9 @@
     },
     methods: {
       async cargarTabla(){
-        const response = await axios.get( this.BASE_URL_AXIOS + 'getPersonas/2,4/0,1/'+localStorage.getItem('id'));
+        const response = await axios.get( this.BASE_URL_AXIOS + 'getClientes/3/0,1');
         this.operadores = response.data;
         this.loading = false;
-      },
-      async modalEliminar(id, correo){
-        this.datosEliminar = {
-          id:id, 
-          correo:correo
-        }
-        this.showModalEliminar = true;
-      },
-      async eliminarPersona(id) {
-        const request = await axios({
-            method: "PUT",
-            url: this.BASE_URL_AXIOS + "actualizarEstadoPersona",
-            data: {
-                "id"                : id,
-                "estado"            : 2,
-            },
-            headers: {
-                "Content-Type": "application/json"
-            }
-        })
-
-        var respuesta =  request.data.split("|");
-        if(respuesta[0] == "OK")
-        {
-            this.hideModalEliminar();
-            this.valorAlerta = respuesta[1];
-            this.showAlerta();
-            this.cargarTabla();
-
-        }else{
-            this.valorAlerta = respuesta[1];
-            this.showAlerta();
-        }
       },
       async suspender(id, estado) {
         const request = await axios({
@@ -278,9 +225,6 @@
           this.hideAlert();
         }, 1500);
       },
-      hideModalEliminar() {
-        this.showModalEliminar = false;
-      },
       hideAlert() {
         this.showAlert = false;
       },
@@ -290,18 +234,12 @@
       },
     }
   };
-</script>
+  </script>
 
-<style>
-.table-row-space 
-{
+  <style>
+.table-row-space {
   margin-bottom: 10px; /* Agrega espacio en la parte inferior de cada fila */
   /* o */
   padding-bottom: 10px; /* Agrega espacio interno en la parte inferior de cada fila */
-}
-
-.btn-eliminar
-{
-  margin-top: 5px;
 }
 </style>

@@ -136,7 +136,7 @@ public class rpt_persona implements itf_rct_persona {
     }
 
     @Override
-    public boolean suspenderPersona(String id) {
+    public boolean suspenderPersona(int id) {
         try {
             mdl_persona persona = new mdl_persona();
             String query = "UPDATE " + table + " SET estado = 0  WHERE id = ?";
@@ -157,9 +157,28 @@ public class rpt_persona implements itf_rct_persona {
     }
 
     @Override
-    public boolean habilitarPersona(String id) {
+    public boolean habilitarPersona(int id) {
         try {
             String query = "UPDATE " + table + " SET estado = 1  WHERE id = ?";
+
+            int registros = JdbcTemplate.update(query, id);
+                
+            if (registros != 0) {
+                return true;
+            }
+
+        } catch (
+
+        Exception e) {
+            return false;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean EliminatPersona(int id) {
+        try {
+            String query = "UPDATE " + table + " SET estado = 2  WHERE id = ?";
 
             int registros = JdbcTemplate.update(query, id);
                 

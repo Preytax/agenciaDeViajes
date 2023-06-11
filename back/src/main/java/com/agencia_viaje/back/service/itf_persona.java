@@ -12,18 +12,17 @@ public interface itf_persona {
     public boolean confirmarCorreo(String correo);
     public boolean confirmarNroDocumento(String dni);
     public List<mdl_persona> singIn(String correo, String password);
-    public boolean suspenderPersona(String id);
-    public boolean habilitarPersona(String id);
+    public boolean suspenderPersona(int id);
+    public boolean habilitarPersona(int id);
+    public boolean EliminatPersona(int id);
     /* END QUERY CON JDBC */
 
     /* --------------------------------------------------------------------------------------------- */
 
     /* QUERY CON JPA */
     public mdl_persona getPersonaJPA(long id);
-
     public List<mdl_persona> findAllByIdPerfilInAndEstadoInAndUsuarioRegistra(List<String> id_perfil, List<String> estado, String usuario_registra);
-    //public mdl_persona findPersonasWithIdPerfilAndIdDocument(int id);
-
+    public List<mdl_persona> findAllByIdPerfilAndEstadoIn(String id_perfil, List<String> estado);
     public List<mdl_persona> getPersonasJPA();
     public Boolean savePersonaJPA(mdl_persona request);
     public Boolean updatePersonaJPA(mdl_persona request);

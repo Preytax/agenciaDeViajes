@@ -5,7 +5,7 @@
         <div class="pt-0 container-fluid" data-bd-theme="dark">
             <div class="card">
                 <div class="card-body">
-                    <h2 class="mb-4" _msttexthash="318188" _msthash="6">Registro de Operador</h2>
+                    <h2 class="mb-4" _msttexthash="318188" _msthash="6">{{ title }}</h2>
                     <div class="row g-3">
                         <div class="col-sm-6">
                             <label for="firstName" class="form-label" _msttexthash="76193" _msthash="27">Nombre</label>
@@ -153,6 +153,7 @@ export default{
     },
     data(){
         return {
+            title: 'Registrar Operador',
             id: localStorage.getItem('id'),
             idPerfil: null,
             nombres: null,

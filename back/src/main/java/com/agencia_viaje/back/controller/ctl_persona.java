@@ -31,6 +31,12 @@ public class ctl_persona {
         return listOpe;
     }
 
+    @GetMapping("/getClientes/{id_perfil}/{estado}")
+    @ResponseStatus(HttpStatus.CREATED)
+    List<mdl_persona> findAllByIdPerfilAndEstadoIn(@PathVariable String id_perfil, @PathVariable List<String> estado) {
+        return servicio.findAllByIdPerfilAndEstadoIn(id_perfil, estado);
+    }
+
     @GetMapping("/getPersonas/{id_perfil}/{estado}/{usuario_registra}")
     @ResponseStatus(HttpStatus.CREATED)
     List<mdl_persona> findAllByIdPerfilInAndEstadoInAndUsuarioRegistra(@PathVariable List<String> id_perfil, @PathVariable List<String> estado, @PathVariable String usuario_registra) {
@@ -160,14 +166,17 @@ public class ctl_persona {
             mensaje = "ER|No se pudo actualizar la información.";
 
             if(datosPersona.getEstado().equals("1")){
-                confirmacion = servicio.suspenderPersona(datosPersona.getId()+"");
+                confirmacion = servicio.suspenderPersona(datosPersona.getId());
             }
             else if(datosPersona.getEstado().equals("0")){
-                confirmacion = servicio.habilitarPersona(datosPersona.getId()+"");
+                confirmacion = servicio.habilitarPersona(datosPersona.getId());
+            }
+            else if(datosPersona.getEstado().equals("2")){
+                confirmacion = servicio.EliminatPersona(datosPersona.getId());
             }
 
             if (confirmacion) {
-                mensaje = "OK|Se actualizó el estado.";
+                mensaje = datosPersona.getEstado().equals("2") ? "OK|Se elimino al usuario." : "OK|Se actualizó el estado.";
             }
         }
 

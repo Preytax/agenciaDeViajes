@@ -224,7 +224,7 @@
             </li>
             -->
             <template v-if="id_perfil == 1 || id_perfil == 4">
-              <template v-if="urlRouter == 'operador'">
+              <template v-if="urlRouter == 'operador' || urlRouter == 'cliente'">
                 <li class="nav-item" role="presentation">
                   <router-link to="/operador/add">
                     <button :class="{ 'active': urlEvento === 'add'}" class="nav-link rounded-5" id="contact-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="false">
@@ -235,7 +235,14 @@
                 <li class="nav-item" role="presentation">
                   <router-link to="/operador/get">
                     <button :class="{ 'active': urlEvento === 'get'}" class="nav-link rounded-5" id="contact-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="false">
-                      Listar Personas
+                      Usuarios Registrados
+                    </button>
+                  </router-link>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <router-link to="/cliente/gett">
+                    <button :class="{ 'active': urlEvento === 'gett'}" class="nav-link rounded-5" id="contact-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="false">
+                      Clientes Registrados
                     </button>
                   </router-link>
                 </li>

@@ -106,8 +106,9 @@ export default {
       var passwordMD5 = CryptoJS.MD5(this.password).toString()
 
       if(this.correo == "" || this.password == ""){
-        this.alerta_credenciales = false;
         this.alerta_campos = true;
+        this.alerta_recapchat = false;
+        this.alerta_credenciales = false;
 
       }else{
         if(this.recordarCuenta){
@@ -116,7 +117,10 @@ export default {
             localStorage.setItem('besh', CryptoJS.MD5(this.password).toString());
           }else{
             if(this.password != "**-*-*-*-*"){
+              this.alerta_campos = false;
+              this.alerta_recapchat = false;
               this.alerta_credenciales = true;
+              
               localStorage.removeItem('hash');
               localStorage.removeItem('besh');
               return
@@ -137,8 +141,10 @@ export default {
           this.datosPersona = responseTipoDocumento.data;
 
           if(this.datosPersona != ""){
-            this.alerta_credenciales = false;
             this.alerta_campos = false;
+            this.alerta_recapchat = false;
+            this.alerta_credenciales = false;
+
             localStorage.setItem('id', this.datosPersona[0].id);
             localStorage.setItem('id_perfil', this.datosPersona[0].idPerfil);
             localStorage.setItem('nombres', this.datosPersona[0].nombres);
@@ -146,12 +152,16 @@ export default {
             localStorage.setItem('apellido_materno', this.datosPersona[0].apellidoMaterno);
             localStorage.setItem('dni', this.datosPersona[0].nroDocumento);
             localStorage.setItem('correo', this.correo);
-            //registrar correo y luego compararlo con el del input, si son iguales no tomar en cuenta, si son diferentes actualizar
-            //lo mismo para el dni
+            
+            if(localStorage.getItem('hash') != localStorage.getItem('correo')){
+              localStorage.setItem('hash', localStorage.getItem('correo'));
+            }
+
             window.location.href = "/home";
 
           } else {
             this.alerta_campos = false;
+            this.alerta_recapchat = false;
             this.alerta_credenciales = true;
           }
         }
