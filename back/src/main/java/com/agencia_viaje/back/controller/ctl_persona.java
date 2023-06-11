@@ -31,6 +31,12 @@ public class ctl_persona {
         return listOpe;
     }
 
+    @GetMapping("/getPersonas/{id_perfil}/{estado}/{usuario_registra}")
+    @ResponseStatus(HttpStatus.CREATED)
+    List<mdl_persona> findAllByIdPerfilInAndEstadoInAndUsuarioRegistra(@PathVariable List<String> id_perfil, @PathVariable List<String> estado, @PathVariable String usuario_registra) {
+        return servicio.findAllByIdPerfilInAndEstadoInAndUsuarioRegistra(id_perfil, estado, usuario_registra);
+    }
+
     @GetMapping("/singIn/{correo}/{password}")
     @ResponseStatus(HttpStatus.OK)
     List<mdl_persona>  singIn(@PathVariable String correo, @PathVariable String password) {

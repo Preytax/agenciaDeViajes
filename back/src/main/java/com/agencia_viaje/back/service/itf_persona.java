@@ -20,6 +20,10 @@ public interface itf_persona {
 
     /* QUERY CON JPA */
     public mdl_persona getPersonaJPA(long id);
+
+    public List<mdl_persona> findAllByIdPerfilInAndEstadoInAndUsuarioRegistra(List<String> id_perfil, List<String> estado, String usuario_registra);
+    //public mdl_persona findPersonasWithIdPerfilAndIdDocument(int id);
+
     public List<mdl_persona> getPersonasJPA();
     public Boolean savePersonaJPA(mdl_persona request);
     public Boolean updatePersonaJPA(mdl_persona request);

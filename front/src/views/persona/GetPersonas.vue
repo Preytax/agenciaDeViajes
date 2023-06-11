@@ -130,7 +130,7 @@
         loading: true,
         operadores: null,
         showAlert: false,
-        title: 'Operadores',
+        title: 'Usuaarios Creados',
         filters: {
           global: { 
             value: null, matchMode: FilterMatchMode.CONTAINS 
@@ -161,9 +161,7 @@
     },
     mounted: async function() {
 
-      const response = await axios.get( this.BASE_URL_AXIOS + 'getOperadores');
-      this.operadores = response.data;
-      this.loading = false;
+      this.cargarTabla();
 
       for (let key in this.operadores) {
         const operador = this.operadores[key];
@@ -191,6 +189,11 @@
       this.perfiles = auxTipoPerfiles;*/
     },
     methods: {
+      async cargarTabla(){
+        const response = await axios.get( this.BASE_URL_AXIOS + 'getPersonas/2,4/0,1/'+localStorage.getItem('id'));
+        this.operadores = response.data;
+        this.loading = false;
+      },
       async suspender(dataP, id, estado) {
         const request = await axios({
             method: "PUT",
@@ -208,18 +211,19 @@
         if(respuesta[0] == "OK")
         {
             this.valorAlerta = respuesta[1];
-            this.showAlert = true;
-            if(estado == 0){
-              dataP.data.estado = 1;
-            }
-            else if(estado == 1){
-              dataP.data.estado = 0;
-            }
+            this.showAlerta();
+            this.cargarTabla();
 
         }else{
             this.valorAlerta = respuesta[1];
-            this.showAlert = true;
+            this.showAlerta();
         }
+      },
+      showAlerta() {
+        this.showAlert = true;
+        setTimeout(() => {
+          this.hideAlert();
+        }, 1500);
       },
       hideAlert() {
         this.showAlert = false;

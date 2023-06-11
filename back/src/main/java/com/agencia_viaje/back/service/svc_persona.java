@@ -56,6 +56,17 @@ public class svc_persona implements itf_persona {
     itf_pct_persona persistence;
 
     @Override
+    public List<mdl_persona> findAllByIdPerfilInAndEstadoInAndUsuarioRegistra(List<String> id_perfil, List<String> estado, String usuario_registra) {
+        return persistence.findAllByIdPerfilInAndEstadoInAndUsuarioRegistra(id_perfil, estado, usuario_registra);
+    }
+    
+    /*@Override
+    public mdl_persona findPersonasWithIdPerfilAndIdDocument(int id) {
+        mdl_persona opt = persistence.findPersonasWithIdPerfilAndIdDocument(id);
+        return opt;
+    }*/
+
+    @Override
     public mdl_persona getPersonaJPA(long id) {
         Optional<mdl_persona> opt = persistence.findById(id);
 
