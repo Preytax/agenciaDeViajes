@@ -19,22 +19,22 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">
-                                                    <label for="lastName" class="form-label" _msttexthash="112346" _msthash="29">Apellido Paterno</label>
-                                                    <InputText type="text" class="form-control" id="lastName" placeholder="" maxlength="45" v-model="apellidoPaterno" required/>
+                                                    <label for="apellidoPaterno" class="form-label" _msttexthash="112346" _msthash="29">Apellido Paterno</label>
+                                                    <InputText type="text" class="form-control" id="apellidoPaterno" placeholder="" maxlength="45" v-model="apellidoPaterno" required/>
                                                     <div ref="apellidoPaterno" class="invalid-feedback" _msttexthash="592748" _msthidden="1" _msthash="30">
                                                         El apellido paterno es obligatorio.
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">
-                                                    <label for="firstName" class="form-label" _msttexthash="76193" _msthash="27">Aapellido Materno</label>
-                                                    <InputText type="text" class="form-control" id="lastName2" placeholder="" maxlength="45" v-model="apellidoMaterno" required/>
+                                                    <label for="apellidoMaterno" class="form-label" _msttexthash="76193" _msthash="27">Apellido Materno</label>
+                                                    <InputText type="text" class="form-control" id="apellidoMaterno" placeholder="" maxlength="45" v-model="apellidoMaterno" required/>
                                                     <div ref="apellidoMaterno" class="invalid-feedback" _msttexthash="637039" _msthidden="1" _msthash="28">
                                                         El apellido materno es obligatorio.
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">
-                                                    <label for="firstName" class="form-label" _msttexthash="76193" _msthash="27">Fecha de Nacimiento</label>
-                                                    <InputText type="date" class="form-control" id="lastName2" placeholder="" v-model="fechaNacimiento" :max="maxDate" required/>
+                                                    <label for="fechaNacimiento" class="form-label" _msttexthash="76193" _msthash="27">Fecha de Nacimiento</label>
+                                                    <InputText type="date" class="form-control" id="fechaNacimiento" placeholder="" v-model="fechaNacimiento" :max="maxDate" required/>
                                                     <div ref="fechaNacimiento" class="invalid-feedback" _msttexthash="637039" _msthidden="1" _msthash="28">
                                                         La fecha de nacimiento es obligataoria.
                                                     </div>
@@ -50,8 +50,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">
-                                                    <label for="firstName" class="form-label" _msttexthash="76193" _msthash="27">Nro. de Documento</label>
-                                                    <InputText type="text" class="form-control" id="lastName2" placeholder="" maxlength="8" v-model="nroDocumento" required/>
+                                                    <label for="nroDocumento" class="form-label" _msttexthash="76193" _msthash="27">Nro. de Documento</label>
+                                                    <InputText type="text" class="form-control" id="nroDocumento" placeholder="" maxlength="8" v-model="nroDocumento" required/>
                                                     <div ref="nroDocumento" class="invalid-feedback" _msttexthash="637039" _msthidden="1" _msthash="28">
                                                         El numero de documento es obligatorio.
                                                     </div>
@@ -88,11 +88,13 @@
                                             </div>
                                             <hr class="my-4">
                                         </div>
-                                        <button @click="updatePersona" type="button" class="btn btn-success m-1">Actualizar</button>
-                                        <button @click="ocultarEdit" ref="divOculto" type="button" class="btn btn-danger m-1">Cancelar</button>
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div>
+                            <button @click="updatePersona" type="button" class="btn btn-success m-1">Actualizar</button>
+                            <button @click="ocultarEdit" ref="divOculto" type="button" class="btn btn-danger m-1">Cancelar</button>
                         </div>
                     </div>
                 </div>
@@ -104,8 +106,6 @@
 <script>
 import axios from 'axios';
 import CryptoJS from 'crypto-js';
-var error = 0;
-var passwMD5 = "";
 
 export default {
     inject: ['BASE_URL_AXIOS','BASE_URL'],
@@ -154,7 +154,7 @@ export default {
             const responseTipoDocumento = await axios.get( this.BASE_URL_AXIOS + 'getTiposDocumentos');
             this.tiposDocumentos = responseTipoDocumento.data;
 
-            this.persona           = request.data;
+            this.persona            = request.data;
             this.nombres            = this.persona.nombres;
             this.apellidoPaterno    = this.persona.apellidoPaterno;
             this.apellidoMaterno    = this.persona.apellidoMaterno;
@@ -164,6 +164,9 @@ export default {
             this.correo             = this.persona.correo;
         },
         async updatePersona(){
+            var error = 0;
+            var passwMD5 = "";
+
             Object.keys(this.$refs).forEach((refKey) => {
                 const elements = this.$refs[refKey];
                 if (!Array.isArray(elements)) {
@@ -212,6 +215,16 @@ export default {
                 }
             }
 
+            var correo = "";
+            if(this.correo != localStorage.getItem('correo')){
+                correo = this.correo;
+            }
+
+            var nro_Docuemento = "";
+            if(this.nroDocumento != localStorage.getItem('dni')){
+                nro_Docuemento = this.nroDocumento;
+            }
+
             if(error == 0){
                 
                 const request = await axios({
@@ -223,9 +236,9 @@ export default {
                         "apellidoPaterno"   : this.apellidoPaterno,
                         "apellidoMaterno"   : this.apellidoMaterno,
                         "tipoDocumento"     : this.tipoDocumento,
-                        "nroDocumento"      : this.nroDocumento,
+                        "nroDocumento"      : nro_Docuemento,
                         "fechaNacimiento"   : this.fechaNacimiento,
-                        "correo"            : this.correo,
+                        "correo"            : correo,
                         "password"          : passwMD5,
                     },
                     headers: {
@@ -236,6 +249,8 @@ export default {
                 var respuesta =  request.data.split("|");
                 if(respuesta[0] == "OK")
                 {
+                    localStorage.setItem('correo', this.correo);
+                    localStorage.setItem('dni', this.nroDocumento);
                     this.valorAlerta = respuesta[1];
                     this.showAlert = true;
                     setTimeout(() => {
@@ -247,8 +262,6 @@ export default {
                     this.showAlert = true;
                 }
             }
-
-            
         },
         validateEmail(email) {
             const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -273,11 +286,13 @@ export default {
 </script>
 
 <style>
-.mostrarObligatorio{
+.mostrarObligatorio
+{
   display: block !important;
 }
 
-.divSombraAlerta{
+.divSombraAlerta
+{
   width: 100%;
   height: 100%;
   position: fixed;
@@ -287,7 +302,8 @@ export default {
   z-index: 9999;
 }
 
-.contenedorAlerta{
+.contenedorAlerta
+{
     width: 100%; 
     height: 25rem; 
     background-color: #5d87ff; 
@@ -296,23 +312,71 @@ export default {
     border: solid 1px;
 }
 
-.divAlerta{
+.divAlerta
+{
     position: absolute;
     bottom: 0;
     top: -450px
 }
 
-.scrollEditor{
+.body-wrapper 
+{
+    margin-right: 10px !important;
+}
+
+.scrollEditor 
+{
     max-height: 700px;
-    overflow-x: hidden;
-    overflow-y: scroll;
+    overflow: hidden;
+}
+
+@media (max-width: 575px)
+{
+    .divAlerta
+    {
+        padding-top: 20px;
+        position: absolute;
+        bottom: 0;
+        top: -380px;
+    }
+
+    .scrollEditor{
+        overflow-x: hidden;
+        overflow-y: scroll;
+        max-height: 680px;
+        margin-bottom: 20px !important;
+        padding-right: 10px !important;
+    }
 }
 
 @media (min-width: 767.98px)
 {
     .scrollEditor{
-        margin-left: 200px !important;
+        width: clamp(200px, 90%, 2000px) !important;
+        margin-left: 100px !important;
     }
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 20px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey; 
+  border-radius: 10px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #727f8c; 
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #727f8c; 
 }
 
 .fade-enter-active{

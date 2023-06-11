@@ -20,7 +20,7 @@ export default {
     inc_head
   },
   methods: {
-    inc_head
+    
   },
   mounted() {
 

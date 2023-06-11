@@ -2,13 +2,16 @@ import {createApp} from 'vue'
 import App from './App.vue'
 import router from './router'
 import { FilterMatchMode, FilterOperator } from 'primevue/api';
+//import 'bootstrap/dist/css/bootstrap.css'
+//import 'bootstrap'
+import 'bootstrap-icons/font/bootstrap-icons.css'
+
 
 /* AXIOS */
 Window.axios = require('axios')
 /* END AXIOS */
 
 const app = createApp(App).use(router);
-
 
 /* VARIBLES GLOBALES */
 const BASE_URL = "http://" + window.location.host + "/";
@@ -20,17 +23,8 @@ app.provide('BASE_URL_AXIOS', BASE_URL_AXIOS);
 
 
 /* PRIMEVUE */
+import PrimeVue from 'primevue/config';
 app.use(PrimeVue);
-app.use(PrimeVue, { ripple: true });
-app.use(PrimeVue, { inputStyle: "filled" });
-app.use(PrimeVue, {
-    zIndex: {
-        modal: 1100,        //dialog, sidebar
-        overlay: 1000,      //dropdown, overlaypanel
-        menu: 1000,         //overlay menus
-        tooltip: 1100       //tooltip
-    }
-});
 /* END PRIMEVUE */
 
 
@@ -41,7 +35,6 @@ app.component('CryptoJS', CryptoJS);
 
 
 /* DATATABLES */
-import PrimeVue from 'primevue/config';
 import 'primevue/resources/primevue.min.css';
 import 'primevue/resources/themes/saga-blue/theme.css';
 import 'primeicons/primeicons.css';

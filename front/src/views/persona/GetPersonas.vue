@@ -2,14 +2,14 @@
     <div class="mp_row_Alert" v-if="showAlert">{{valorAlerta}}<i @click="hideAlert"></i></div>
     <inc_head/>
     <div class="body-wrapper">
-      <div class="container-fluid">
+      <div class="pt-0 container-fluid">
         <div class="card">
           <div class="card-body">
             <h3>{{ title }}</h3><!--showGridlines-->
             <DataTable 
               v-model:filters="filters" :value="operadores" editMode="row" tableClass="editable-cells-table" 
-              :rows="10" @cell-edit-complete="onCellEditComplete" filterDisplay="row" tableStyle="min-width: 50rem" 
-              paginator scrollable
+              :rows="10" filterDisplay="row" tableStyle="min-width: 50rem; border:0" 
+              paginator scrollable :row-class-name="'table-row-space'"
               :globalFilterFields="['idPerfil', 'nombres', 'apellidoPaterno', 'apellidoPaterno', 'tipoDocumento', 'nroDocumento']">
               
               <template v-slot:header>
@@ -34,7 +34,7 @@
               </template>
       
               <Column field="id" header="Id" style="min-width: 2rem"></Column>
-              <Column field="nombres" header="Nombres" style="min-width: 15rem" frozen>
+              <Column field="nombres" header="Nombres" style="min-width: 15rem"><!--frozen-->
                 <template #filter="{  }">
                   <InputText v-model="filters['nombres'].value" type="text" class="p-column-filter" placeholder="Buscar" />
                 </template>
@@ -172,8 +172,6 @@
         operador.idPerfil = nombrePerfil; // Agregar el nombre al objeto operador en la lista
       }
 
-      console.log(this.operadores);
-
       /* REORDENAMIENTO DE TIPOS DE DOCUEMNTOS */
       const responseTipoDocumento = await axios.get( this.BASE_URL_AXIOS + 'getTiposDocumentos');
       var auxTiposDocumentos = {};
@@ -233,3 +231,11 @@
     }
   };
   </script>
+
+  <style>
+.table-row-space {
+  margin-bottom: 10px; /* Agrega espacio en la parte inferior de cada fila */
+  /* o */
+  padding-bottom: 10px; /* Agrega espacio interno en la parte inferior de cada fila */
+}
+</style>

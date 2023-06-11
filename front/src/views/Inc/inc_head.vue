@@ -178,7 +178,7 @@
             <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
               <!--<a href="https://adminmart.com/product/modernize-free-bootstrap-admin-dashboard/" target="_blank" class="btn btn-primary">Download Free</a>-->
               <li class="nav-item dropdown">
-                <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown"
+                <a class="nav-link nav-icon-hover" href="#" id="drop2" data-bs-toggle="dropdown"
                   aria-expanded="false">
                   <img src="@/assets/images/profile/user-1.jpg" alt="" width="35" height="35" class="rounded-circle">
                 </a>
@@ -186,19 +186,19 @@
                   <div class="message-body">
                     <a href="/perfil" class="d-flex align-items-center gap-2 dropdown-item">
                       <i class="ti ti-user fs-6"></i>
-                      <p class="mb-0 fs-3">Mi Cuenta</p>
+                      <p class="mb-0 fs-6">Mi Cuenta</p>
                     </a>
-                    <a @click="mostrarEdit()" href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
-                      <i class="bi bi-pencil-square" style="width: 20px;"></i>
-                      <p class="mb-0 fs-3">Editar</p>
+                    <a @click="mostrarEdit()" href="#" class="d-flex align-items-center gap-2 dropdown-item">
+                      <i class="bi bi-pencil-square fs-6" style="width: 20px;"></i>
+                      <p class="mb-0 fs-6">Editar</p>
                     </a>
                     <!--<a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
                       <i class="ti ti-mail fs-6"></i>
-                      <p class="mb-0 fs-3">My Account</p>
+                      <p class="mb-0 fs-6">My Account</p>
                     </a>-->
-                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
+                    <a href="#" class="d-flex align-items-center gap-2 dropdown-item">
                       <i class="ti ti-list-check fs-6"></i>
-                      <p class="mb-0 fs-3">My Task</p>
+                      <p class="mb-0 fs-6">My Task</p>
                     </a>
                     <a @click="singOut()" class="btn btn-outline-primary mx-3 mt-2 d-block">Logout</a>
                   </div>
@@ -210,7 +210,7 @@
       </header>
       <!--  Header End -->
       <div class="container-fluid">
-        <div v-show="urlRouter != 'HomeOperador' && urlRouter != 'perfil'" class="card">
+        <div style="border: 0;" v-show="urlRouter != 'HomeOperador' && urlRouter != 'perfil'" class="card">
           <ul class="nav nav-pills nav-fill gap-2 p-1 small bg-primary rounded-5 shadow-sm" id="pillNav2" role="tablist" 
             style="--bs-nav-link-color: var(--bs-white); --bs-nav-pills-link-active-color: var(--bs-primary); --bs-nav-pills-link-active-bg: var(--bs-white);">
             <!--
@@ -305,6 +305,8 @@ export default {
       localStorage.removeItem('nombres');
       localStorage.removeItem('apellido_paterno');
       localStorage.removeItem('apellido_materno');
+      localStorage.removeItem('correo');
+      localStorage.removeItem('dni');
       window.location.href = this.BASE_URL;
     },
     mostrarEdit(){
@@ -355,7 +357,7 @@ export default {
 </script>
 
 <style>
-@import '@/assets/css/styles.min.css';
+
 body {
   font-family: Helvetica Neue,Helvetica,Arial,sans-serif; 
 } 
@@ -368,14 +370,19 @@ body {
   color: #2c3e50;
 }
 
-nav {
+.nav-item {
+  text-decoration: none;
+}
+
+nav
+{
   padding: 30px;
 }
 
-nav a {
+nav a 
+{
   font-weight: bold;
   color: white;
   text-decoration:none;
 }
-
 </style>

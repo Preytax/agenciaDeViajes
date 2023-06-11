@@ -2,7 +2,7 @@
     <inc_head/>
     <div class="mp_row_Alert" v-if="showAlert">{{valorAlerta}}<i @click="hideAlert"></i></div>
     <div class="body-wrapper">
-        <div class="container-fluid" data-bd-theme="dark">
+        <div class="pt-0 container-fluid" data-bd-theme="dark">
             <div class="card">
                 <div class="card-body">
                     <h2 class="mb-4" _msttexthash="318188" _msthash="6">Registro de Operador</h2>
@@ -241,6 +241,11 @@ export default{
                     correo : this.correo,
                     password : CryptoJS.MD5(this.password).toString()
                 };
+
+
+                const responsePerfil = await axios.get( this.BASE_URL_AXIOS + 'getPerfiles');
+                this.perfiles = responsePerfil.data;
+
 
                 const request = await axios({
                     method: "POST",

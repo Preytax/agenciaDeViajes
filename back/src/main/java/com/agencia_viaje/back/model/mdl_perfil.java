@@ -6,36 +6,25 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "agv_perfiles")
+@AllArgsConstructor
+@NoArgsConstructor
 public class mdl_perfil {
 
     @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Getter @Setter
     private int id;
+
     @Column(name = "NOMBRE")
+    @Getter @Setter
     private String nombre;
- 
-    public mdl_perfil(int id, String nombre) {
-        this.id = id;
-        this.nombre = nombre;
-    }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
 }

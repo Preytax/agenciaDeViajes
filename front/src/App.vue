@@ -18,6 +18,7 @@ export default {
 </template>
 
 <style>
+@import '@/assets/css/styles.min.css';
 
 body {
   font-family: Helvetica Neue,Helvetica,Arial,sans-serif; 
