@@ -36,17 +36,17 @@
               <Column field="id" header="Id" style="min-width: 2rem"></Column>
               <Column field="nombres" header="Nombres" style="min-width: 15rem"><!--frozen-->
                 <template #filter="{  }">
-                  <InputText v-model="filters['nombres'].value" type="text" class="p-column-filter" placeholder="Buscar" />
+                  <InputText ref="filtroNombres" v-model="filters['nombres'].value" type="text" class="p-column-filter" placeholder="Buscar" />
                 </template>
               </Column>
               <Column field="apellidoPaterno" header="Apellido Paterno" style="min-width: 12rem">
                 <template #filter="{  }">
-                  <InputText v-model="filters['apellidoPaterno'].value" type="text" class="p-column-filter" placeholder="Buscar" />
+                  <InputText ref="filtroApellidoPaterno" v-model="filters['apellidoPaterno'].value" type="text" class="p-column-filter" placeholder="Buscar" />
                 </template>
               </Column>
               <Column field="apellidoMaterno" header="Apellido Materno" style="min-width: 12rem">
                 <template #filter="{  }">
-                  <InputText v-model="filters['apellidoMaterno'].value" type="text" class="p-column-filter" placeholder="Buscar" />
+                  <InputText ref="filtroApellidoMaterno" v-model="filters['apellidoMaterno'].value" type="text" class="p-column-filter" placeholder="Buscar" />
                 </template>
               </Column>
               <Column field="tipoDocumento" header="Documento" style="min-width: 12rem">
@@ -56,7 +56,7 @@
               </Column>
               <Column field="nroDocumento" header="Nro. Documento" style="min-width: 12rem">
                 <template #filter="{  }">
-                  <InputText v-model="filters['nroDocumento'].value" type="text" class="p-column-filter" placeholder="Buscar" />
+                  <InputText ref="filtroNroDocumento" v-model="filters['nroDocumento'].value" type="text" class="p-column-filter" placeholder="Buscar" />
                 </template>
               </Column>
               <Column field="idPerfil" header="Perfil" style="min-width: 12rem">
@@ -64,7 +64,7 @@
                   <span>{{ /*perfiles[datosTiposPerlies.data.idPerfil]*/ }}</span>
                 </template>-->
                 <template #filter="{  }">
-                  <InputText v-model="filters['idPerfil'].value" type="text" class="p-column-filter" placeholder="Buscar" />
+                  <InputText ref="filtroIdPerfil" v-model="filters['idPerfil'].value" type="text" class="p-column-filter" placeholder="Buscar" />
                 </template>
               </Column>
               <Column field="estado" header="Estado" style="min-width: 12rem">
@@ -74,7 +74,7 @@
               </Column>
               <Column field="fechaNacimiento" header="Fecha Nacimiento" style="min-width: 12rem">
                 <template #filter="{  }">
-                  <InputText type="date" v-model="filters['fechaNacimiento'].value" placeholder="yyyy-mm-dd" mask="99-99-9999" />
+                  <InputText ref="filtroFechaNacimiento" type="date" v-model="filters['fechaNacimiento'].value" placeholder="yyyy-mm-dd" mask="99-99-9999" />
                 </template>
               </Column>
               <Column field="usuarioRegistra" header="Usuario Registra" style="min-width: 12rem"></Column>
@@ -83,9 +83,9 @@
 
               <Column field="id" header="Acciones" style="min-width: 12rem">
                   <template #body="datosId">
-                    <button v-show="datosId.data.estado == 1" type="button" @click="suspender(datosId.data.id, datosId.data.estado)" class="btn btn-warning">Deshabilitar</button>
-                    <button v-show="datosId.data.estado == 0" type="button" @click="suspender(datosId.data.id, datosId.data.estado)" class="btn btn-success">Habilitar</button>
-                    <button type="button" @click="modalEliminar(datosId.data.id, datosId.data.correo)" class="btn btn-danger btn-eliminar">Eliminar</button>
+                    <button v-if="datosId.data.estado == 1" type="button" @click="suspender(datosId.data.id, datosId.data.estado)" class="btn btn-warning">Suspender</button>
+                    <button v-if="datosId.data.estado == 0" type="button" @click="suspender(datosId.data.id, datosId.data.estado)" class="btn btn-success">Habilitar</button>
+                    <button type="button" @click="ShowModalEliminar(datosId.data.id, datosId.data.correo)" class="btn btn-danger btn-eliminar">Eliminar</button>
                 </template>
               </Column>
               <!--<Column :rowEditor="true" style="width: 10%; min-width: 8rem" bodyStyle="text-align:center"></Column>-->
@@ -93,7 +93,7 @@
           </div>
         </div>
       </div>
-      <div v-show="showModalEliminar" class="modal" tabindex="-1" style="display: block;">
+      <div v-show="modalEliminar" class="modal" tabindex="-1" style="display: block;">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -142,7 +142,7 @@
     },
     data() {
       return {
-        showModalEliminar: false,
+        modalEliminar: false,
         datosEliminar: {},
         tiposDocumentos : {},
         perfiles : {},
@@ -214,12 +214,15 @@
         this.operadores = response.data;
         this.loading = false;
       },
-      async modalEliminar(id, correo){
+      async ShowModalEliminar(id, correo){
         this.datosEliminar = {
           id:id, 
           correo:correo
         }
-        this.showModalEliminar = true;
+        this.modalEliminar = true;
+      },
+      hideModalEliminar() {
+        this.modalEliminar = false;
       },
       async eliminarPersona(id) {
         const request = await axios({
@@ -278,15 +281,27 @@
           this.hideAlert();
         }, 1500);
       },
-      hideModalEliminar() {
-        this.showModalEliminar = false;
-      },
       hideAlert() {
         this.showAlert = false;
       },
       clearFilter() {
-        this.$refs.search.$el.value = ''; //Limpiar el inputText
-        this.filters.global.value = null; // Restablecer el valor del filtro global // Restablecer el valor del filtro nroDocumento
+        //Limpiar el inputText
+        this.$refs.search.$el.value                 = ''; 
+        this.$refs.filtroNombres.$el.value          = '';
+        this.$refs.filtroApellidoPaterno.$el.value  = '';
+        this.$refs.filtroApellidoMaterno.$el.value  = '';
+        this.$refs.filtroNroDocumento.$el.value     = '';
+        this.$refs.filtroIdPerfil.$el.value         = '';
+        this.$refs.filtroFechaNacimiento.$el.value  = '';
+        
+        // Restablecer el valor del los filtro
+        this.filters.global.value           = null;
+        this.filters.nombres.value          = null;
+        this.filters.apellidoPaterno.value  = null;
+        this.filters.apellidoMaterno.value  = null;
+        this.filters.nroDocumento.value     = null;
+        this.filters.idPerfil.value         = null;
+        this.filters.fechaNacimiento.value  = null;
       },
     }
   };

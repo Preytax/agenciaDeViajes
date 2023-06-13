@@ -57,7 +57,7 @@
                             <select class="form-select" id="idPerfil" v-model="idPerfil">
                                 <option value="" selected>Elegir...</option>
                                 <template v-for="perfil in perfiles">
-                                    <option  v-if="perfil.id == 2 || perfil.id == 4" :key="perfil.id" :value="perfil.id">{{perfil.nombre}}</option>
+                                    <option  v-if="perfil.id == 1 || perfil.id == 2" :key="perfil.id" :value="perfil.id">{{perfil.nombre}}</option>
                                 </template>
                             </select>
                             <div ref="idPerfil" class="invalid-feedback" _msttexthash="631839" _msthidden="1" _msthash="49">

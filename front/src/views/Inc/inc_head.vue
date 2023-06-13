@@ -42,6 +42,16 @@
                   </a>
                 </li>
               </template>
+              <template v-if="id_perfil == 2 || id_perfil == 4">
+                <li class="sidebar-item">
+                  <a class="sidebar-link" :href="`${BASE_URL}cliente/gett`" aria-expanded="false">
+                    <span>
+                      <i class="ti ti-layout-dashboard"></i>
+                    </span>
+                    <span class="hide-menu">Clientes</span>
+                  </a>
+                </li>
+              </template>
               <template v-if="id_perfil == 2  || id_perfil == 4">
                 <li class="sidebar-item">
                   <a class="sidebar-link" :href="`${BASE_URL}paquete/addEstandar`" aria-expanded="false">
@@ -173,6 +183,12 @@
                 <div class="notification bg-primary rounded-circle"></div>
               </a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link nav-icon-hover"  :href="`${BASE_URL}helpChat`">
+                <i class="bi bi-whatsapp"></i>
+                <div class="notification bg-primary rounded-circle"></div>
+              </a>
+            </li>
           </ul>
           <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
             <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
@@ -224,7 +240,7 @@
             </li>
             -->
             <template v-if="id_perfil == 1 || id_perfil == 4">
-              <template v-if="urlRouter == 'operador' || urlRouter == 'cliente'">
+              <template v-if="urlRouter == 'operador'">
                 <li class="nav-item" role="presentation">
                   <router-link to="/operador/add">
                     <button :class="{ 'active': urlEvento === 'add'}" class="nav-link rounded-5" id="contact-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="false">
@@ -239,13 +255,6 @@
                     </button>
                   </router-link>
                 </li>
-                <li class="nav-item" role="presentation">
-                  <router-link to="/cliente/gett">
-                    <button :class="{ 'active': urlEvento === 'gett'}" class="nav-link rounded-5" id="contact-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="false">
-                      Clientes Registrados
-                    </button>
-                  </router-link>
-                </li>
               </template>
             </template>
             <template v-if="id_perfil == 2 || id_perfil == 4">
@@ -254,6 +263,15 @@
                   <router-link to="/paquete/addEstandar">
                     <button :class="{ 'active': urlEvento === 'addEstandar'}" class="nav-link rounded-5" id="contact-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="false">
                       Crear Paquetes Estandar
+                    </button>
+                  </router-link>
+                </li>
+              </template>
+              <template v-if="urlRouter == 'cliente'">
+                <li class="nav-item" role="presentation">
+                  <router-link to="/cliente/gett">
+                    <button :class="{ 'active': urlEvento === 'gett'}" class="nav-link rounded-5" id="contact-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="false">
+                      Clientes Registrados
                     </button>
                   </router-link>
                 </li>
