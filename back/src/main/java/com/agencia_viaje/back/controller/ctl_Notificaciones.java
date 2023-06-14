@@ -25,7 +25,7 @@ public class ctl_Notificaciones {
     itf_chatHelp servicio;
 
     public static final String ACCOUNT_SID  = "AC6caf804c4bd3a5966e89a2375ac20fac";
-    public static final String AUTH_TOKEN   = "4252ce00021deed027f09f5f4f1c9db7";
+    public static final String AUTH_TOKEN   = "09d6c9c72a7099d684d687dacffe2932";
     public static final String TO_FOPHE     = "whatsapp:+51942263335";
     public static final String FROM_FOPHE   = "whatsapp:+14155238886";
 
