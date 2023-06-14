@@ -108,8 +108,17 @@
             </div>
         </div>
         <div v-show="mostrarActividad" class="modal" tabindex="-1" style="display:block">
-            <div class="modal-dialog">
-                <div class="modal-content">
+            <div class="modal-dialog" style="
+            display: flex; 
+            justify-content: space-around; 
+            ">
+                <div class="modal-content" style="
+                width: 300px; 
+                display: flex;
+                /* align-content: space-between; */
+                /* justify-content: space-around; */
+                /* align-items: center; */
+                ">
                     <div class="modal-header">
                         <h5 class="modal-title">Actividades</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @click="hideActividades()"></button>
