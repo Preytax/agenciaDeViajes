@@ -183,7 +183,7 @@
                 <div class="notification bg-primary rounded-circle"></div>
               </a>
             </li>
-            <li class="nav-item">
+            <li v-if="id_perfil != 3" class="nav-item">
               <a class="nav-link nav-icon-hover"  :href="`${BASE_URL}helpChat`">
                 <i class="bi bi-whatsapp"></i>
                 <div class="notification bg-primary rounded-circle"></div>
@@ -280,14 +280,14 @@
             <template v-else-if="id_perfil == 3">
               <li class="nav-item" role="presentation">
                 <router-link to="/home">
-                  <button :class="{ 'active': urlEvento === 'Home'}" class="nav-link rounded-5" id="home-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="true">
+                  <button :class=" urlEvento == 'home' || urlEvento == 'HomeOperador' ? 'active': ''" class="nav-link rounded-5" id="home-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="true">
                     Home
                   </button>
                 </router-link>
               </li>
               <li class="nav-item" role="presentation">
                 <router-link to="/paquete/add">
-                  <button :class="{ 'active': urlEvento === 'addPaquete'}" class="nav-link rounded-5" id="contact-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="false">
+                  <button :class="{ 'active': urlEvento === 'add'}" class="nav-link rounded-5" id="contact-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="false">
                     Crear Paquetes Personalizados
                   </button>
                 </router-link>

@@ -3,17 +3,11 @@ package com.agencia_viaje.back.controller;
 import com.agencia_viaje.back.model.mdl_ChatHelp;
 import com.agencia_viaje.back.service.itf_chatHelp;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.twilio.Twilio;
 import com.twilio.base.ResourceSet;
 //import com.twilio.rest.api.v2010.account.IncomingPhoneNumber;
 import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
-
-//import java.net.URI;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.scheduling.annotation.Scheduled;
