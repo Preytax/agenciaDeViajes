@@ -52,13 +52,8 @@
                             </select>
                         </div>
                         <div class="col-md-12">
-                            <label for="inputEmail4" class="form-label">Elegir Activades</label>
-                            <input class="form-check-input" type="checkbox" value="" id="Actividades" v-model="showData" />
-                            <div v-if="showData">
-                                <ul>
-                                    <li v-for="actividad in actividades" :key="actividad.id">{{ actividad.nombre }}</li>
-                                </ul>
-                            </div>
+                            <label for="inputEmail4" class="form-label">Elegir Activades</label>                     
+                            <input type="checkbox" @click="showActividades()"> 
                         </div>
                         <div class="col-md-6"> <!--Tipo-Transporte-->
                             <label for="inputEmail4" class="form-label">Elegir el tipo Transporte</label>
@@ -112,19 +107,37 @@
                 </div>
             </div>
         </div>
+        <div v-show="mostrarActividad" class="modal" tabindex="-1" style="display:block">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Actividades</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @click="hideActividades()"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div v-for="actividad in actividades" :key="actividad.id" class="form-check">
+                            <input v-model="grupoActividades" :value="actividad.id" type="checkbox" :id="actividad.id" class="form-check-input">
+                            <label :for="actividad.id" class="form-check-label">
+                                {{ actividad.nombre }}
+                            </label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @click="hideActividades()">Close</button>
+                        <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
 import inc_head from "../Inc/inc_head";
-import { createApp, reactive } from 'vue';
+
 var axios = require('axios');
 var error = 0;
 
-const appData = reactive({
-    checkboxValue: false,
-    checkbox: null,
-})
 export default{
     beforeRouteEnter(to, from, next) {
         // Verificar si la variable de sesión existe
@@ -137,6 +150,7 @@ export default{
             next();
         }
     },
+    inject: ['BASE_URL_AXIOS','BASE_URL'],
     components: {
         inc_head
     },
@@ -160,50 +174,44 @@ export default{
             fechaFinal: null,
             monto: null,
             showAlert: null,
+            mostrarActividad: false,
+            grupoActividades: [],
         };
     },
-    watch: {
-        showData(newValue) {
-            if(newValue) {
-                axios.get('BASE_URL_AXIOS +' /getActividades)
-                .then(response => {
-                    this.actividades =response.data;
-                })
-                .catch (error => {
-                    console.error(error);
-                });
-            } else {
-                this.actividades = [];
-            }
-        }
-    },
+
     mounted: async function () {
-        const responsePais = await axios.get("http://localhost:8080/getPaises");
+        const responsePais = await axios.get(this.BASE_URL_AXIOS +"getPaises");
         this.paises = responsePais.data;
-        const responseTipoTransporte = await axios.get("http://localhost:8080/getTipoTransporte");
+        const responseTipoTransporte = await axios.get(this.BASE_URL_AXIOS + "getTipoTransporte");
         this.modoTransportes = responseTipoTransporte.data;
     },
     props: [],
     methods: {
+        showActividades() {
+            this.mostrarActividad = true;
+        },
+        hideActividades() {
+            this.mostrarActividad = false;
+        },
         async paisesr() {
-            const responseDepartamento = await axios.get("http://localhost:8080/getDepartamento/" + this.paises1);
+            const responseDepartamento = await axios.get(this.BASE_URL_AXIOS + "getDepartamento/" + this.paises1);
             this.departamentos = responseDepartamento.data;
         },
 
         async tansporte() {
-            const responseTransporte = await axios.get("http://localhost:8080/getTransportes/" + this.modoDeTransporte);
+            const responseTransporte = await axios.get(this.BASE_URL_AXIOS + "getTransportes/" + this.modoDeTransporte);
             this.transportes = responseTransporte.data;
         },
 
         async ciudad5() {
-            const responseCuidad = await axios.get("http://localhost:8080/getCiudades/" + this.departamento2);
+            const responseCuidad = await axios.get(this.BASE_URL_AXIOS + "getCiudades/" + this.departamento2);
             this.cuidades = responseCuidad.data;
         },
 
         async hotelactividades() {
-            const responseHotel = await axios.get("http://localhost:8080/getHoteles/" + this.cuidades2);
+            const responseHotel = await axios.get(this.BASE_URL_AXIOS + "getHoteles/" + this.cuidades2);
             this.hoteles = responseHotel.data;
-            const responseActividad = await axios.get("http://localhost:8080/getActividades/" + this.cuidades2);
+            const responseActividad = await axios.get(this.BASE_URL_AXIOS + "getActividades/" + this.cuidades2);
             this.actividades = responseActividad.data;
         },
         
@@ -249,28 +257,26 @@ export default{
                 //this.$refs.transportes.classList.add("mostrarObligatorio");
                 error = 1;
             }
-            if (error == 0) {
+            if (error == 0) {              
                 const newPaqueteEstandar = {
                     idmodo: 1,
-                    idusuario: 213412,
+                    idusuario: localStorage.getItem('id'),
                     idpais: this.paises1,
                     iddepartamento: this.departamento2,
                     idciudad: this.cuidades2,
-                    idactividades: this.actividades2,
+                    actividades: this.grupoActividades.join(","),
                     idhotel: this.hoteles2,
                     idmodotransporte: this.modoDeTransporte,
                     idtransporte: this.transportes1,
                     fechaInicio: this.fechaInicio,
                     fechaFinal: this.fechaFinal,
                     monto: this.monto,
-                    usuarioRegistra: 1,
+                    usuarioRegistra: localStorage.getItem('id'),
                 };
-
-                const baseUrl = "http://localhost:8080/";
 
                 const request = await axios({
                     method: "POST",
-                    url: baseUrl + "savePaquete",
+                    url: this.BASE_URL_AXIOS + "savePaquete",
                     data: newPaqueteEstandar,
                     headers: {
                         "Content-Type": "application/json",

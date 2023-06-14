@@ -24,7 +24,7 @@ public class rpt_paquetes implements itf_rct_paquetes{
                 table + ".id_modo, "+
                 table + ".id_usuario, "+
                 table + ".id_departamento, "+
-                table + ".id_actividades, "+
+                table + ".actividades, "+
                 table + ".id_hoteles, "+
                 table + ".id_modo_transporte, "+
                 table + ".id_transporte, "+
@@ -53,13 +53,13 @@ public class rpt_paquetes implements itf_rct_paquetes{
                 rs.getString("PAIS"),
                 rs.getInt("ID_DEPARTAMENTO"),
                 rs.getString("CIUDAD"),
-                rs.getInt("ID_ACTIVIDADES"),
                 rs.getInt("ID_HOTELES"),
                 rs.getInt("ID_MODO_TRANSPORTE"),
                 rs.getInt("ID_TRANSPORTE"),
                 rs.getString("FECHA_INICIO"),
                 rs.getString("FECHA_FINAL"),
-                rs.getInt("MONTO")
+                rs.getInt("MONTO"),
+                rs.getString("ACTIVIDADES")
             )
         );
         return listPaq;
@@ -71,8 +71,8 @@ public class rpt_paquetes implements itf_rct_paquetes{
             
             int registros = JdbcTemplate.update(
                 "INSERT INTO " + table
-                        + " (id_usuario,id_modo,id_pais,id_departamento,id_ciudad,id_actividades,id_hoteles,id_modo_transporte,id_transporte,fecha_inicio,fecha_final,monto) VALUES (?,?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-               request.getIdusuario(),request.getIdmodo(),request.getIdpais(), request.getIddepartamento(), request.getIdciudad(), request.getIdactividades(), request.getIdhotel(), request.getIdmodotransporte(),request.getIdtransporte(),request.getFechaInicio(),request.getFechaFinal(),request.getMonto());
+                        + " (id_usuario,id_modo,id_pais,id_departamento,id_ciudad,id_hoteles,id_modo_transporte,id_transporte,fecha_inicio,fecha_final,monto,actividades) VALUES (?,?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+               request.getIdusuario(),request.getIdmodo(),request.getIdpais(), request.getIddepartamento(), request.getIdciudad(), request.getActividades(), request.getIdhotel(), request.getIdmodotransporte(),request.getIdtransporte(),request.getFechaInicio(),request.getFechaFinal(),request.getMonto());
 
             if (registros != 0) {
                 return registros;

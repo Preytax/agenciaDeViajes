@@ -44,10 +44,6 @@ public class mdl_Paquetes {
     @Getter @Setter
     private String idciudad;
 
-    @Column(name = "id_actividades")
-    @Getter @Setter
-    private int idactividades;
-
     @Column(name = "id_hoteles")
     @Getter @Setter
     private int idhotel;
@@ -108,23 +104,27 @@ public class mdl_Paquetes {
     @Getter @Setter
     private String ipElimina;
 
+    @Column(name ="actividades")
+    @Getter @Setter
+    private String actividades;
+
                 
     public mdl_Paquetes(int id, int idmodo, int idusuario, String idpais, int iddepartamento, String idciudad,
-            int idactividades, int idhotel, int idmodotransporte, int idtransporte, String fechaInicio,
-            String fechaFinal, int monto) {
+            int idhotel, int idmodotransporte, int idtransporte, String fechaInicio,
+            String fechaFinal, int monto, String actividades) {
         this.id = id;
         this.idmodo = idmodo;
         this.idusuario = idusuario;
         this.idpais = idpais;
         this.iddepartamento = iddepartamento;
         this.idciudad = idciudad;
-        this.idactividades = idactividades;
         this.idhotel = idhotel;
         this.idmodotransporte = idmodotransporte;
         this.idtransporte = idtransporte;
         this.fechaInicio = fechaInicio;
         this.fechaFinal = fechaFinal;
         this.monto = monto;
+        this.actividades = actividades;
     }
 
 

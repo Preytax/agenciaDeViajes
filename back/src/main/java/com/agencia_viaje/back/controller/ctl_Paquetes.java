@@ -43,7 +43,6 @@ public class ctl_Paquetes {
             paquete.setIddepartamento(paquetes.getIddepartamento());
             paquete.setIdciudad(paquetes.getIdciudad());
             paquete.setIdhotel(paquetes.getIdhotel());
-            paquete.setIdactividades(paquetes.getIdactividades());
             paquete.setIdmodotransporte(paquetes.getIdmodotransporte());
             paquete.setIdtransporte(paquetes.getIdtransporte());
             paquete.setFechaInicio(paquetes.getFechaInicio());
@@ -51,6 +50,7 @@ public class ctl_Paquetes {
             paquete.setMonto(paquetes.getMonto());
             paquete.setIpRegistra(paquetes.capturarIp());
             paquete.setUsuarioRegistra(paquetes.getUsuarioRegistra());
+            paquete.setActividades(paquetes.getActividades());
 
             if(servicio.savePaqueteJPA(paquete)){
                 mensaje = "OK|Se registro el operador con exito";
