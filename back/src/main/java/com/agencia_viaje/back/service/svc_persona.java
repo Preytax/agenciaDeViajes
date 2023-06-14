@@ -36,13 +36,18 @@ public class svc_persona implements itf_persona {
     }
 
     @Override
-    public boolean suspenderPersona(String id) {
+    public boolean suspenderPersona(int id) {
         return repocitory.suspenderPersona(id);
     }
 
     @Override
-    public boolean habilitarPersona(String id) {
+    public boolean habilitarPersona(int id) {
         return repocitory.habilitarPersona(id);
+    }
+
+    @Override
+    public boolean EliminatPersona(int id) {
+        return repocitory.EliminatPersona(id);
     }
     /* END QUERY CON JDBC */
 
@@ -54,6 +59,16 @@ public class svc_persona implements itf_persona {
     /* QUERY CON JPA */
     @Autowired
     itf_pct_persona persistence;
+
+    @Override
+    public List<mdl_persona> findAllByIdPerfilInAndEstadoInAndUsuarioRegistra(List<String> id_perfil, List<String> estado, String usuario_registra) {
+        return persistence.findAllByIdPerfilInAndEstadoInAndUsuarioRegistra(id_perfil, estado, usuario_registra);
+    }
+
+    @Override
+    public List<mdl_persona> findAllByIdPerfilAndEstadoIn(String id_perfil, List<String> estado) {
+        return persistence.findAllByIdPerfilAndEstadoIn(id_perfil, estado);
+    }
 
     @Override
     public mdl_persona getPersonaJPA(long id) {

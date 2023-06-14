@@ -118,6 +118,7 @@ export default {
             next();
         }
     },
+    inject: ['BASE_URL_AXIOS','BASE_URL'],
     components: {
         inc_head
     },
@@ -143,32 +144,32 @@ export default {
         };
     },
     mounted: async function () {
-        const responsePais = await axios.get("http://localhost:8080/getPaises");
+        const responsePais = await axios.get(this.BASE_URL_AXIOS + "getPaises");
         this.paises = responsePais.data;
-        const responseTipoTransporte = await axios.get("http://localhost:8080/getTipoTransporte");
+        const responseTipoTransporte = await axios.get(this.BASE_URL_AXIOS + "getTipoTransporte");
         this.modoTransportes = responseTipoTransporte.data;
     },
     props: [],
     methods: {
         async paisesr() {
-            const responseDepartamento = await axios.get("http://localhost:8080/getDepartamento/" + this.paises1);
+            const responseDepartamento = await axios.get(this.BASE_URL_AXIOS + "getDepartamento/" + this.paises1);
             this.departamentos = responseDepartamento.data;
         },
 
         async tansporte() {
-            const responseTransporte = await axios.get("http://localhost:8080/getTransportes/" + this.modoDeTransporte);
+            const responseTransporte = await axios.get(this.BASE_URL_AXIOS + "getTransportes/" + this.modoDeTransporte);
             this.transportes = responseTransporte.data;
         },
 
         async ciudad5() {
-            const responseCuidad = await axios.get("http://localhost:8080/getCiudades/" + this.departamento2);
+            const responseCuidad = await axios.get(this.BASE_URL_AXIOS + "getCiudades/" + this.departamento2);
             this.cuidades = responseCuidad.data;
         },
 
         async hotelactividades() {
-            const responseHotel = await axios.get("http://localhost:8080/getHoteles/" + this.cuidades2);
+            const responseHotel = await axios.get(this.BASE_URL_AXIOS + "getHoteles/" + this.cuidades2);
             this.hoteles = responseHotel.data;
-            const responseActividad = await axios.get("http://localhost:8080/getActividades/" + this.cuidades2);
+            const responseActividad = await axios.get(this.BASE_URL_AXIOS + "getActividades/" + this.cuidades2);
             this.actividades = responseActividad.data;
         },
 
@@ -231,11 +232,9 @@ export default {
                     usuarioRegistra: 1,
                 };
 
-                const baseUrl = "http://localhost:8080/";
-
                 const request = await axios({
                     method: "POST",
-                    url: baseUrl + "savePaquete",
+                    url: this.BASE_URL_AXIOS + "savePaquete",
                     data: newPaqueteEstandar,
                     headers: {
                         "Content-Type": "application/json",

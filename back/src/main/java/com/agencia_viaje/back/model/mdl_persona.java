@@ -109,6 +109,15 @@ public class mdl_persona {
         this.apellidoMaterno = apellidoMaterno;
     }
 
+    public mdl_persona(int id, String idPerfil, String nroDocumento, String nombres, String apellidoPaterno, String apellidoMaterno) {
+        this.id = id;
+        this.idPerfil = idPerfil;
+        this.nroDocumento = nroDocumento;
+        this.nombres = nombres;
+        this.apellidoPaterno = apellidoPaterno;
+        this.apellidoMaterno = apellidoMaterno;
+    }
+
     public mdl_persona(int id, String estado) {
         this.id = id;
         this.estado = estado;

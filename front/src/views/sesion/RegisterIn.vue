@@ -67,8 +67,11 @@
                           <span class="input-group-text">@</span>
                           <input v-model="correo" type="email" class="form-control" id="correo" placeholder="Correo" maxlength="150" required="">
                           <div ref="correo" class="invalid-feedback">
-                              El correo es obligatorio.
+                            El correo es obligatorio.
                           </div>
+                          <div ref="correoValido" class="invalid-feedback">
+                            Ingrese un correo electronico valido.
+                        </div>
                       </div>
                   </div>
                   <div class="col-sm-6">
@@ -212,6 +215,9 @@ export default{
             if (this.correo == null || this.correo == "") {
                 this.$refs.correo.classList.add("mostrarObligatorio");
                 error = 1;
+            }else if(this.validateEmail(this.correo)){
+                this.$refs.correoValido.classList.add("mostrarObligatorio");
+                error = 1;
             }
             if (this.password == null || this.password == "") {
                 this.$refs.password.classList.add("mostrarObligatorio");
@@ -252,6 +258,14 @@ export default{
                     this.valorAlerta = arreglo[1];
                     this.showAlert = true;
                 }
+            }
+        },
+        validateEmail(email) {
+            const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!regex.test(email)) {
+                return true;
+            } else {
+                return false;
             }
         },
         hideAlert() {

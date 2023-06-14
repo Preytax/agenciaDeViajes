@@ -31,6 +31,18 @@ public class ctl_persona {
         return listOpe;
     }
 
+    @GetMapping("/getClientes/{id_perfil}/{estado}")
+    @ResponseStatus(HttpStatus.CREATED)
+    List<mdl_persona> findAllByIdPerfilAndEstadoIn(@PathVariable String id_perfil, @PathVariable List<String> estado) {
+        return servicio.findAllByIdPerfilAndEstadoIn(id_perfil, estado);
+    }
+
+    @GetMapping("/getPersonas/{id_perfil}/{estado}/{usuario_registra}")
+    @ResponseStatus(HttpStatus.CREATED)
+    List<mdl_persona> findAllByIdPerfilInAndEstadoInAndUsuarioRegistra(@PathVariable List<String> id_perfil, @PathVariable List<String> estado, @PathVariable String usuario_registra) {
+        return servicio.findAllByIdPerfilInAndEstadoInAndUsuarioRegistra(id_perfil, estado, usuario_registra);
+    }
+
     @GetMapping("/singIn/{correo}/{password}")
     @ResponseStatus(HttpStatus.OK)
     List<mdl_persona>  singIn(@PathVariable String correo, @PathVariable String password) {
@@ -83,8 +95,7 @@ public class ctl_persona {
             persona.setIpRegistra(operador.capturarIp());
 
             if (servicio.savePersonaJPA(persona)) {
-                mensaje = "OK|" + ((operador.getIdPerfil() == "2") ? "Se registro el operador con exito."
-                        : "Su registro ha sido exitoso.");
+                mensaje = "OK|Se registro el operador con exito.";
             }
         }
 
@@ -96,18 +107,18 @@ public class ctl_persona {
     String updatePersona(@RequestBody mdl_persona operador) {
         String mensaje = "ER|Existe un error interno y no pudo actualizar.";
         if (!operador.getNombres().equals("") && !operador.getNombres().isEmpty() &&
-                !operador.getApellidoPaterno().equals("") && !operador.getApellidoPaterno().isEmpty() &&
-                !operador.getApellidoMaterno().equals("") && !operador.getApellidoMaterno().isEmpty() &&
-                !operador.getTipoDocumento().equals("") && !operador.getTipoDocumento().isEmpty() &&
-                !operador.getNroDocumento().equals("") && !operador.getNroDocumento().isEmpty() &&
-                !operador.getFechaNacimiento().equals("") && !operador.getFechaNacimiento().isEmpty() &&
-                !operador.getCorreo().equals("") && !operador.getCorreo().isEmpty()) {
+            !operador.getApellidoPaterno().equals("") && !operador.getApellidoPaterno().isEmpty() &&
+            !operador.getApellidoMaterno().equals("") && !operador.getApellidoMaterno().isEmpty() &&
+            !operador.getTipoDocumento().equals("") && !operador.getTipoDocumento().isEmpty() &&
+            !operador.getFechaNacimiento().equals("") && !operador.getFechaNacimiento().isEmpty()
+        )
+        {
             mensaje = "ER|No se pudo actualizar la información.";
 
-            if(servicio.confirmarCorreo(operador.getCorreo()) == false){
+            if(!operador.getCorreo().equals("") && servicio.confirmarCorreo(operador.getCorreo()) == false){
                 return "ER|El correo ya esta registrado.";
             }
-            else if(servicio.confirmarNroDocumento(operador.getNroDocumento()) == false){
+            else if(!operador.getNroDocumento().equals("") && servicio.confirmarNroDocumento(operador.getNroDocumento()) == false){
                 return "ER|El Nro de docuemento ya esta registrado.";
             }
 
@@ -118,11 +129,17 @@ public class ctl_persona {
             persona.setApellidoPaterno(operador.getApellidoPaterno());
             persona.setApellidoMaterno(operador.getApellidoMaterno());
             persona.setTipoDocumento(operador.getTipoDocumento());
-            persona.setNroDocumento(operador.getNroDocumento());
             persona.setFechaNacimiento(operador.getFechaNacimiento());
-            persona.setCorreo(operador.getCorreo());
 
-            if (operador.getPassword() != null) {
+            if (operador.getCorreo() != "") {
+                persona.setCorreo(operador.getCorreo());
+            }
+
+            if (operador.getNroDocumento() != "") {
+                persona.setNroDocumento(operador.getNroDocumento());
+            }
+
+            if (operador.getPassword() != "") {
                 persona.setPassword(operador.getPassword());
             }
 
@@ -149,14 +166,17 @@ public class ctl_persona {
             mensaje = "ER|No se pudo actualizar la información.";
 
             if(datosPersona.getEstado().equals("1")){
-                confirmacion = servicio.suspenderPersona(datosPersona.getId()+"");
+                confirmacion = servicio.suspenderPersona(datosPersona.getId());
             }
             else if(datosPersona.getEstado().equals("0")){
-                confirmacion = servicio.habilitarPersona(datosPersona.getId()+"");
+                confirmacion = servicio.habilitarPersona(datosPersona.getId());
+            }
+            else if(datosPersona.getEstado().equals("2")){
+                confirmacion = servicio.EliminatPersona(datosPersona.getId());
             }
 
             if (confirmacion) {
-                mensaje = "OK|Se actualizó el estado.";
+                mensaje = datosPersona.getEstado().equals("2") ? "OK|Se elimino al usuario." : "OK|Se actualizó el estado.";
             }
         }
 

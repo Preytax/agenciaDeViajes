@@ -2,20 +2,22 @@
     <div class="mp_row_Alert" v-if="showAlert">{{valorAlerta}}<i @click="hideAlert"></i></div>
     <inc_head/>
     <div class="body-wrapper">
-      <div class="container-fluid">
+      <div class="pt-0 container-fluid">
         <div class="card">
           <div class="card-body">
-            <h3>{{ title }}</h3>
-            <DataTable selectionMode="single" :metaKeySelection="metaKey" v-model:filters="filters" :value="operadores" paginator showGridlines :rows="10" editMode="row" dataKey="id" filterDisplay="menu" 
-              :loading="loading" :globalFilterFields="['idPerfil', 'nombres', 'apellidoPaterno', 'apellidoPaterno', 'tipoDocumento', 'nroDocumento']" tableClass="editable-cells-table" @row-edit-save="onRowEditSave"
-              tableStyle="min-width: 50rem" v-model:editingRows="editingRows">
-      
+            <h3>{{ title }}</h3><!--showGridlines-->
+            <DataTable 
+              v-model:filters="filters" :value="operadores" editMode="row" tableClass="editable-cells-table" 
+              :rows="10" filterDisplay="row" tableStyle="min-width: 50rem; border:0" 
+              paginator scrollable :row-class-name="'table-row-space'"
+              :globalFilterFields="['idPerfil', 'nombres', 'apellidoPaterno', 'apellidoPaterno', 'tipoDocumento', 'nroDocumento']">
+              
               <template v-slot:header>
                 <div class="flex justify-content-end">
-                  <Button type="button" class="p-button p-component p-button-outlined p-button-sm" style="float: left;" label="Limpiar" outlined @click="clearFilter()">
+                  <button type="button" class="p-button p-component p-button-outlined p-button-sm" style="float: left;" label="Limpiar" outlined @click="clearFilter()">
                     <span class="p-button-icon p-button-icon-left pi pi-filter-slash"></span>
                     <span class="p-button-label">Limpiar</span>
-                  </Button>
+                  </button>
                   <span class="p-input-icon-left">
                     <i class="pi pi-search" />
                     <InputText ref="search" style="" v-model="filters['global'].value" placeholder="Buscar..." />
@@ -24,46 +26,66 @@
               </template>
       
               <template #empty>
-                Sin datos de operadores.
+                Sin datos de usuarios.
               </template>
       
               <template #loading>
-                Cargando datos de operadores. Por favor espere.
+                Cargando datos de usuarios. Por favor espere.
               </template>
       
-              <Column field="id" header="Id" style="min-width: 12rem"></Column>
-              <Column field="idPerfil" header="Perfil" style="min-width: 12rem">
-                <template #body="datosTiposPerlies">
-                  <span>{{ perfiles[datosTiposPerlies.data.idPerfil] }}</span>
+              <Column field="id" header="Id" style="min-width: 2rem"></Column>
+              <Column field="nombres" header="Nombres" style="min-width: 15rem"><!--frozen-->
+                <template #filter="{  }">
+                  <InputText ref="filtroNombres" v-model="filters['nombres'].value" type="text" class="p-column-filter" placeholder="Buscar" />
                 </template>
               </Column>
-              <Column field="nombres" header="Nombres" style="min-width: 12rem">
-                <template #editor="{ data, field }">
-                    <InputText v-model="data[field]" />
+              <Column field="apellidoPaterno" header="Apellido Paterno" style="min-width: 12rem">
+                <template #filter="{  }">
+                  <InputText ref="filtroApellidoPaterno" v-model="filters['apellidoPaterno'].value" type="text" class="p-column-filter" placeholder="Buscar" />
                 </template>
               </Column>
-              <Column field="apellidoPaterno" header="Apellido Paterno" style="min-width: 12rem"></Column>
-              <Column field="apellidoMaterno" header="Apellido Materno" style="min-width: 12rem"></Column>
+              <Column field="apellidoMaterno" header="Apellido Materno" style="min-width: 12rem">
+                <template #filter="{  }">
+                  <InputText ref="filtroApellidoMaterno" v-model="filters['apellidoMaterno'].value" type="text" class="p-column-filter" placeholder="Buscar" />
+                </template>
+              </Column>
               <Column field="tipoDocumento" header="Documento" style="min-width: 12rem">
                 <template #body="datostipoDocumento">
                   <span>{{ tiposDocumentos[datostipoDocumento.data.tipoDocumento] }}</span>
                 </template>
               </Column>
-              <Column field="nroDocumento" header="Nro. Documento" style="min-width: 12rem"></Column>
+              <Column field="nroDocumento" header="Nro. Documento" style="min-width: 12rem">
+                <template #filter="{  }">
+                  <InputText ref="filtroNroDocumento" v-model="filters['nroDocumento'].value" type="text" class="p-column-filter" placeholder="Buscar" />
+                </template>
+              </Column>
+              <Column field="idPerfil" header="Perfil" style="min-width: 12rem">
+                <!--<template #body="datosTiposPerlies">
+                  <span>{{ /*perfiles[datosTiposPerlies.data.idPerfil]*/ }}</span>
+                </template>-->
+                <template #filter="{  }">
+                  <InputText ref="filtroIdPerfil" v-model="filters['idPerfil'].value" type="text" class="p-column-filter" placeholder="Buscar" />
+                </template>
+              </Column>
               <Column field="estado" header="Estado" style="min-width: 12rem">
                 <template #body="datoOperador">
                   <span>{{ statuses[datoOperador.data.estado] }}</span>
                 </template>
               </Column>
-              <Column field="fechaNacimiento" header="Fecha Nacimiento" style="min-width: 12rem"></Column>
+              <Column field="fechaNacimiento" header="Fecha Nacimiento" style="min-width: 12rem">
+                <template #filter="{  }">
+                  <InputText ref="filtroFechaNacimiento" type="date" v-model="filters['fechaNacimiento'].value" placeholder="yyyy-mm-dd" mask="99-99-9999" />
+                </template>
+              </Column>
               <Column field="usuarioRegistra" header="Usuario Registra" style="min-width: 12rem"></Column>
               <Column field="fechaRegistro" header="Fecha Registro" style="min-width: 12rem"></Column>
-              <Column field="ipRegistra" header="ip" style="min-width: 12rem"></Column>
+              <Column field="ipRegistra" header="IP Registro" style="min-width: 12rem"></Column>
 
               <Column field="id" header="Acciones" style="min-width: 12rem">
                   <template #body="datosId">
-                    <button v-if="datosId.data.estado == 1" type="button" @click="suspender(datosId,datosId.data.id, datosId.data.estado)" class="btn btn-warning">Suspender</button>
-                    <button v-if="datosId.data.estado == 0" type="button" @click="suspender(datosId,datosId.data.id, datosId.data.estado)" class="btn btn-success">Habilitar</button>
+                    <button v-if="datosId.data.estado == 1" type="button" @click="suspender(datosId.data.id, datosId.data.estado)" class="btn btn-warning">Suspender</button>
+                    <button v-if="datosId.data.estado == 0" type="button" @click="suspender(datosId.data.id, datosId.data.estado)" class="btn btn-success">Habilitar</button>
+                    <button type="button" @click="ShowModalEliminar(datosId.data.id, datosId.data.correo)" class="btn btn-danger btn-eliminar">Eliminar</button>
                 </template>
               </Column>
               <!--<Column :rowEditor="true" style="width: 10%; min-width: 8rem" bodyStyle="text-align:center"></Column>-->
@@ -71,14 +93,33 @@
           </div>
         </div>
       </div>
+      <div v-show="modalEliminar" class="modal" tabindex="-1" style="display: block;">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Eliminaci&oacute;n de Usuario</h5>
+              <button type="button" @click="hideModalEliminar()" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p>&#191;Quiere eliminar al usuario {{ datosEliminar.correo }}&#63;</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" @click="hideModalEliminar()" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+              <button type="button" @click="eliminarPersona(datosEliminar.id)" class="btn btn-danger btn-eliminar">Eliminar</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 </template>
-  <script>
+<script>
+  
   import inc_head from "../Inc/inc_head";
-  import { DataTable, Column } from 'primevue/datatable';
+  import DataTable from 'primevue/datatable';
+  import Column from 'primevue/column';
   import InputText from 'primevue/inputtext';
   import axios from 'axios';
-  import { FilterMatchMode, FilterOperator } from 'primevue/api';
+  import { FilterMatchMode } from 'primevue/api';
 
   export default {
     beforeRouteEnter(to, from, next) {
@@ -101,40 +142,46 @@
     },
     data() {
       return {
+        modalEliminar: false,
+        datosEliminar: {},
         tiposDocumentos : {},
         perfiles : {},
         statuses : {0: 'Deshabilitado', 1:'Habilitado', 2:'Eliminado'},
         loading: true,
         operadores: null,
         showAlert: false,
-        title: 'Operadores',
+        title: 'Usuarios Creados',
         filters: {
-            global: { 
-              value: null, matchMode: FilterMatchMode.CONTAINS 
-            },
-            idPerfil: { 
-              nombres: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] 
-            },
-            nombres: { 
-              nombres: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] 
-            },
-            apellidoPaterno: { 
-              nombres: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] 
-            },
-            apellidoMaterno: { 
-              nombres: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] 
-            },
-            nroDocumento: { 
-              nombres: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] 
-            },
+          global: { 
+            value: null, matchMode: FilterMatchMode.CONTAINS 
           },
+          idPerfil: { 
+            value: null, matchMode: FilterMatchMode.STARTS_WITH
+          },
+          nombres: { 
+            value: null, matchMode: FilterMatchMode.STARTS_WITH
+          },
+          apellidoPaterno: { 
+            value: null, matchMode: FilterMatchMode.STARTS_WITH
+          },
+          apellidoMaterno: { 
+            value: null, matchMode: FilterMatchMode.STARTS_WITH
+          },
+          nroDocumento: { 
+            value: null, matchMode: FilterMatchMode.STARTS_WITH
+          },
+          fechaNacimiento: { 
+            value: null, matchMode: FilterMatchMode.CONTAINS
+          },
+          fechaRegistro: { 
+            value: null, matchMode: FilterMatchMode.CONTAINS
+          },
+        },
       };
     },
     mounted: async function() {
 
-      const response = await axios.get( this.BASE_URL_AXIOS + 'getOperadores');
-      this.operadores = response.data;
-      this.loading = false;
+      this.cargarTabla();
 
       /* REORDENAMIENTO DE TIPOS DE DOCUEMNTOS */
       const responseTipoDocumento = await axios.get( this.BASE_URL_AXIOS + 'getTiposDocumentos');
@@ -145,18 +192,65 @@
       }
       this.tiposDocumentos = auxTiposDocumentos;
 
-      /*REORDENAMIENTO DE TIPOS DE PERFILES */
+      for (let key in this.operadores) {
+        const operador = this.operadores[key];
+        const perfilResponse = await axios.get(this.BASE_URL_AXIOS + 'getPerfil/' + operador.idPerfil);
+        const nombrePerfil = perfilResponse.data.nombre;
+        operador.idPerfil = nombrePerfil; // Agregar el nombre al objeto operador en la lista
+      }
+
+      /*REORDENAMIENTO DE TIPOS DE PERFILES 
       const responsePerfil = await axios.get( this.BASE_URL_AXIOS + 'getPerfiles');
       var auxTipoPerfiles = {};
       
       for (const op of responsePerfil.data) {
         auxTipoPerfiles[op.id] = op.nombre;
       }
-      this.perfiles = auxTipoPerfiles;
-
+      this.perfiles = auxTipoPerfiles;*/
     },
     methods: {
-      async suspender(dataP, id, estado) {
+      async cargarTabla(){
+        const response = await axios.get( this.BASE_URL_AXIOS + 'getPersonas/2,4/0,1/'+localStorage.getItem('id'));
+        this.operadores = response.data;
+        this.loading = false;
+      },
+      async ShowModalEliminar(id, correo){
+        this.datosEliminar = {
+          id:id, 
+          correo:correo
+        }
+        this.modalEliminar = true;
+      },
+      hideModalEliminar() {
+        this.modalEliminar = false;
+      },
+      async eliminarPersona(id) {
+        const request = await axios({
+            method: "PUT",
+            url: this.BASE_URL_AXIOS + "actualizarEstadoPersona",
+            data: {
+                "id"                : id,
+                "estado"            : 2,
+            },
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+
+        var respuesta =  request.data.split("|");
+        if(respuesta[0] == "OK")
+        {
+            this.hideModalEliminar();
+            this.valorAlerta = respuesta[1];
+            this.showAlerta();
+            this.cargarTabla();
+
+        }else{
+            this.valorAlerta = respuesta[1];
+            this.showAlerta();
+        }
+      },
+      async suspender(id, estado) {
         const request = await axios({
             method: "PUT",
             url: this.BASE_URL_AXIOS + "actualizarEstadoPersona",
@@ -173,27 +267,56 @@
         if(respuesta[0] == "OK")
         {
             this.valorAlerta = respuesta[1];
-            this.showAlert = true;
-            if(estado == 0){
-              dataP.data.estado = 1;
-            }
-            else if(estado == 1){
-              dataP.data.estado = 0;
-            }
+            this.showAlerta();
+            this.cargarTabla();
 
         }else{
             this.valorAlerta = respuesta[1];
-            this.showAlert = true;
+            this.showAlerta();
         }
+      },
+      showAlerta() {
+        this.showAlert = true;
+        setTimeout(() => {
+          this.hideAlert();
+        }, 1500);
       },
       hideAlert() {
         this.showAlert = false;
       },
       clearFilter() {
-        this.$refs.search.$el.value = ''; //Limpiar el inputText
-        this.filters.global.value = null; // Restablecer el valor del filtro global // Restablecer el valor del filtro nroDocumento
-        this.fetchData(); // Volver a cargar los datos y refrescar la tabla
+        //Limpiar el inputText
+        this.$refs.search.$el.value                 = ''; 
+        this.$refs.filtroNombres.$el.value          = '';
+        this.$refs.filtroApellidoPaterno.$el.value  = '';
+        this.$refs.filtroApellidoMaterno.$el.value  = '';
+        this.$refs.filtroNroDocumento.$el.value     = '';
+        this.$refs.filtroIdPerfil.$el.value         = '';
+        this.$refs.filtroFechaNacimiento.$el.value  = '';
+        
+        // Restablecer el valor del los filtro
+        this.filters.global.value           = null;
+        this.filters.nombres.value          = null;
+        this.filters.apellidoPaterno.value  = null;
+        this.filters.apellidoMaterno.value  = null;
+        this.filters.nroDocumento.value     = null;
+        this.filters.idPerfil.value         = null;
+        this.filters.fechaNacimiento.value  = null;
       },
     }
   };
-  </script>
+</script>
+
+<style>
+.table-row-space 
+{
+  margin-bottom: 10px; /* Agrega espacio en la parte inferior de cada fila */
+  /* o */
+  padding-bottom: 10px; /* Agrega espacio interno en la parte inferior de cada fila */
+}
+
+.btn-eliminar
+{
+  margin-top: 5px;
+}
+</style>

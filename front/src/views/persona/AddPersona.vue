@@ -2,10 +2,10 @@
     <inc_head/>
     <div class="mp_row_Alert" v-if="showAlert">{{valorAlerta}}<i @click="hideAlert"></i></div>
     <div class="body-wrapper">
-        <div class="container-fluid" data-bd-theme="dark">
+        <div class="pt-0 container-fluid" data-bd-theme="dark">
             <div class="card">
                 <div class="card-body">
-                    <h2 class="mb-4" _msttexthash="318188" _msthash="6">Registro de Operador</h2>
+                    <h2 class="mb-4" _msttexthash="318188" _msthash="6">{{ title }}</h2>
                     <div class="row g-3">
                         <div class="col-sm-6">
                             <label for="firstName" class="form-label" _msttexthash="76193" _msthash="27">Nombre</label>
@@ -30,7 +30,7 @@
                         </div>
                         <div class="col-sm-6">
                             <label for="firstName" class="form-label" _msttexthash="76193" _msthash="27">Fecha de Nacimiento</label>
-                            <input type="date" class="form-control" id="fechaNacimiento" placeholder="" v-model="fechaNacimiento" required/>
+                            <input type="date" class="form-control" id="fechaNacimiento" placeholder="" v-model="fechaNacimiento" :max="maxDate" required/>
                             <div ref="fechaNacimiento" class="invalid-feedback" _msttexthash="637039" _msthidden="1" _msthash="28">
                                 La fecha de nacimiento es obligataoria.
                             </div>
@@ -57,7 +57,7 @@
                             <select class="form-select" id="idPerfil" v-model="idPerfil">
                                 <option value="" selected>Elegir...</option>
                                 <template v-for="perfil in perfiles">
-                                    <option  v-if="perfil.id == 2 || perfil.id == 4" :key="perfil.id" :value="perfil.id">{{perfil.nombre}}</option>
+                                    <option  v-if="perfil.id == 1 || perfil.id == 2" :key="perfil.id" :value="perfil.id">{{perfil.nombre}}</option>
                                 </template>
                             </select>
                             <div ref="idPerfil" class="invalid-feedback" _msttexthash="631839" _msthidden="1" _msthash="49">
@@ -72,6 +72,9 @@
                                 <input v-model="correo" type="email" class="form-control" id="correo" placeholder="Correo" maxlength="150" required="">
                                 <div ref="correo" class="invalid-feedback">
                                     El correo electronico es obligatorio.
+                                </div>
+                                <div ref="correoValido" class="invalid-feedback">
+                                    Ingrese un correo electronico valido.
                                 </div>
                             </div>
                         </div>
@@ -130,8 +133,27 @@ export default{
     components: {
         inc_head,
     },
+    computed: {
+        maxDate() {
+            const now = new Date();
+            const year = now.getFullYear();
+            let month = now.getMonth() + 1;
+            let day = now.getDate();
+
+            if (month < 10) {
+                month = '0' + month;
+            }
+
+            if (day < 10) {
+                day = '0' + day;
+            }
+
+            return `${year}-${month}-${day}`;
+        },
+    },
     data(){
         return {
+            title: 'Registrar Operador',
             id: localStorage.getItem('id'),
             idPerfil: null,
             nombres: null,
@@ -199,6 +221,10 @@ export default{
                 this.$refs.correo.classList.add("mostrarObligatorio");
                 error = 1;
             }
+            else if(this.validateEmail(this.correo)){
+                this.$refs.correoValido.classList.add("mostrarObligatorio");
+                error = 1;
+            }
             if (this.password == null || this.password == "") {
                 this.$refs.password.classList.add("mostrarObligatorio");
                 error = 1;
@@ -216,6 +242,11 @@ export default{
                     correo : this.correo,
                     password : CryptoJS.MD5(this.password).toString()
                 };
+
+
+                const responsePerfil = await axios.get( this.BASE_URL_AXIOS + 'getPerfiles');
+                this.perfiles = responsePerfil.data;
+
 
                 const request = await axios({
                     method: "POST",
@@ -240,6 +271,14 @@ export default{
                     this.valorAlerta = arreglo[1];
                     this.showAlert = true;
                 }
+            }
+        },
+        validateEmail(email) {
+            const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!regex.test(email)) {
+                return true;
+            } else {
+                return false;
             }
         },
         hideAlert() {

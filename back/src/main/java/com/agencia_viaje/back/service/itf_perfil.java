@@ -7,4 +7,8 @@ import com.agencia_viaje.back.model.mdl_perfil;
 @Service
 public interface itf_perfil {
     public List<mdl_perfil> getPerfiles();
+
+    /* QUERY CON JPA */
+    public mdl_perfil getPerfilJPA(long id);
+    /* END QUERY CON JPA */
 }

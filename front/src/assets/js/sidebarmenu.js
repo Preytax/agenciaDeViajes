@@ -1,4 +1,3 @@
-import $ from 'jquery'
 /*
 Template Name: Admin Template
 Author: Wrappixel

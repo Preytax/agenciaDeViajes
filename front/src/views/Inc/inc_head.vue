@@ -42,6 +42,16 @@
                   </a>
                 </li>
               </template>
+              <template v-if="id_perfil == 2 || id_perfil == 4">
+                <li class="sidebar-item">
+                  <a class="sidebar-link" :href="`${BASE_URL}cliente/gett`" aria-expanded="false">
+                    <span>
+                      <i class="ti ti-layout-dashboard"></i>
+                    </span>
+                    <span class="hide-menu">Clientes</span>
+                  </a>
+                </li>
+              </template>
               <template v-if="id_perfil == 2  || id_perfil == 4">
                 <li class="sidebar-item">
                   <a class="sidebar-link" :href="`${BASE_URL}paquete/addEstandar`" aria-expanded="false">
@@ -173,12 +183,19 @@
                 <div class="notification bg-primary rounded-circle"></div>
               </a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link nav-icon-hover"  :href="`${BASE_URL}helpChat`">
+                <i class="bi bi-whatsapp"></i>
+                <div class="notification bg-primary rounded-circle"></div>
+              </a>
+            </li>
           </ul>
           <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
             <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
               <!--<a href="https://adminmart.com/product/modernize-free-bootstrap-admin-dashboard/" target="_blank" class="btn btn-primary">Download Free</a>-->
+              <span>{{ correo }}</span>
               <li class="nav-item dropdown">
-                <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown"
+                <a class="nav-link nav-icon-hover" href="#" id="drop2" data-bs-toggle="dropdown"
                   aria-expanded="false">
                   <img src="@/assets/images/profile/user-1.jpg" alt="" width="35" height="35" class="rounded-circle">
                 </a>
@@ -186,19 +203,19 @@
                   <div class="message-body">
                     <a href="/perfil" class="d-flex align-items-center gap-2 dropdown-item">
                       <i class="ti ti-user fs-6"></i>
-                      <p class="mb-0 fs-3">Mi Cuenta</p>
+                      <p class="mb-0 fs-6">Mi Cuenta</p>
                     </a>
-                    <a @click="mostrarEdit()" href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
-                      <i class="bi bi-pencil-square" style="width: 20px;"></i>
-                      <p class="mb-0 fs-3">Editar</p>
+                    <a @click="mostrarEdit()" href="#" class="d-flex align-items-center gap-2 dropdown-item">
+                      <i class="bi bi-pencil-square fs-6" style="width: 20px;"></i>
+                      <p class="mb-0 fs-6">Editar</p>
                     </a>
                     <!--<a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
                       <i class="ti ti-mail fs-6"></i>
-                      <p class="mb-0 fs-3">My Account</p>
+                      <p class="mb-0 fs-6">My Account</p>
                     </a>-->
-                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
+                    <a href="#" class="d-flex align-items-center gap-2 dropdown-item">
                       <i class="ti ti-list-check fs-6"></i>
-                      <p class="mb-0 fs-3">My Task</p>
+                      <p class="mb-0 fs-6">My Task</p>
                     </a>
                     <a @click="singOut()" class="btn btn-outline-primary mx-3 mt-2 d-block">Logout</a>
                   </div>
@@ -210,7 +227,7 @@
       </header>
       <!--  Header End -->
       <div class="container-fluid">
-        <div v-show="urlRouter != 'HomeOperador' && urlRouter != 'perfil'" class="card">
+        <div style="border: 0;" v-show="urlRouter != 'HomeOperador' && urlRouter != 'perfil'" class="card">
           <ul class="nav nav-pills nav-fill gap-2 p-1 small bg-primary rounded-5 shadow-sm" id="pillNav2" role="tablist" 
             style="--bs-nav-link-color: var(--bs-white); --bs-nav-pills-link-active-color: var(--bs-primary); --bs-nav-pills-link-active-bg: var(--bs-white);">
             <!--
@@ -234,7 +251,7 @@
                 <li class="nav-item" role="presentation">
                   <router-link to="/operador/get">
                     <button :class="{ 'active': urlEvento === 'get'}" class="nav-link rounded-5" id="contact-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="false">
-                      Listar Personas
+                      Usuarios Registrados
                     </button>
                   </router-link>
                 </li>
@@ -246,6 +263,15 @@
                   <router-link to="/paquete/addEstandar">
                     <button :class="{ 'active': urlEvento === 'addEstandar'}" class="nav-link rounded-5" id="contact-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="false">
                       Crear Paquetes Estandar
+                    </button>
+                  </router-link>
+                </li>
+              </template>
+              <template v-if="urlRouter == 'cliente'">
+                <li class="nav-item" role="presentation">
+                  <router-link to="/cliente/gett">
+                    <button :class="{ 'active': urlEvento === 'gett'}" class="nav-link rounded-5" id="contact-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="false">
+                      Clientes Registrados
                     </button>
                   </router-link>
                 </li>
@@ -284,7 +310,7 @@ import $ from 'jquery';
 
 
 export default {
-  inject: ['BASE_URL','PAGE_URL'],
+  inject: ['BASE_URL'],
   name: "inc_head",
   components:{
     inc_editarInfo
@@ -292,6 +318,7 @@ export default {
   data() {
     return {
       id_perfil: localStorage.getItem('id_perfil'),
+      correo: localStorage.getItem('correo'),
       title: 'Operadores',
       url: window.location.href,
       urlRouter: "",
@@ -305,6 +332,8 @@ export default {
       localStorage.removeItem('nombres');
       localStorage.removeItem('apellido_paterno');
       localStorage.removeItem('apellido_materno');
+      localStorage.removeItem('correo');
+      localStorage.removeItem('dni');
       window.location.href = this.BASE_URL;
     },
     mostrarEdit(){
@@ -355,7 +384,7 @@ export default {
 </script>
 
 <style>
-@import '@/assets/css/styles.min.css';
+
 body {
   font-family: Helvetica Neue,Helvetica,Arial,sans-serif; 
 } 
@@ -368,14 +397,19 @@ body {
   color: #2c3e50;
 }
 
-nav {
+.nav-item {
+  text-decoration: none;
+}
+
+nav
+{
   padding: 30px;
 }
 
-nav a {
+nav a 
+{
   font-weight: bold;
   color: white;
   text-decoration:none;
 }
-
 </style>
