@@ -30,7 +30,7 @@
                         Recordar cuenta
                       </label>
                     </div>
-                    <a class="text-primary fw-bold" href="#">&#191;Olvidaste tu contraseña&#63;</a>
+                    <a class="text-primary fw-bold" href="#" @click="showCambioContraseña()">&#191;Olvidaste tu contraseña&#63;</a>
                   </div>
                   <template class="recapchat">
                     <vue-recaptcha ref="recaptcha" sitekey="6LdYA4kmAAAAAOBwAWvfJ50cxN8YbR33rc2I2FLQ" @verify="onRecaptchaVerify" />
@@ -54,6 +54,30 @@
               <div v-show="alerta_credenciales" class="alert alert-danger" role="alert">
                 Credenciales invalidas
               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div v-show="cambioContraseña" class="modal" tabindex="-1" style="display: block;">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Recuperación de Contraseña</h5>
+            <button v-show="!spinner" type="button" @click="hideCambioContraseña()"></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3">
+              <label for="exampleInputPassword1" class="form-label">Correo Electrónico</label>
+              <input type="text" v-model="chatCorreo" class="form-control" id="exampleInputPassword1">
+            </div>
+            <div class="modal-footer">
+              <button v-show="!spinner" type="button" @click="hideCambioContraseña()" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+              <button v-show="!spinner" type="button" @click="enviarCorreo()" class="btn btn-primary">Enviar</button>
+              <button v-show="spinner" type="button" class="ben btn-primary">
+                <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                Enviando...
+              </button>
             </div>
           </div>
         </div>
@@ -173,6 +197,13 @@ export default {
     showSolicitudAyuda() {
       this.solicitudAyuda = true;
     },
+
+    showCambioContraseña() {
+      this.cambioContraseña = true;
+    },
+    hideCambioContraseña() {
+      this.cambioContraseña = false;
+    },
     async enviarMensajeWPP() {
       this.spinner = true;
       //const request = await axios.get( this.BASE_URL_AXIOS + 'sendMessage/Solicitud de Ayuda/'+this.correoAyuda+'/'+this.numeroAyuda);
@@ -205,6 +236,10 @@ export default {
         this.alerta_ayuda = false;
       }, 1500);
       
+    },
+    async enviarCorreo(){
+      this.spinner = true;
+
     },
     onRecaptchaVerify(response) {
       this.tokenRecaptcha = response;
