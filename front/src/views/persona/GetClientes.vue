@@ -85,10 +85,28 @@
                   <template #body="datosId">
                     <button v-if="datosId.data.estado == 1" type="button" @click="suspenderCliente(datosId.data.id, datosId.data.estado)" class="btn btn-warning">Suspender</button>
                     <button v-if="datosId.data.estado == 0" type="button" @click="suspenderCliente(datosId.data.id, datosId.data.estado)" class="btn btn-success">Habilitar</button>
+                    <button type="button" @click="ShowModalEliminar(datosId.data.id, datosId.data.correo)" class="btn btn-danger btn-eliminar">Eliminar</button>
                 </template>
               </Column>
               <!--<Column :rowEditor="true" style="width: 10%; min-width: 8rem" bodyStyle="text-align:center"></Column>-->
             </DataTable>
+          </div>
+        </div>
+        <div v-show="modalEliminar" class="modal" tabindex="-1" style="display: block;">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Eliminaci&oacute;n de Usuario</h5>
+                <button type="button" @click="hideModalEliminar()" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <p>&#191;Quiere eliminar al usuario {{ datosEliminar.correo }}&#63;</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" @click="hideModalEliminar()" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" @click="eliminarCliente(datosEliminar.id)" class="btn btn-danger btn-eliminar">Eliminar</button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -124,8 +142,10 @@
     },
     data() {
       return {
+        modalEliminar: false,
         tiposDocumentos : {},
         perfiles : {},
+        datosEliminar: {},
         statuses : {0: 'Suspendido', 1:'Habilitado', 2:'Eliminado'},
         loading: true,
         operadores: null,
@@ -193,6 +213,43 @@
         const response = await axios.get( this.BASE_URL_AXIOS + 'getClientes/3/0,1');
         this.operadores = response.data;
         this.loading = false;
+      },
+      async ShowModalEliminar(id, correo){
+        this.datosEliminar = {
+          id:id, 
+          correo:correo
+        }
+        this.modalEliminar = true;
+      },
+      hideModalEliminar() {
+        this.modalEliminar = false;
+      },
+
+      async eliminarCliente(id) {
+        const request = await axios({
+            method: "PUT",
+            url: this.BASE_URL_AXIOS + "actualizarEstadoPersona",
+            data: {
+                "id"                : id,
+                "estado"            : 2,
+            },
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+
+        var respuesta =  request.data.split("|");
+        if(respuesta[0] == "OK")
+        {
+            this.hideModalEliminar();
+            this.valorAlerta = respuesta[1];
+            this.showAlerta();
+            this.cargarTabla();
+
+        }else{
+            this.valorAlerta = respuesta[1];
+            this.showAlerta();
+        }
       },
       async suspenderCliente(id, estado) {
         const request = await axios({
