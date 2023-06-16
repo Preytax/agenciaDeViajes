@@ -64,7 +64,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title">Recuperación de Contraseña</h5>
-            <button v-show="!spinner" type="button" @click="hideCambioContraseña()"></button>
+            <button v-show="!spinner" type="button" @click="hideCambioContraseña()" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
             <div class="mb-3">
@@ -191,18 +191,17 @@ export default {
         }, 1500);
       }
     },*/
+    hideCambioContraseña() {
+      this.cambioContraseña = false;
+    },
+    showCambioContraseña() {
+      this.cambioContraseña = true;
+    },
     hideSolicitudAyuda() {
       this.solicitudAyuda = false;
     },
     showSolicitudAyuda() {
       this.solicitudAyuda = true;
-    },
-
-    showCambioContraseña() {
-      this.cambioContraseña = true;
-    },
-    hideCambioContraseña() {
-      this.cambioContraseña = false;
     },
     async enviarMensajeWPP() {
       this.spinner = true;
@@ -237,9 +236,36 @@ export default {
       }, 1500);
       
     },
-    async enviarCorreo(){
+    async enviarCorreo() {
       this.spinner = true;
+      const newMensaje = {
+          correo  : this.chatCorreo,
+      };
+      const request = await axios ({
+        method: "POST",
+        url: this.BASE_URL_AXIOS + "sendCorreo",
+        data: newMensaje,
+        headers: {
+            "Content-Type": "application/json"
+        }
+      })
+      
+      this.hideCambioContraseña();
+      this.spinner = false;
+      var arreglo =  request.data.split("|");
+      this.valorAlerta = arreglo[1];
+      this.alerta_ayuda = true;
 
+      if(arreglo[0] == "OK"){
+        this.modoAlerta = 1;
+      }else{
+        this.modoAlerta = 2;
+      }
+
+      setTimeout(() => {
+        this.alerta_ayuda = false;
+      }, 1500);
+      
     },
     onRecaptchaVerify(response) {
       this.tokenRecaptcha = response;
