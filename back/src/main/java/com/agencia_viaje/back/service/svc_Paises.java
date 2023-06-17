@@ -4,17 +4,32 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.agencia_viaje.back.model.mdl_Paises;
-import com.agencia_viaje.back.repocitory.itf_rct_paises;
+import com.agencia_viaje.back.persistence.itf_pct_pais;
 
 @Service
-public class svc_Paises implements itf_rct_paises {
+public class svc_Paises implements itf_paises {
 
     @Autowired
-    itf_rct_paises repositorio;
+    itf_pct_pais persistence;
 
     @Override
-    public List<mdl_Paises> getPaises() {
-        return repositorio.getPaises();
+    public Boolean savePais(mdl_Paises pais) {
+        try {
+            persistence.save(pais);
+            return true;
+
+        } catch (Exception e) {
+            return false;
+        }
     }
 
+    @Override
+    public List<mdl_Paises> getPaisesById(int id){
+        return persistence.findById(id);
+    }
+
+    @Override
+    public List<mdl_Paises> getPaises(String id_usuario) {
+        return persistence.findAllByIdUsuario(id_usuario);
+    }
 }

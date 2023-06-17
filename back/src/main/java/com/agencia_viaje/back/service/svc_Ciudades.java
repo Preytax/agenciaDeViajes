@@ -6,17 +6,34 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.agencia_viaje.back.model.mdl_Ciudades;
-import com.agencia_viaje.back.repocitory.itf_rct_ciudades;
+import com.agencia_viaje.back.model.mdl_Departamento;
+import com.agencia_viaje.back.persistence.itf_pct_ciudad;
 
 @Service
-public class svc_Ciudades implements itf_rct_ciudades {
+public class svc_Ciudades implements itf_ciudades {
 
     @Autowired
-    itf_rct_ciudades repocitorio;
+    itf_pct_ciudad repocitorio;
 
     @Override
-    public List<mdl_Ciudades> getCiudades(int id_modo_departamento) {
-        return repocitorio.getCiudades(id_modo_departamento);
+    public Boolean saveCiudad(mdl_Ciudades ciudad) {
+        try {
+            repocitorio.save(ciudad);
+            return true;
+
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    @Override
+    public List<mdl_Ciudades> getCiudadesByIdusuario(int idUsuario) {
+        return repocitorio.findAllByIdUsuario(idUsuario);
+    }
+
+    @Override
+    public List<mdl_Ciudades> getCiudadesByIdUsuarioAndIdDepartamento(int idUsuario, int idDepartamento) {
+        return repocitorio.findAllByIdUsuarioAndIdDepartamento(idUsuario, idDepartamento);
     }
 
 }

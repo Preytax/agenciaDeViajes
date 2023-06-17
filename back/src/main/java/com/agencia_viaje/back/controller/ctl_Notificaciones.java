@@ -10,7 +10,7 @@ import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.scheduling.annotation.Scheduled;
+//import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,7 +27,7 @@ public class ctl_Notificaciones {
     public static final String ACCOUNT_SID  = "AC6caf804c4bd3a5966e89a2375ac20fac";
     public static final String AUTH_TOKEN   = "09d6c9c72a7099d684d687dacffe2932";
     public static final String TO_FOPHE     = "whatsapp:+51942263335";
-    public static final String FROM_FOPHE   = "whatsapp:+14155238886";
+    public static final String FROM_FOPHE   = "whatsapp:+14155238886 ";
 
     static {
       Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
@@ -35,17 +35,18 @@ public class ctl_Notificaciones {
 
     @PostMapping("/receiveWhatsAppMessage")
     @ResponseStatus(HttpStatus.OK)
-    @Scheduled(fixedDelay = 1000)
+    //@Scheduled(fixedDelay = 1000)
     public String receiveWhatsAppMessage() throws JsonProcessingException {
-    
+    System.out.println("1-----------------------");
         // Obtén los mensajes de WhatsApp entrantes
         ResourceSet<Message> messages = Message.reader()
-                .setTo(new PhoneNumber(FROM_FOPHE))
-                .setFrom(new PhoneNumber(TO_FOPHE))
+                .setTo(new PhoneNumber(TO_FOPHE))
+                .setFrom(new PhoneNumber(FROM_FOPHE))
                 .read();
-
+System.out.println("2-----------------------");
         // Verifica si hay al menos un mensaje recibido
         if (!messages.toString().isEmpty()) {
+            System.out.println("3-----------------------");
             try {
                 Message firstMessage = messages.iterator().next();
                 String numero = firstMessage.getFrom().toString().replace("whatsapp:+51", "");
@@ -100,7 +101,8 @@ public class ctl_Notificaciones {
             }
 
         } catch (Exception e) {
-            return "ER|El mensaje no se pudo Enviar.";
+            System.out.println(e);
+            return e+"ER|El mensaje no se pudo enviar.";
         }
     }
 

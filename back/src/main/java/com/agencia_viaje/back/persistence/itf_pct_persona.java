@@ -6,6 +6,9 @@ import org.springframework.data.repository.CrudRepository;
 import com.agencia_viaje.back.model.mdl_persona;
 
 public interface itf_pct_persona extends CrudRepository <mdl_persona, Long> {
+    //Confirmacion de login
+    public List<mdl_persona> findByCorreoAndPasswordAndEstado(String correo, String password, String estado);
+
     //Personas por tipo de perfil, estado y usuario que registro
     public List<mdl_persona> findAllByIdPerfilInAndEstadoInAndUsuarioRegistra(List<String> id_perfil, List<String> estado, String usuario_registra);
 

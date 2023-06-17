@@ -62,6 +62,31 @@
                   </a>
                 </li>
               </template>
+
+              <li class="nav-small-cap">
+                  <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+                  <span class="hide-menu">Ubigeo</span>
+              </li>
+              <template v-if="id_perfil == 1 || id_perfil == 4">
+                <li class="sidebar-item">
+                  <a class="sidebar-link" :href="`${BASE_URL}pais/addPais`" aria-expanded="false">
+                    <span>
+                      <i class="ti ti-layout-dashboard"></i>
+                    </span>
+                    <span class="hide-menu">Paises</span>
+                  </a>
+                </li>
+              </template>
+              <template v-if="id_perfil == 2 || id_perfil == 4">
+                <li class="sidebar-item">
+                  <a class="sidebar-link" :href="`${BASE_URL}departamento/addDepartamento`" aria-expanded="false">
+                    <span>
+                      <i class="ti ti-layout-dashboard"></i>
+                    </span>
+                    <span class="hide-menu">Departamentos</span>
+                  </a>
+                </li>
+              </template>
             </template>
             
             <!--<li class="nav-small-cap">
@@ -256,6 +281,38 @@
                   </router-link>
                 </li>
               </template>
+              <template v-if="urlRouter == 'pais'">
+                <li class="nav-item" role="presentation">
+                  <router-link to="/pais/addPais">
+                    <button :class="{ 'active': urlEvento === 'addPais'}" class="nav-link rounded-5" id="contact-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="false">
+                      Crear Pa&iacute;s
+                    </button>
+                  </router-link>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <router-link to="/pais/GetPais">
+                    <button :class="{ 'active': urlEvento === 'GetPais'}" class="nav-link rounded-5" id="contact-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="false">
+                      Paises Registrados
+                    </button>
+                  </router-link>
+                </li>
+              </template>
+              <template v-if="urlRouter == 'departamento'">
+                <li class="nav-item" role="presentation">
+                  <router-link to="/departamento/addDepartamento">
+                    <button :class="{ 'active': urlEvento === 'addDepartamento'}" class="nav-link rounded-5" id="contact-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="false">
+                      Crear Departamento
+                    </button>
+                  </router-link>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <router-link to="/departamento/GetDepartamento">
+                    <button :class="{ 'active': urlEvento === 'GetDepartamento'}" class="nav-link rounded-5" id="contact-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="false">
+                      Departamentos Resgistrados
+                    </button>
+                  </router-link>
+                </li>
+              </template>
             </template>
             <template v-if="id_perfil == 2 || id_perfil == 4">
               <template v-if="urlRouter == 'paquete'">
@@ -329,6 +386,7 @@ export default {
     async singOut(){
       localStorage.removeItem('id');
       localStorage.removeItem('id_perfil');
+      localStorage.removeItem('id_multiuser');
       localStorage.removeItem('nombres');
       localStorage.removeItem('apellido_paterno');
       localStorage.removeItem('apellido_materno');
