@@ -67,7 +67,7 @@
             <button type="button" @click="hideCambioContraseña()" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <div class="mb-3">
+            <div class="mb-3" @submit="enviarCorreo()">
               <label for="exampleInputPassword1" class="form-label">Correo Electrónico</label>
               <input type="text" v-model="chatCorreo" class="form-control" id="exampleInputPassword1">
             </div>

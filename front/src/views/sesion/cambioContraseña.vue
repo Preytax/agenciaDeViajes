@@ -21,7 +21,7 @@
                                 </div>
                                 <button class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">Guardar Nueva Contraseña</button>
                                 <div v-show="alerta_campos" class="alert alert-warning" role="alert">
-                                    Complete los campos
+                                    Complete el campo
                                   </div>
                             </div>
                         </div>
@@ -46,12 +46,6 @@ export default {
             password: "",
             recordarCuenta: false,
             alerta_campos: false,
-        }
-    },
-    mounted() {
-        if(localStorage.getItem('hash') && localStorage.getItem('besh') ){
-            this.recordarCuenta = true
-            this.password = "**-*-*-*-*";
         }
     },
     methods: {
