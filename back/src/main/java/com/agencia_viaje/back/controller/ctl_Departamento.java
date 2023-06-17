@@ -25,12 +25,10 @@ public class ctl_Departamento {
     String saveOperador(@RequestBody mdl_Departamento departamento) {
         String mensaje = "ER|Existe un error interno y no pudo registrarse.";
 
-        if (
-            !departamento.getNombre().equals("") && !departamento.getNombre().isEmpty() &&
-            departamento.getIdUsuario() != 0 &&
-            departamento.getIdPais() != 0
-            ) 
-        {
+        if (!departamento.getNombre().equals("") && !departamento.getNombre().isEmpty() &&
+                departamento.getIdMultiuser() != 0 &&
+                departamento.getUsuarioRegistra() != 0 &&
+                departamento.getIdPais() != 0) {
             mensaje = "ER|No se pudo registrar el departamento.";
             if (servicio.saveDepartamento(departamento)) {
                 mensaje = "OK|Se registro el departamento con exito.";
@@ -39,19 +37,29 @@ public class ctl_Departamento {
         return mensaje;
     }
 
-    @GetMapping("/getDepartamentosbyidusuario/{idusuario}")
+    @GetMapping("/getDepartamentosById/{id}")
     @ResponseStatus(HttpStatus.CREATED)
-    List<mdl_Departamento> getDepartamento(@PathVariable int idusuario){
+    List<mdl_Departamento> getDepartamentosById(@PathVariable int id){
+        List<mdl_Departamento> listPaises =null;
+        listPaises = servicio.getDepartamentoById(id);
+
+        return listPaises;
+    }
+
+    @GetMapping("/getDepartamentosByIdMultiuser/{idMultiuser}")
+    @ResponseStatus(HttpStatus.CREATED)
+    List<mdl_Departamento> getDepartamento(@PathVariable int idMultiuser) {
         List<mdl_Departamento> listDepartamento = null;
-        listDepartamento = servicio.getDepartamentosbyidusuario(idusuario);
+        listDepartamento = servicio.getDepartamentosByIdMultiuser(idMultiuser);
         return listDepartamento;
     }
 
-    @GetMapping("/getDepartamentosbyidusuariobyidpais/{idusuario}/{id_pais}")
+    @GetMapping("/getDepartamentosByIdMultiuserByIdpais/{idMultiuser}/{id_pais}")
     @ResponseStatus(HttpStatus.CREATED)
-    List<mdl_Departamento> getDepartamentosbyidusuariobyidpais(@PathVariable int idusuario, @PathVariable int id_pais){
+    List<mdl_Departamento> getDepartamentosByIdMultiuserByIdpais(@PathVariable int idMultiuser,
+            @PathVariable int id_pais) {
         List<mdl_Departamento> listDepartamento = null;
-        listDepartamento = servicio.getDepartamentosbyidusuariobyidpais(idusuario, id_pais);
+        listDepartamento = servicio.getDepartamentosByIdMultiuserByIdpais(idMultiuser, id_pais);
         return listDepartamento;
     }
 }

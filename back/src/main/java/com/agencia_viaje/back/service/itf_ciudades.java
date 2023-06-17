@@ -6,6 +6,7 @@ import com.agencia_viaje.back.model.mdl_Ciudades;
 
 public interface itf_ciudades {
     public Boolean saveCiudad(mdl_Ciudades ciudad);
-    public List<mdl_Ciudades> getCiudadesByIdusuario(int idUsuario);
-    public List<mdl_Ciudades> getCiudadesByIdUsuarioAndIdDepartamento(int idUsuario, int idDepartamento);
+    public List<mdl_Ciudades> getCiudadeById(int id);
+    public List<mdl_Ciudades> getCiudadesByIdMultiuser(int idUsuario);
+    public List<mdl_Ciudades> getCiudadesByIdMultiuserAndIdDepartamento(int idUsuario, int idDepartamento);
 }

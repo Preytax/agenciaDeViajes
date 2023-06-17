@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.agencia_viaje.back.model.mdl_Ciudades;
-import com.agencia_viaje.back.model.mdl_Departamento;
 import com.agencia_viaje.back.service.svc_Ciudades;
 
 @Controller
@@ -28,7 +27,7 @@ public class ctl_Ciudades {
 
         if (
             !ciudad.getNombre().equals("") && !ciudad.getNombre().isEmpty() &&
-            ciudad.getIdUsuario() != 0 &&
+            ciudad.getIdMultiuser() != 0 &&
             ciudad.getIdDepartamento() != 0
             ) 
         {
@@ -40,19 +39,19 @@ public class ctl_Ciudades {
         return mensaje;
     }
 
-    @GetMapping("/getCiudadesByIdusuario/{idusuario}")
+    @GetMapping("/getCiudadesByIdMultiuser/{idusuario}")
     @ResponseStatus(HttpStatus.CREATED)
-    List<mdl_Ciudades> getCiudadesByIdusuario(@PathVariable int idusuario){
+    List<mdl_Ciudades> getCiudadesByIdMultiuser(@PathVariable int idusuario){
         List<mdl_Ciudades> listDepartamento = null;
-        listDepartamento = servicio.getCiudadesByIdusuario(idusuario);
+        listDepartamento = servicio.getCiudadesByIdMultiuser(idusuario);
         return listDepartamento;
     }
 
-    @GetMapping("/getCiudadesByIdUsuarioAndIdDepartamento/{idUsuario}/{idDepartamento}")
+    @GetMapping("/getCiudadesByIdMultiuserAndIdDepartamento/{idMultiuser}/{idDepartamento}")
     @ResponseStatus(HttpStatus.CREATED)
-    List<mdl_Ciudades> getCiudadesByIdUsuarioAndIdDepartamento(@PathVariable int idUsuario, @PathVariable int idDepartamento){
+    List<mdl_Ciudades> getCiudadesByIdMultiuserAndIdDepartamento(@PathVariable int idMultiuser, @PathVariable int idDepartamento){
         List<mdl_Ciudades> listCiudades =null;
-        listCiudades = servicio.getCiudadesByIdUsuarioAndIdDepartamento(idUsuario, idDepartamento);
+        listCiudades = servicio.getCiudadesByIdMultiuserAndIdDepartamento(idMultiuser, idDepartamento);
 
         return listCiudades;
     }

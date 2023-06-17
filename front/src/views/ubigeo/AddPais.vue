@@ -49,6 +49,7 @@ export default{
         return {
             title: 'Registrar País',
             id: localStorage.getItem('id'),
+            idMultiuser: localStorage.getItem('id_multiuser'),
             idPerfil: null,
             showAlert: false,
             nombrePais: ""
@@ -71,7 +72,8 @@ export default{
 
             if(error == 0){
                 const newPais = {
-                    id_usuario  : this.id,
+                    usuarioRegistra  : this.id,
+                    idMultiuser  : this.idMultiuser,
                     nombre : this.nombrePais
                 };
 

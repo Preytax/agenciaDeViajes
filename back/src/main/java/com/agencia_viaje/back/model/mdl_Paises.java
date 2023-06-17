@@ -23,9 +23,13 @@ public class mdl_Paises {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name="id_usuario")
+    @Column(name="USUARIO_REGISTRA")
     @Getter @Setter
-    private String idUsuario;
+    private int usuarioRegistra;
+
+    @Column(name="ID_MULTIUSER")
+    @Getter @Setter
+    private int idMultiuser;
     
     @Column(name="nombre")
     @Getter @Setter

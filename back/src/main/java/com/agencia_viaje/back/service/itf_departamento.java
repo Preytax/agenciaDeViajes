@@ -6,6 +6,7 @@ import com.agencia_viaje.back.model.mdl_Departamento;
 public interface itf_departamento {
     // CON JPA
     public Boolean saveDepartamento(mdl_Departamento departamento);
-    public List<mdl_Departamento> getDepartamentosbyidusuario(int idUsuario);
-    public List<mdl_Departamento> getDepartamentosbyidusuariobyidpais(int idUsuario, int id_modo_pais);
+    public List<mdl_Departamento> getDepartamentoById(int id);
+    public List<mdl_Departamento> getDepartamentosByIdMultiuser(int idUsuario);
+    public List<mdl_Departamento> getDepartamentosByIdMultiuserByIdpais(int idUsuario, int id_modo_pais);
 }

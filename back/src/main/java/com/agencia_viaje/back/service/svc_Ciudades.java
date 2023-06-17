@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.agencia_viaje.back.model.mdl_Ciudades;
-import com.agencia_viaje.back.model.mdl_Departamento;
 import com.agencia_viaje.back.persistence.itf_pct_ciudad;
 
 @Service
@@ -27,13 +26,18 @@ public class svc_Ciudades implements itf_ciudades {
     }
 
     @Override
-    public List<mdl_Ciudades> getCiudadesByIdusuario(int idUsuario) {
-        return repocitorio.findAllByIdUsuario(idUsuario);
+    public List<mdl_Ciudades> getCiudadeById(int id) {
+        return repocitorio.findById(id);
     }
 
     @Override
-    public List<mdl_Ciudades> getCiudadesByIdUsuarioAndIdDepartamento(int idUsuario, int idDepartamento) {
-        return repocitorio.findAllByIdUsuarioAndIdDepartamento(idUsuario, idDepartamento);
+    public List<mdl_Ciudades> getCiudadesByIdMultiuser(int idMultiuser) {
+        return repocitorio.findAllByIdMultiuser(idMultiuser);
+    }
+
+    @Override
+    public List<mdl_Ciudades> getCiudadesByIdMultiuserAndIdDepartamento(int idMultiuser, int idDepartamento) {
+        return repocitorio.findAllByIdMultiuserAndIdDepartamento(idMultiuser, idDepartamento);
     }
 
 }

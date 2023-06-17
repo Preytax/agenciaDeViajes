@@ -20,7 +20,7 @@
               <span class="hide-menu">Home</span>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link"  :href="`${BASE_URL}HomeOperador`" aria-expanded="false">
+              <a class="sidebar-link" :href="`${BASE_URL}HomeOperador`" aria-expanded="false">
                 <span>
                   <i class="ti ti-layout-dashboard"></i>
                 </span>
@@ -84,6 +84,14 @@
                       <i class="ti ti-layout-dashboard"></i>
                     </span>
                     <span class="hide-menu">Departamentos</span>
+                  </a>
+                </li>
+                <li class="sidebar-item">
+                  <a class="sidebar-link" :href="`${BASE_URL}ciudad/addCiudad`" aria-expanded="false">
+                    <span>
+                      <i class="ti ti-layout-dashboard"></i>
+                    </span>
+                    <span class="hide-menu">Ciudades</span>
                   </a>
                 </li>
               </template>
@@ -297,6 +305,26 @@
                   </router-link>
                 </li>
               </template>
+            </template>
+            <template v-if="id_perfil == 2 || id_perfil == 4">
+              <template v-if="urlRouter == 'ciudad'">
+                <li class="nav-item" role="presentation">
+                  <router-link to="/ciudad/addCiudad">
+                    <button :class="{ 'active': urlEvento === 'addCiudad'}" class="nav-link rounded-5" id="contact-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="false">
+                      Crear Ciudad
+                    </button>
+                  </router-link>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <router-link to="/ciudad/getCiudad">
+                    <button :class="{ 'active': urlEvento === 'getCiudad'}" class="nav-link rounded-5" id="contact-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="false">
+                      Ciudades Resgistradas
+                    </button>
+                  </router-link>
+                </li>
+              </template>
+            </template>
+            <template v-if="id_perfil == 2 || id_perfil == 4">
               <template v-if="urlRouter == 'departamento'">
                 <li class="nav-item" role="presentation">
                   <router-link to="/departamento/addDepartamento">
@@ -313,8 +341,6 @@
                   </router-link>
                 </li>
               </template>
-            </template>
-            <template v-if="id_perfil == 2 || id_perfil == 4">
               <template v-if="urlRouter == 'paquete'">
                 <li class="nav-item" role="presentation">
                   <router-link to="/paquete/addEstandar">
@@ -336,8 +362,8 @@
             </template>
             <template v-else-if="id_perfil == 3">
               <li class="nav-item" role="presentation">
-                <router-link to="/home">
-                  <button :class=" urlEvento == 'home' || urlEvento == 'HomeOperador' ? 'active': ''" class="nav-link rounded-5" id="home-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="true">
+                <router-link to="/Home">
+                  <button :class=" urlEvento == 'Home' || urlEvento == 'HomeOperador' ? 'active': ''" class="nav-link rounded-5" id="home-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="true">
                     Home
                   </button>
                 </router-link>

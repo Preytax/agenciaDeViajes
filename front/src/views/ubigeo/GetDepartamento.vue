@@ -91,7 +91,7 @@
         if (!localStorage.getItem('id')) {
             // Redirigir a la página de inicio de sesión
             next('/login');
-        } else if(localStorage.getItem('id_perfil') != 1  && localStorage.getItem('id_perfil') != 4){
+        } else if(localStorage.getItem('id_perfil') != 2  && localStorage.getItem('id_perfil') != 4){
             next('/home');
         } else {
             next();
@@ -135,7 +135,7 @@
     },
     methods: {
       async cargarTabla(){
-        const response = await axios.get( this.BASE_URL_AXIOS + 'getDepartamentosbyidusuario/'+this.idMultiuser);
+        const response = await axios.get( this.BASE_URL_AXIOS + 'getDepartamentosByIdMultiuser/'+this.idMultiuser);
         this.departamentos = response.data;
 
         for (let key in this.departamentos) {

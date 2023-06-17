@@ -21,7 +21,7 @@ public class ctl_Paises {
 
     @GetMapping("/getPaises/{idUsuario}")
     @ResponseStatus(HttpStatus.CREATED)
-    List<mdl_Paises> getPaises(@PathVariable String idUsuario){
+    List<mdl_Paises> getPaises(@PathVariable int idUsuario){
         List<mdl_Paises> listPaises =null;
         listPaises = servicio.getPaises(idUsuario);
 
@@ -44,7 +44,8 @@ public class ctl_Paises {
 
         if (
             !pais.getNombre().equals("") && !pais.getNombre().isEmpty() &&
-            !pais.getIdUsuario().equals("")
+            pais.getIdMultiuser() != 0 &&
+            pais.getUsuarioRegistra() != 0
             ) 
         {
             mensaje = "ER|No se pudo registrar al país.";

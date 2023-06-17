@@ -7,10 +7,10 @@
           <div class="card-body">
             <h3>{{ title }}</h3><!--showGridlines-->
             <DataTable 
-              v-model:filters="filters" :value="departamentos" editMode="row" tableClass="editable-cells-table" 
+              v-model:filters="filters" :value="ciudades" editMode="row" tableClass="editable-cells-table" 
               :rows="10" filterDisplay="row" tableStyle="min-width: 50rem; border:0" 
               paginator scrollable :row-class-name="'table-row-space'"
-              :globalFilterFields="['id', 'nombres', 'idPais']">
+              :globalFilterFields="['id', 'nombres', 'idDepartamento']">
               
               <template v-slot:header>
                 <div class="flex justify-content-end">
@@ -34,12 +34,12 @@
               </template>
       
               <Column field="id" header="Id" style="min-width: 2rem"></Column>
-              <Column field="idPais" header="Pais" style="min-width: 15rem"><!--frozen-->
+              <Column field="idDepartamento" header="Departamento" style="min-width: 15rem"><!--frozen-->
                 <template #filter="{  }">
-                  <InputText ref="filtroNombre" v-model="filters['idPais'].value" type="text" class="p-column-filter" placeholder="Buscar" />
+                  <InputText ref="filtroDepartamento" v-model="filters['idDepartamento'].value" type="text" class="p-column-filter" placeholder="Buscar" />
                 </template>
               </Column>
-              <Column field="nombre" header="Departamento" style="min-width: 15rem"><!--frozen-->
+              <Column field="nombre" header="Ciudad" style="min-width: 15rem"><!--frozen-->
                 <template #filter="{  }">
                   <InputText ref="filtroNombre" v-model="filters['nombre'].value" type="text" class="p-column-filter" placeholder="Buscar" />
                 </template>
@@ -91,7 +91,7 @@
         if (!localStorage.getItem('id')) {
             // Redirigir a la página de inicio de sesión
             next('/login');
-        } else if(localStorage.getItem('id_perfil') != 1  && localStorage.getItem('id_perfil') != 4){
+        } else if(localStorage.getItem('id_perfil') != 2  && localStorage.getItem('id_perfil') != 4){
             next('/home');
         } else {
             next();
@@ -109,13 +109,12 @@
         idMultiuser: localStorage.getItem('id_multiuser'),
         modalEliminar: false,
         datosEliminar: {},
-        tiposDocumentos : {},
-        idPais : {},
+        idDepartamento : {},
         statuses : {0: 'Deshabilitado', 1:'Habilitado', 2:'Eliminado'},
         loading: true,
-        departamentos: null,
+        ciudades: null,
         showAlert: false,
-        title: 'Usuarios Creados',
+        title: 'Ciudades Creadas',
         filters: {
           global: { 
             value: null, matchMode: FilterMatchMode.CONTAINS 
@@ -123,7 +122,7 @@
           nombre: { 
             value: null, matchMode: FilterMatchMode.STARTS_WITH
           },
-          idPais: { 
+          idDepartamento: { 
             value: null, matchMode: FilterMatchMode.STARTS_WITH
           },
         },
@@ -136,15 +135,14 @@
     },
     methods: {
       async cargarTabla(){
-        const response = await axios.get( this.BASE_URL_AXIOS + 'getDepartamentosbyidusuario/'+this.idMultiuser);
-        this.departamentos = response.data;
+        const response = await axios.get( this.BASE_URL_AXIOS + 'getCiudadesByIdMultiuser/'+this.idMultiuser);
+        this.ciudades = response.data;
 
-        for (let key in this.departamentos) {
-          console.log("llego");
-          const operador = this.departamentos[key];
-          const paisResponse = await axios.get(this.BASE_URL_AXIOS + 'getPaisesById/' + operador.idPais);
-          const nombrePais = paisResponse.data[0].nombre;
-          operador.idPais = nombrePais; // Agregar el nombre al objeto operador en la lista
+        for (let key in this.ciudades) {
+          const departamento = this.ciudades[key];
+          const departamentoResponse = await axios.get(this.BASE_URL_AXIOS + 'getDepartamentosById/' + departamento.idDepartamento);
+          const nombreDepartamento = departamentoResponse.data[0].nombre;
+          departamento.idDepartamento = nombreDepartamento; // Agregar el nombre al objeto departamento en la lista
         }
 
         this.loading = false;
@@ -222,21 +220,13 @@
       clearFilter() {
         //Limpiar el inputText
         this.$refs.search.$el.value                 = ''; 
-        this.$refs.filtroNombres.$el.value          = '';
-        this.$refs.filtroApellidoPaterno.$el.value  = '';
-        this.$refs.filtroApellidoMaterno.$el.value  = '';
-        this.$refs.filtroNroDocumento.$el.value     = '';
-        this.$refs.filtroIdPerfil.$el.value         = '';
-        this.$refs.filtroFechaNacimiento.$el.value  = '';
+        this.$refs.filtroNombre.$el.value          = '';
+        this.$refs.filtroDepartamento.$el.value     = '';
         
         // Restablecer el valor del los filtro
-        this.filters.global.value           = null;
-        this.filters.nombres.value          = null;
-        this.filters.apellidoPaterno.value  = null;
-        this.filters.apellidoMaterno.value  = null;
-        this.filters.nroDocumento.value     = null;
-        this.filters.idPerfil.value         = null;
-        this.filters.fechaNacimiento.value  = null;
+        this.filters.global.value             = null;
+        this.filters.nombre.value            = null;
+        this.filters.idDepartamento.value = null;
       },
     }
   };

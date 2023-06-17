@@ -14,6 +14,8 @@ import AddPais from '@/views/ubigeo/AddPais.vue'
 import GetPais from '@/views/ubigeo/GetPais.vue'
 import AddDepartamento from '@/views/ubigeo/AddDepartamento.vue'
 import GetDepartamento from '@/views/ubigeo/GetDepartamento.vue'
+import AddCiudad from '@/views/ubigeo/AddCiudad.vue'
+import GetCiudad from '@/views/ubigeo/GetCiudad.vue'
 
 const routes = [
   {
@@ -25,6 +27,16 @@ const routes = [
     path: '/home',
     name: 'home',
     component: sesion,
+  },
+  {
+    path: '/ciudad/AddCiudad',
+    name: 'AddCiudad',
+    component: AddCiudad,
+  },
+  {
+    path: '/ciudad/GetCiudad',
+    name: 'GetCiudad',
+    component: GetCiudad,
   },
   {
     path: '/pais/AddPais',

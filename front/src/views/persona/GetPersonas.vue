@@ -210,7 +210,7 @@
     },
     methods: {
       async cargarTabla(){
-        const response = await axios.get( this.BASE_URL_AXIOS + 'getPersonas/2,4/0,1/'+localStorage.getItem('id'));
+        const response = await axios.get( this.BASE_URL_AXIOS + 'getPersonas/1,2/0,1/'+localStorage.getItem('id'));
         this.operadores = response.data;
         this.loading = false;
       },

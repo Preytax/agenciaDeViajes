@@ -25,7 +25,7 @@ public class ctl_Notificaciones {
     itf_chatHelp servicio;
 
     public static final String ACCOUNT_SID  = "AC6caf804c4bd3a5966e89a2375ac20fac";
-    public static final String AUTH_TOKEN   = "09d6c9c72a7099d684d687dacffe2932";
+    public static final String AUTH_TOKEN   = "a3d272423d08d8ec33a8afda6408e810";
     public static final String TO_FOPHE     = "whatsapp:+51942263335";
     public static final String FROM_FOPHE   = "whatsapp:+14155238886 ";
 
@@ -37,16 +37,14 @@ public class ctl_Notificaciones {
     @ResponseStatus(HttpStatus.OK)
     //@Scheduled(fixedDelay = 1000)
     public String receiveWhatsAppMessage() throws JsonProcessingException {
-    System.out.println("1-----------------------");
         // Obtén los mensajes de WhatsApp entrantes
         ResourceSet<Message> messages = Message.reader()
                 .setTo(new PhoneNumber(TO_FOPHE))
                 .setFrom(new PhoneNumber(FROM_FOPHE))
                 .read();
-System.out.println("2-----------------------");
-        // Verifica si hay al menos un mensaje recibido
+
+                // Verifica si hay al menos un mensaje recibido
         if (!messages.toString().isEmpty()) {
-            System.out.println("3-----------------------");
             try {
                 Message firstMessage = messages.iterator().next();
                 String numero = firstMessage.getFrom().toString().replace("whatsapp:+51", "");

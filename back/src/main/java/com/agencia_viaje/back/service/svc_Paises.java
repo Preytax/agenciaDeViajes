@@ -29,7 +29,7 @@ public class svc_Paises implements itf_paises {
     }
 
     @Override
-    public List<mdl_Paises> getPaises(String id_usuario) {
-        return persistence.findAllByIdUsuario(id_usuario);
+    public List<mdl_Paises> getPaises(int idMultiuser) {
+        return persistence.findAllByIdMultiuser(idMultiuser);
     }
 }

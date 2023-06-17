@@ -153,7 +153,7 @@ export default {
     props: [],
     methods: {
         async paisesr() {
-            const responseDepartamento = await axios.get(this.BASE_URL_AXIOS + "getDepartamentosbyidusuariobyidpais/" + this.idMultiuser + "/" + this.paises1);
+            const responseDepartamento = await axios.get(this.BASE_URL_AXIOS + "getDepartamentosByIdMultiuserByIdpais/" + this.idMultiuser + "/" + this.paises1);
             this.departamentos = responseDepartamento.data;
         },
 
@@ -163,7 +163,7 @@ export default {
         },
 
         async ciudad5() {
-            const responseCuidad = await axios.get(this.BASE_URL_AXIOS + "getCiudades/" + this.departamento2);
+            const responseCuidad = await axios.get(this.BASE_URL_AXIOS + "getCiudadesByIdMultiuserAndIdDepartamento/" + this.idMultiuser + "/" + this.departamento2);
             this.cuidades = responseCuidad.data;
         },
 

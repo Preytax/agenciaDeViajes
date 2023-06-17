@@ -22,9 +22,13 @@ public class mdl_Ciudades {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "ID_USUARIO")
+    @Column(name = "USUARIO_REGISTRA")
     @Getter @Setter
-    private int idUsuario;
+    private int usuarioRegistra;
+
+    @Column(name = "ID_MULTIUSER")
+    @Getter @Setter
+    private int idMultiuser;
     
     @Column(name="ID_DEPARTAMENTO")
     @Getter @Setter

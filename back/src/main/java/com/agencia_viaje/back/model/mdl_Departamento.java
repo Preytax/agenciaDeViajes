@@ -16,6 +16,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class mdl_Departamento {
+
     @Id
     @Column(name="ID")
     @Getter @Setter
@@ -26,9 +27,13 @@ public class mdl_Departamento {
     @Getter @Setter
     private int idPais;
     
-    @Column(name = "ID_USUARIO")
+    @Column(name = "USUARIO_REGISTRA")
     @Getter @Setter
-    private int idUsuario;
+    private int usuarioRegistra;
+
+    @Column(name="ID_MULTIUSER")
+    @Getter @Setter
+    private int idMultiuser;
 
     @Column(name="NOMBRE")
     @Getter @Setter
