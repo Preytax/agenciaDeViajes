@@ -6,39 +6,32 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name="agv_paises")
+@AllArgsConstructor
+@NoArgsConstructor
 public class mdl_Paises {
+
     @Id
     @Column(name="id")
+    @Getter @Setter
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Column(name="USUARIO_REGISTRA")
+    @Getter @Setter
+    private int usuarioRegistra;
+
+    @Column(name="ID_MULTIUSER")
+    @Getter @Setter
+    private int idMultiuser;
+    
     @Column(name="nombre")
+    @Getter @Setter
     private String nombre;
-
-    public mdl_Paises() {
-    }
-
-    public mdl_Paises(int id,String nombre) {
-        this.id = id;
-        this.nombre = nombre;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
 }

@@ -30,10 +30,10 @@ public class svc_persona implements itf_persona {
         return repocitory.updatePersonajdbc(request);
     }
 
-    @Override
+    /*@Override
     public List<mdl_persona> singIn(String correo, String password) {
         return repocitory.singIn(correo, password);
-    }
+    }*/
 
     @Override
     public boolean suspenderPersona(int id) {
@@ -59,6 +59,11 @@ public class svc_persona implements itf_persona {
     /* QUERY CON JPA */
     @Autowired
     itf_pct_persona persistence;
+
+    @Override
+    public List<mdl_persona> singIn(String correo, String password) {
+        return persistence.findByCorreoAndPasswordAndEstado(correo, password, "1");
+    }
 
     @Override
     public List<mdl_persona> findAllByIdPerfilInAndEstadoInAndUsuarioRegistra(List<String> id_perfil, List<String> estado, String usuario_registra) {

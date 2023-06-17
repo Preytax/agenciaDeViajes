@@ -11,7 +11,7 @@ public interface itf_persona {
     public int updatePersonajdbc(mdl_persona request);
     public boolean confirmarCorreo(String correo);
     public boolean confirmarNroDocumento(String dni);
-    public List<mdl_persona> singIn(String correo, String password);
+    //public List<mdl_persona> singIn(String correo, String password);
     public boolean suspenderPersona(int id);
     public boolean habilitarPersona(int id);
     public boolean EliminatPersona(int id);
@@ -20,6 +20,7 @@ public interface itf_persona {
     /* --------------------------------------------------------------------------------------------- */
 
     /* QUERY CON JPA */
+    public List<mdl_persona> singIn(String correo, String password);
     public mdl_persona getPersonaJPA(long id);
     public List<mdl_persona> findAllByIdPerfilInAndEstadoInAndUsuarioRegistra(List<String> id_perfil, List<String> estado, String usuario_registra);
     public List<mdl_persona> findAllByIdPerfilAndEstadoIn(String id_perfil, List<String> estado);

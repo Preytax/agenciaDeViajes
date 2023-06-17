@@ -136,37 +136,6 @@ export default {
     }
   },
   methods: {
-    /*async enviarMensajeWPP() {
-      const token = 'GA230611221411';
-      const api = 'https://script.google.com/macros/s/AKfycbyoBhxuklU5D3LTguTcYAS85klwFINHxxd-FroauC4CmFVvS0ua/exec';
-
-      const payload = {
-        op: 'registermessage',
-        token_qr: token,
-        mensajes: [
-          {
-            numero: "51942263335",
-            mensaje: `*Solicitud de Ayuda* \n\nUn cliente esta solicitando ayuda desde el formulario del login, los datos de contato son:\n\n*Numero:* ${this.numeroAyuda}\n*Correo:* ${this.correoAyuda}\n\n*Comuniquese con el cliente*`
-          }
-        ]
-      };
-
-      try {
-        this.spinner = true;
-        await axios.post(api, JSON.stringify(payload));
-        this.hideSolicitudAyuda();
-        this.spinner = false;
-        this.alerta_ayuda = true;
-        setTimeout(() => {
-          this.alerta_ayuda = false;
-        }, 1500);
-      } catch (error) {
-        this.alerta_error_ayuda = true;
-        setTimeout(() => {
-          this.alerta_error_ayuda = false;
-        }, 1500);
-      }
-    },*/
     hideSolicitudAyuda() {
       this.solicitudAyuda = false;
     },
@@ -175,11 +144,12 @@ export default {
     },
     async enviarMensajeWPP() {
       this.spinner = true;
-      //const request = await axios.get( this.BASE_URL_AXIOS + 'sendMessage/Solicitud de Ayuda/'+this.correoAyuda+'/'+this.numeroAyuda);
+
       const newChat = {
           nombre  : this.chatNombre,
           numero  : this.chatNumero,
       };
+      
       const request = await axios({
           method: "POST",
           url: this.BASE_URL_AXIOS + "sendHelpMessage",
@@ -254,6 +224,7 @@ export default {
 
             localStorage.setItem('id', this.datosPersona[0].id);
             localStorage.setItem('id_perfil', this.datosPersona[0].idPerfil);
+            localStorage.setItem('id_multiuser', this.datosPersona[0].usuarioRegistra);
             localStorage.setItem('nombres', this.datosPersona[0].nombres);
             localStorage.setItem('apellido_paterno', this.datosPersona[0].apellidoPaterno);
             localStorage.setItem('apellido_materno', this.datosPersona[0].apellidoMaterno);

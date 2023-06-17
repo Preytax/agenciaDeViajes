@@ -141,10 +141,11 @@ export default {
             fechaFinal: null,
             monto: null,
             showAlert: null,
+            idMultiuser: localStorage.getItem('id_multiuser'),
         };
     },
     mounted: async function () {
-        const responsePais = await axios.get(this.BASE_URL_AXIOS + "getPaises");
+        const responsePais = await axios.get(this.BASE_URL_AXIOS + "getPaises/" + this.idMultiuser);
         this.paises = responsePais.data;
         const responseTipoTransporte = await axios.get(this.BASE_URL_AXIOS + "getTipoTransporte");
         this.modoTransportes = responseTipoTransporte.data;
@@ -152,7 +153,7 @@ export default {
     props: [],
     methods: {
         async paisesr() {
-            const responseDepartamento = await axios.get(this.BASE_URL_AXIOS + "getDepartamento/" + this.paises1);
+            const responseDepartamento = await axios.get(this.BASE_URL_AXIOS + "getDepartamentosByIdMultiuserByIdpais/" + this.idMultiuser + "/" + this.paises1);
             this.departamentos = responseDepartamento.data;
         },
 
@@ -162,7 +163,7 @@ export default {
         },
 
         async ciudad5() {
-            const responseCuidad = await axios.get(this.BASE_URL_AXIOS + "getCiudades/" + this.departamento2);
+            const responseCuidad = await axios.get(this.BASE_URL_AXIOS + "getCiudadesByIdMultiuserAndIdDepartamento/" + this.idMultiuser + "/" + this.departamento2);
             this.cuidades = responseCuidad.data;
         },
 

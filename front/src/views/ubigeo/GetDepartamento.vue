@@ -7,10 +7,10 @@
           <div class="card-body">
             <h3>{{ title }}</h3><!--showGridlines-->
             <DataTable 
-              v-model:filters="filters" :value="operadores" editMode="row" tableClass="editable-cells-table" 
+              v-model:filters="filters" :value="departamentos" editMode="row" tableClass="editable-cells-table" 
               :rows="10" filterDisplay="row" tableStyle="min-width: 50rem; border:0" 
               paginator scrollable :row-class-name="'table-row-space'"
-              :globalFilterFields="['idPerfil', 'nombres', 'apellidoPaterno', 'apellidoPaterno', 'tipoDocumento', 'nroDocumento']">
+              :globalFilterFields="['id', 'nombres', 'idPais']">
               
               <template v-slot:header>
                 <div class="flex justify-content-end">
@@ -26,69 +26,33 @@
               </template>
       
               <template #empty>
-                Sin datos de usuarios.
+                Sin datos de departamentos.
               </template>
       
               <template #loading>
-                Cargando datos de usuarios. Por favor espere.
+                Cargando datos de departamentos. Por favor espere.
               </template>
       
               <Column field="id" header="Id" style="min-width: 2rem"></Column>
-              <Column field="nombres" header="Nombres" style="min-width: 15rem"><!--frozen-->
+              <Column field="idPais" header="Pais" style="min-width: 15rem"><!--frozen-->
                 <template #filter="{  }">
-                  <InputText ref="filtroNombres" v-model="filters['nombres'].value" type="text" class="p-column-filter" placeholder="Buscar" />
+                  <InputText ref="filtroIdPais" v-model="filters['idPais'].value" type="text" class="p-column-filter" placeholder="Buscar" />
                 </template>
               </Column>
-              <Column field="apellidoPaterno" header="Apellido Paterno" style="min-width: 12rem">
+              <Column field="nombre" header="Departamento" style="min-width: 15rem"><!--frozen-->
                 <template #filter="{  }">
-                  <InputText ref="filtroApellidoPaterno" v-model="filters['apellidoPaterno'].value" type="text" class="p-column-filter" placeholder="Buscar" />
+                  <InputText ref="filtroNombre" v-model="filters['nombre'].value" type="text" class="p-column-filter" placeholder="Buscar" />
                 </template>
               </Column>
-              <Column field="apellidoMaterno" header="Apellido Materno" style="min-width: 12rem">
-                <template #filter="{  }">
-                  <InputText ref="filtroApellidoMaterno" v-model="filters['apellidoMaterno'].value" type="text" class="p-column-filter" placeholder="Buscar" />
-                </template>
-              </Column>
-              <Column field="tipoDocumento" header="Documento" style="min-width: 12rem">
-                <template #body="datostipoDocumento">
-                  <span>{{ tiposDocumentos[datostipoDocumento.data.tipoDocumento] }}</span>
-                </template>
-              </Column>
-              <Column field="nroDocumento" header="Nro. Documento" style="min-width: 12rem">
-                <template #filter="{  }">
-                  <InputText ref="filtroNroDocumento" v-model="filters['nroDocumento'].value" type="text" class="p-column-filter" placeholder="Buscar" />
-                </template>
-              </Column>
-              <Column field="idPerfil" header="Perfil" style="min-width: 12rem">
-                <!--<template #body="datosTiposPerlies">
-                  <span>{{ /*perfiles[datosTiposPerlies.data.idPerfil]*/ }}</span>
-                </template>-->
-                <template #filter="{  }">
-                  <InputText ref="filtroIdPerfil" v-model="filters['idPerfil'].value" type="text" class="p-column-filter" placeholder="Buscar" />
-                </template>
-              </Column>
-              <Column field="estado" header="Estado" style="min-width: 12rem">
-                <template #body="datoOperador">
-                  <span>{{ statuses[datoOperador.data.estado] }}</span>
-                </template>
-              </Column>
-              <Column field="fechaNacimiento" header="Fecha Nacimiento" style="min-width: 12rem">
-                <template #filter="{  }">
-                  <InputText ref="filtroFechaNacimiento" type="date" v-model="filters['fechaNacimiento'].value" placeholder="yyyy-mm-dd" mask="99-99-9999" />
-                </template>
-              </Column>
-              <Column field="usuarioRegistra" header="Usuario Registra" style="min-width: 12rem"></Column>
-              <Column field="fechaRegistro" header="Fecha Registro" style="min-width: 12rem"></Column>
-              <Column field="ipRegistra" header="IP Registro" style="min-width: 12rem"></Column>
 
-              <Column field="id" header="Acciones" style="min-width: 12rem">
+              <!--<Column field="id" header="Acciones" style="min-width: 12rem">
                   <template #body="datosId">
                     <button v-if="datosId.data.estado == 1" type="button" @click="suspender(datosId.data.id, datosId.data.estado)" class="btn btn-warning">Suspender</button>
                     <button v-if="datosId.data.estado == 0" type="button" @click="suspender(datosId.data.id, datosId.data.estado)" class="btn btn-success">Habilitar</button>
                     <button type="button" @click="ShowModalEliminar(datosId.data.id, datosId.data.correo)" class="btn btn-danger btn-eliminar">Eliminar</button>
                 </template>
               </Column>
-              <!--<Column :rowEditor="true" style="width: 10%; min-width: 8rem" bodyStyle="text-align:center"></Column>-->
+              <Column :rowEditor="true" style="width: 10%; min-width: 8rem" bodyStyle="text-align:center"></Column>-->
             </DataTable>
           </div>
         </div>
@@ -127,7 +91,7 @@
         if (!localStorage.getItem('id')) {
             // Redirigir a la página de inicio de sesión
             next('/login');
-        } else if(localStorage.getItem('id_perfil') != 1  && localStorage.getItem('id_perfil') != 4){
+        } else if(localStorage.getItem('id_perfil') != 2  && localStorage.getItem('id_perfil') != 4){
             next('/home');
         } else {
             next();
@@ -142,39 +106,24 @@
     },
     data() {
       return {
+        idMultiuser: localStorage.getItem('id_multiuser'),
         modalEliminar: false,
         datosEliminar: {},
-        tiposDocumentos : {},
-        perfiles : {},
+        idPais : {},
         statuses : {0: 'Deshabilitado', 1:'Habilitado', 2:'Eliminado'},
         loading: true,
-        operadores: null,
+        departamentos: null,
         showAlert: false,
         title: 'Usuarios Creados',
         filters: {
           global: { 
             value: null, matchMode: FilterMatchMode.CONTAINS 
           },
-          idPerfil: { 
+          nombre: { 
             value: null, matchMode: FilterMatchMode.STARTS_WITH
           },
-          nombres: { 
+          idPais: { 
             value: null, matchMode: FilterMatchMode.STARTS_WITH
-          },
-          apellidoPaterno: { 
-            value: null, matchMode: FilterMatchMode.STARTS_WITH
-          },
-          apellidoMaterno: { 
-            value: null, matchMode: FilterMatchMode.STARTS_WITH
-          },
-          nroDocumento: { 
-            value: null, matchMode: FilterMatchMode.STARTS_WITH
-          },
-          fechaNacimiento: { 
-            value: null, matchMode: FilterMatchMode.CONTAINS
-          },
-          fechaRegistro: { 
-            value: null, matchMode: FilterMatchMode.CONTAINS
           },
         },
       };
@@ -183,35 +132,19 @@
 
       this.cargarTabla();
 
-      /* REORDENAMIENTO DE TIPOS DE DOCUEMNTOS */
-      const responseTipoDocumento = await axios.get( this.BASE_URL_AXIOS + 'getTiposDocumentos');
-      var auxTiposDocumentos = {};
-
-      for (const op of responseTipoDocumento.data) {
-        auxTiposDocumentos[op.id] = op.nombre;
-      }
-      this.tiposDocumentos = auxTiposDocumentos;
-
-      for (let key in this.operadores) {
-        const operador = this.operadores[key];
-        const perfilResponse = await axios.get(this.BASE_URL_AXIOS + 'getPerfil/' + operador.idPerfil);
-        const nombrePerfil = perfilResponse.data.nombre;
-        operador.idPerfil = nombrePerfil; // Agregar el nombre al objeto operador en la lista
-      }
-
-      /*REORDENAMIENTO DE TIPOS DE PERFILES 
-      const responsePerfil = await axios.get( this.BASE_URL_AXIOS + 'getPerfiles');
-      var auxTipoPerfiles = {};
-      
-      for (const op of responsePerfil.data) {
-        auxTipoPerfiles[op.id] = op.nombre;
-      }
-      this.perfiles = auxTipoPerfiles;*/
     },
     methods: {
       async cargarTabla(){
-        const response = await axios.get( this.BASE_URL_AXIOS + 'getPersonas/1,2/0,1/'+localStorage.getItem('id'));
-        this.operadores = response.data;
+        const response = await axios.get( this.BASE_URL_AXIOS + 'getDepartamentosByIdMultiuser/'+this.idMultiuser);
+        this.departamentos = response.data;
+
+        for (let key in this.departamentos) {
+          const operador = this.departamentos[key];
+          const paisResponse = await axios.get(this.BASE_URL_AXIOS + 'getPaisesById/' + operador.idPais);
+          const nombrePais = paisResponse.data[0].nombre;
+          operador.idPais = nombrePais;
+        }
+
         this.loading = false;
       },
       async ShowModalEliminar(id, correo){
@@ -287,21 +220,13 @@
       clearFilter() {
         //Limpiar el inputText
         this.$refs.search.$el.value                 = ''; 
-        this.$refs.filtroNombres.$el.value          = '';
-        this.$refs.filtroApellidoPaterno.$el.value  = '';
-        this.$refs.filtroApellidoMaterno.$el.value  = '';
-        this.$refs.filtroNroDocumento.$el.value     = '';
-        this.$refs.filtroIdPerfil.$el.value         = '';
-        this.$refs.filtroFechaNacimiento.$el.value  = '';
+        this.$refs.filtroNombre.$el.value          = '';
+        this.$refs.filtroIdPais.$el.value         = '';
         
         // Restablecer el valor del los filtro
         this.filters.global.value           = null;
-        this.filters.nombres.value          = null;
-        this.filters.apellidoPaterno.value  = null;
-        this.filters.apellidoMaterno.value  = null;
-        this.filters.nroDocumento.value     = null;
-        this.filters.idPerfil.value         = null;
-        this.filters.fechaNacimiento.value  = null;
+        this.filters.nombre.value          = null;
+        this.filters.idPais.value  = null;
       },
     }
   };

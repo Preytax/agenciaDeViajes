@@ -5,5 +5,8 @@ import java.util.List;
 import com.agencia_viaje.back.model.mdl_Ciudades;
 
 public interface itf_ciudades {
-    public List<mdl_Ciudades> getCiudades(int id_modo_departamento);
+    public Boolean saveCiudad(mdl_Ciudades ciudad);
+    public List<mdl_Ciudades> getCiudadeById(int id);
+    public List<mdl_Ciudades> getCiudadesByIdMultiuser(int idUsuario);
+    public List<mdl_Ciudades> getCiudadesByIdMultiuserAndIdDepartamento(int idUsuario, int idDepartamento);
 }

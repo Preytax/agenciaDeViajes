@@ -10,6 +10,12 @@ import Login from '@/views/sesion/LogIn.vue'
 import Register from '@/views/sesion/RegisterIn.vue'
 import HelpChat from '@/views/whatsapp/helpChat.vue'
 import AddPaqueteEstandar from '@/views/paquetes/AddPaqueteEstandar.vue'
+import AddPais from '@/views/ubigeo/AddPais.vue'
+import GetPais from '@/views/ubigeo/GetPais.vue'
+import AddDepartamento from '@/views/ubigeo/AddDepartamento.vue'
+import GetDepartamento from '@/views/ubigeo/GetDepartamento.vue'
+import AddCiudad from '@/views/ubigeo/AddCiudad.vue'
+import GetCiudad from '@/views/ubigeo/GetCiudad.vue'
 
 const routes = [
   {
@@ -21,6 +27,36 @@ const routes = [
     path: '/home',
     name: 'home',
     component: sesion,
+  },
+  {
+    path: '/ciudad/AddCiudad',
+    name: 'AddCiudad',
+    component: AddCiudad,
+  },
+  {
+    path: '/ciudad/GetCiudad',
+    name: 'GetCiudad',
+    component: GetCiudad,
+  },
+  {
+    path: '/pais/AddPais',
+    name: 'AddPais',
+    component: AddPais,
+  },
+  {
+    path: '/pais/GetPais',
+    name: 'GetPais',
+    component: GetPais,
+  },
+  {
+    path: '/departamento/AddDepartamento',
+    name: 'AddDepartamento',
+    component: AddDepartamento,
+  },
+  {
+    path: '/departamento/GetDepartamento',
+    name: 'GetDepartamento',
+    component: GetDepartamento,
   },
   {
     path: '/HomeOperador',
