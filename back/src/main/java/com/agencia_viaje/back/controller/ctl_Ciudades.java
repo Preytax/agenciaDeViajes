@@ -39,6 +39,14 @@ public class ctl_Ciudades {
         return mensaje;
     }
 
+    @GetMapping("/getCiudadById/{id}")
+    @ResponseStatus(HttpStatus.CREATED)
+    List<mdl_Ciudades> getCiudadById(@PathVariable int id){
+        List<mdl_Ciudades> listDepartamento = null;
+        listDepartamento = servicio.getCiudadById(id);
+        return listDepartamento;
+    }
+
     @GetMapping("/getCiudadesByIdMultiuser/{idusuario}")
     @ResponseStatus(HttpStatus.CREATED)
     List<mdl_Ciudades> getCiudadesByIdMultiuser(@PathVariable int idusuario){

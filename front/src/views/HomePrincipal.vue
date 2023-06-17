@@ -34,7 +34,7 @@ export default{
             // Redirigir a la página de inicio de sesión
             next('/login');
         } else if(localStorage.getItem('id_perfil') != 3){
-            next('/HomeOperador');
+            next('/homeOperador');
         } else {
             next();
         }

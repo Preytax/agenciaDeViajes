@@ -15,7 +15,7 @@ export default {
           // Redirigir a la página de inicio de sesión
           next('/login');
       } else if(localStorage.getItem('id_perfil') != 1 && localStorage.getItem('id_perfil') != 2 && localStorage.getItem('id_perfil') != 4){
-          next('/Home');
+          next('/home');
       } else {
           next();
       }

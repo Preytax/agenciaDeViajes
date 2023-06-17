@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,11 +21,38 @@ public class ctl_Actividades {
     @Autowired
     svc_Actividades servicio;
 
-    @GetMapping("/getActividades/{id_modo_ciudad2}")
+    @PostMapping("/saveActividad")
     @ResponseStatus(HttpStatus.CREATED)
-    List<mdl_Actividades> getActividades(@PathVariable int id_modo_ciudad2){
+    String saveOperador(@RequestBody mdl_Actividades actividad) {
+        String mensaje = "ER|Existe un error interno y no pudo registrarse.";
+
+        if (
+            !actividad.getNombre().equals("") && !actividad.getNombre().isEmpty() &&
+            actividad.getIdMultiuser() != 0 &&
+            actividad.getIdCiudad() != 0
+            ) 
+        {
+            mensaje = "ER|No se pudo registrar la actividad.";
+            if (servicio.saveActividad(actividad)) {
+                mensaje = "OK|Se registro la ciudad con exito.";
+            }
+        }
+        return mensaje;
+    }
+
+    @GetMapping("/getActividadesByIdMultiuser/{idMultiuser}")
+    @ResponseStatus(HttpStatus.CREATED)
+    List<mdl_Actividades> getActividadesByIdMultiuser(@PathVariable int idMultiuser){
         List<mdl_Actividades> listActividades =null;
-        listActividades = servicio.getActividades(id_modo_ciudad2);
+        listActividades = servicio.getActividadesByIdMultiuser(idMultiuser);
+        return listActividades;
+    }
+
+    @GetMapping("/getActividades/{idMultiuser}/{idCiudad}")
+    @ResponseStatus(HttpStatus.CREATED)
+    List<mdl_Actividades> getActividades(@PathVariable int idMultiuser, @PathVariable int idCiudad){
+        List<mdl_Actividades> listActividades =null;
+        listActividades = servicio.getActividadesByIdMultiuserAndIdCiudad(idMultiuser, idCiudad);
         return listActividades;
     }
 }

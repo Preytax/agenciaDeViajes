@@ -10,7 +10,7 @@ import com.agencia_viaje.back.persistence.itf_pct_departamento;
 public class svc_Departamentos implements itf_departamento {
     @Autowired
     itf_pct_departamento repositorio;
-    
+
     @Override
     public Boolean saveDepartamento(mdl_Departamento departamento) {
         try {
@@ -28,12 +28,12 @@ public class svc_Departamentos implements itf_departamento {
     }
 
     @Override
-    public List<mdl_Departamento> getDepartamentosByIdMultiuser(int idMultiuser){
+    public List<mdl_Departamento> getDepartamentosByIdMultiuser(int idMultiuser) {
         return repositorio.findAllByIdMultiuser(idMultiuser);
     }
 
     @Override
-    public List<mdl_Departamento> getDepartamentosByIdMultiuserByIdpais(int idUsuario, int id_modo_pais){
+    public List<mdl_Departamento> getDepartamentosByIdMultiuserAndIdPais(int idUsuario, int id_modo_pais) {
         return repositorio.findAllByIdMultiuserAndIdPais(idUsuario, id_modo_pais);
     }
 }

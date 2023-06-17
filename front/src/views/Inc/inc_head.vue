@@ -20,7 +20,7 @@
               <span class="hide-menu">Home</span>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" :href="`${BASE_URL}HomeOperador`" aria-expanded="false">
+              <a class="sidebar-link" :href="`${BASE_URL}homeOperador`" aria-expanded="false">
                 <span>
                   <i class="ti ti-layout-dashboard"></i>
                 </span>
@@ -92,6 +92,18 @@
                       <i class="ti ti-layout-dashboard"></i>
                     </span>
                     <span class="hide-menu">Ciudades</span>
+                  </a>
+                </li>
+                <li class="nav-small-cap">
+                    <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+                    <span class="hide-menu">Acciones</span>
+                </li>
+                <li class="sidebar-item">
+                  <a class="sidebar-link" :href="`${BASE_URL}actividad/addActividad`" aria-expanded="false">
+                    <span>
+                      <i class="ti ti-layout-dashboard"></i>
+                    </span>
+                    <span class="hide-menu">Actividades</span>
                   </a>
                 </li>
               </template>
@@ -307,6 +319,22 @@
               </template>
             </template>
             <template v-if="id_perfil == 2 || id_perfil == 4">
+              <template v-if="urlRouter == 'actividad'">
+                <li class="nav-item" role="presentation">
+                  <router-link to="/actividad/addActividad">
+                    <button :class="{ 'active': urlEvento === 'addActividad'}" class="nav-link rounded-5" id="contact-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="false">
+                      Crear Actividad
+                    </button>
+                  </router-link>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <router-link to="/actividad/getActividad">
+                    <button :class="{ 'active': urlEvento === 'getActividad'}" class="nav-link rounded-5" id="contact-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="false">
+                      Actividades Resgistradas
+                    </button>
+                  </router-link>
+                </li>
+              </template>
               <template v-if="urlRouter == 'ciudad'">
                 <li class="nav-item" role="presentation">
                   <router-link to="/ciudad/addCiudad">
@@ -323,8 +351,6 @@
                   </router-link>
                 </li>
               </template>
-            </template>
-            <template v-if="id_perfil == 2 || id_perfil == 4">
               <template v-if="urlRouter == 'departamento'">
                 <li class="nav-item" role="presentation">
                   <router-link to="/departamento/addDepartamento">
@@ -362,8 +388,8 @@
             </template>
             <template v-else-if="id_perfil == 3">
               <li class="nav-item" role="presentation">
-                <router-link to="/Home">
-                  <button :class=" urlEvento == 'Home' || urlEvento == 'HomeOperador' ? 'active': ''" class="nav-link rounded-5" id="home-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="true">
+                <router-link to="/home">
+                  <button :class=" urlEvento == 'home' || urlEvento == 'homeOperador' ? 'active': ''" class="nav-link rounded-5" id="home-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="true">
                     Home
                   </button>
                 </router-link>

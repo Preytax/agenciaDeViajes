@@ -39,8 +39,8 @@ public class ctl_Departamento {
 
     @GetMapping("/getDepartamentosById/{id}")
     @ResponseStatus(HttpStatus.CREATED)
-    List<mdl_Departamento> getDepartamentosById(@PathVariable int id){
-        List<mdl_Departamento> listPaises =null;
+    List<mdl_Departamento> getDepartamentosById(@PathVariable int id) {
+        List<mdl_Departamento> listPaises = null;
         listPaises = servicio.getDepartamentoById(id);
 
         return listPaises;
@@ -54,12 +54,12 @@ public class ctl_Departamento {
         return listDepartamento;
     }
 
-    @GetMapping("/getDepartamentosByIdMultiuserByIdpais/{idMultiuser}/{id_pais}")
+    @GetMapping("/getDepartamentosByIdMultiuserAndIdPais/{idMultiuser}/{id_pais}")
     @ResponseStatus(HttpStatus.CREATED)
-    List<mdl_Departamento> getDepartamentosByIdMultiuserByIdpais(@PathVariable int idMultiuser,
+    List<mdl_Departamento> getDepartamentosByIdMultiuserAndIdPais(@PathVariable int idMultiuser,
             @PathVariable int id_pais) {
         List<mdl_Departamento> listDepartamento = null;
-        listDepartamento = servicio.getDepartamentosByIdMultiuserByIdpais(idMultiuser, id_pais);
+        listDepartamento = servicio.getDepartamentosByIdMultiuserAndIdPais(idMultiuser, id_pais);
         return listDepartamento;
     }
 }
