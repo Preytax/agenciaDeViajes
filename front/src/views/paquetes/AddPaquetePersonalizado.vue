@@ -52,8 +52,8 @@
                             </select>
                         </div>
                         <div class="col-md-12">
-                            <label for="inputEmail4" class="form-label">Elegir Activades</label>                     
-                            <input type="checkbox" @click="showActividades()"> 
+                            <label for="inputEmail4" class="form-label">Elegir Activades</label> 
+                            <a class="btn m-1" :class="grupoActividades.length == 0 ? 'btn btn-outline-success' : 'btn-success'" @click="showActividades()">Ver lista</a>
                         </div>
                         <div class="col-md-6"> <!--Tipo-Transporte-->
                             <label for="inputEmail4" class="form-label">Elegir el tipo Transporte</label>

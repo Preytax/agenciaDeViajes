@@ -64,7 +64,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title">Recuperación de Contraseña</h5>
-            <button v-show="!spinner" type="button" @click="hideCambioContraseña()" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <button type="button" @click="hideCambioContraseña()" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
             <div class="mb-3">
@@ -146,6 +146,7 @@ export default {
       solicitudAyuda: false,
       alerta_ayuda: false,
       chatCorreo: "",
+      cambioContraseña: false,
       numeroAyuda: "",
       spinner: false,
       modoAlerta: "",
