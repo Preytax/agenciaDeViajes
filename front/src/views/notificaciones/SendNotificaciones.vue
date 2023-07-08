@@ -1,9 +1,9 @@
 <template>
     <inc_head />
-    <div class="">
+    <div class="app">
         <button @click="sendNotification">Enviar notificación</button>
-        <div v-for="notificacion in notificaciones" :key="notificacion.id" class="notificaciones">
-            {{ notificacion.message }}
+        <div v-for="notificaciones in notificaciones" :key="notificaciones.id" class="notificaciones">
+            {{ notificaciones.mensaje }}
         </div>
     </div>
 </template>
@@ -15,13 +15,13 @@ export default {
     data() {
         return {
             notificaciones: [],
-            userId: 'example_user_id'
+            userId: 55
         };
     },
     methods: {
         sendNotification(){
             const mensaje = '¡Esta es una notificacion!';
-            axios.post('/api/notificaciones', { userId: this.userId, message })
+            axios.post('/api/notificaciones', { userId: this.userId, mensaje })
             .then(response => {
                 console.log(response.data);
             })

@@ -4,7 +4,7 @@ const app = express();
 
 app.use(bodyParser.json());
 
-let notificaciones = [];
+let notificacion = [];
 
 app.post('/api/notifications', (req, res)=>{
     const {userId, message} = req.body;

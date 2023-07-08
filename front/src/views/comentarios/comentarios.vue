@@ -2,8 +2,8 @@
     <div>
         <h1>Experiencias de otros usuarios:</h1>
         <form>
-            <input type="text" placeholder="Nombre" required>
-            <textarea placeholder="Comentario" required></textarea>
+            <input v-model="name" type="text" placeholder="Nombre" required>
+            <textarea v-model="comment" placeholder="Comentario" required></textarea>
             <button tyoe="submit">Enviar</button>
         </form>
         <div>
@@ -12,8 +12,8 @@
 
         <div>
             <div>
-                <!--<h3>{{ comentarios.nombre }}</h3>
-                <p>{{ comentarios.mensaje }}</p>-->
+                <h3>{{ comentarios.id }}</h3>
+                <p>{{ comentarios.mensaje }}</p>
             </div>
         </div>
     </div>
