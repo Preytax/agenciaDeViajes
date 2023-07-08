@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div v-if="2 != 3">
     <!-- Sidebar Start -->
-    <aside class="left-sidebar">
+    <aside v-if="2 == 3" class="left-sidebar">
       <!-- Sidebar scroll-->
       <div>
         <div class="brand-logo d-flex align-items-center justify-content-between">
@@ -258,9 +258,9 @@
                       <i class="ti ti-mail fs-6"></i>
                       <p class="mb-0 fs-6">My Account</p>
                     </a>-->
-                    <a href="#" class="d-flex align-items-center gap-2 dropdown-item">
+                    <a href="/getCompras" class="d-flex align-items-center gap-2 dropdown-item">
                       <i class="ti ti-list-check fs-6"></i>
-                      <p class="mb-0 fs-6">My Task</p>
+                      <p class="mb-0 fs-6">Mis Compras</p>
                     </a>
                     <a @click="singOut()" class="btn btn-outline-primary mx-3 mt-2 d-block">Logout</a>
                   </div>

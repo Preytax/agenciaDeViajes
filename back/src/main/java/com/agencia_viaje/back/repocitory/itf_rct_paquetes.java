@@ -8,4 +8,6 @@ public interface itf_rct_paquetes {
     public List<mdl_Paquetes> getPaquetes();
 
     public int savePaquete (mdl_Paquetes request);
+
+    public List<mdl_Paquetes> getPaquetesByFiltros(String idPais, String idCiudad, String fechaInicio, String fechaFinal);
 }

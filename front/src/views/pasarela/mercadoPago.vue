@@ -4,7 +4,7 @@
 
 <script>
 console.log("");
-/* 
+
 import "@mercadopago/sdk-js";
 
 // eslint-disable-next-line no-undef
@@ -22,7 +22,7 @@ mp.bricks().create("wallet", "wallet_container", {
 export default {
   name: 'MercadoPagoForm',
   // Resto del código del componente
-}; */
+}; 
 </script>
 
 <style>

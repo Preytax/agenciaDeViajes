@@ -8,8 +8,11 @@ span {
     text-align: initial;
 }
 
-.contador {
-    
+.divProductos {
+    max-width: 300px;
+    float: left;
+    margin-left: 3rem;
+    cursor: pointer;
 }
 
 .contador div {
@@ -37,7 +40,7 @@ span {
 .buscador div {
     display: flex;
     align-items: center;
-    height: 100%;
+    height: 2rem;
     flex-wrap: wrap;
     align-content: center;
     padding: 20px;
@@ -55,7 +58,7 @@ span {
 .buscarPaquete {
     color: aliceblue;
     display: flex;
-    border-radius: 0 10px 10px 0;
+    border-radius: 0 10px 0 0;
     width: 8rem;
     height: 100%;
     background-color: #5D87FF;
@@ -70,7 +73,25 @@ span {
     cursor: pointer;
 }
 
-.buscarPaquete span {
+.limpiarPaquete {
+    color: aliceblue;
+    display: flex;
+    border-radius: 0 0 10px 0;
+    width: 8rem;
+    height: 100%;
+    background-color: #f53d3d;
+    transition: background-color 0.3s ease;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.limpiarPaquete:hover {
+    box-shadow: 0px 0px 20px 13px rgba(0, 0, 0, 0.1);
+    background-color: #f40a0a;
+    cursor: pointer;
+}
+
+.buscarPaquete span, .limpiarPaquete span {
     text-align: center;
 }
 
@@ -115,6 +136,7 @@ span {
   appearance: none;
   outline: none;
   padding: 10px 20px;
+  max-width: 50px;
   font-size: 16px;
   border: none;
   background-color: #f1f1f1;
@@ -165,15 +187,50 @@ input[type="date"].custom-input:nth-of-type(2) {
     color: #5D87FF;
     width: 11rem;
 }
+
+.divPaquete {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+    font-size: 20px;
+}
+
+.divPaquete span {
+    width: 70%;
+}
+
+.btn-acciones {
+    width: 8rem;
+    padding: 0 !important;
+    align-items: center;
+    height: 2.5rem;
+    flex-wrap: wrap;
+    align-content: center;
+}
+
 </style>
 
 <template>
     <inc_head/>
     <div class="mp_row_Alert" v-if="showAlert">{{valorAlerta}}<i @click="hideAlert"></i></div>
-    <div class="body-wrapper">
+    <div class="body-wrapper" style="margin-left: 0; margin-top: 10px;">
         <div class="container-fluid" data-bd-theme="dark">
             <div class="card">
                 <div class="buscador">
+                    <div>
+                        <span>Origen</span>
+                        <!-- <input type="text" class="destino"> -->
+                        <select v-model="paisOrigen" @change="getCiudades(pais)" class="custom-select">
+                            <option value="">Seleccionar</option>
+                            <option v-for="pais in paises" :key="pais.id" :value="pais.id">{{ pais.nombre }}</option>
+                        </select>
+                        <select v-model="ciudadOrigen" class="custom-select">
+                            <option value="">Seleccionar</option>
+                            <option v-for="ciudad in ciudades" :key="ciudad.id" :value="ciudad.id">{{ ciudad.nombre }}</option>
+                        </select>
+                    </div>
                     <div>
                         <span>Destino</span>
                         <!-- <input type="text" class="destino"> -->
@@ -195,28 +252,34 @@ input[type="date"].custom-input:nth-of-type(2) {
                         <input class="custom-input" v-model="fechaFin" type="date">
                     </div>
                     <div class="huespedes" @click="huespedClick()">
-                        <span>Huesped</span>
+                        <span>hu&eacute;sped</span>
                         <div>
                             <span>{{ currentText }}</span>
                         </div>
                         <!-- <input type="text" @click="huespedClick()" class="destino"> -->
                     </div>
-                    <div @click="buscarPack()" class="buscarPaquete">
-                        <span>Buscar</span>
+                    <div class="btn-acciones">
+                        <div @click="buscarPack()" class="buscarPaquete">
+                            <span>Buscar</span>
+                        </div>
+                        <div @click="limpiarFiltros()" class="limpiarPaquete">
+                            <span>Limpiar</span>
+                        </div>
                     </div>
                 </div>
-                <template v-for="paquete in paquetes" :key="paquete.id">
-                    <div class="card-body">
-                        <div class="card mb-3">
+                <div class="card-body">
+                    <div @click="modalPaqueteClick(paquete)" v-for="paquete in paquetes" :key="paquete.id" class="divProductos card mb-3">
                         <img src="@/assets/images/paquetes/cuzco.jpg" class="card-img-top" alt="...">
-                        <div class="card-body">
+                        <div style="height: 120px;" class="card-body">
                             <h5 class="card-title">{{paquete.idpais + " - " + paquete.idciudad}}</h5>
                             <p class="card-text">{{ paquete.descripcion }}</p>
                             <p class="card-text"><small class="text-muted">S/.{{ paquete.monto }}</small></p>
                         </div>
+                        <div class="card-footer">
+                            <span class="card-title"><span style="color: #2a62fb;">{{paquete.fechaInicio}}</span> - <span style="color: #f40a0a;">{{paquete.fechaFinal}}</span></span>
                         </div>
                     </div>
-                </template>
+                </div>
             </div>
         </div>
     </div>
@@ -249,6 +312,30 @@ input[type="date"].custom-input:nth-of-type(2) {
                 </div>
                 <div class="modal-footer">
                     <button @click="huespedClick()" type="button" class="btn btn-success" data-bs-dismiss="modal">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal detalle paquete -->
+    <div v-show="modalPaquete" style="display: block;" class="modal" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" @click="modalPaqueteClick()" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="divPaquete">
+                        <span><i class="bi bi-arrow-right-square-fill"></i> Pa&iacute;s Origen: </span>
+                        <span><i class="bi bi-arrow-right-square-fill"></i> Ciudad Origen: </span>
+                        <span><i class="bi bi-arrow-left-square-fill"></i> Pa&iacute;s Destino: {{ paqueteSeleccionado.idpais }}</span>
+                        <span><i class="bi bi-arrow-left-square-fill"></i> Ciudad Destino: {{ paqueteSeleccionado.idciudad }}</span>
+                        <span><i class="bi bi-calendar-check"></i> Fecha de Partida: {{ paqueteSeleccionado.fechaInicio }}</span>
+                        <span><i class="bi bi-calendar-check-fill"></i> Fecha de Regreso: {{ paqueteSeleccionado.fechaFinal }}</span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button style="background-color: #5D87FF;" @click="modalPaqueteClick()" type="button" class="btn btn-success" data-bs-dismiss="modal"><i class="bi bi-cash-coin"></i> Comprar S/{{ paqueteSeleccionado.monto }}</button>
                 </div>
             </div>
         </div>
@@ -309,14 +396,15 @@ export default{
             contNinos: 0,
             contHabitaciones: 1,
 
-            idMultiuser: localStorage.getItem('id_multiuser'),
+            idMultiuser: 1/* localStorage.getItem('id_multiuser') */,
 
             paises: [],
             ciudades: [],
 
             pais: "",
-            ciudad: ""
+            ciudad: "",
 
+            paqueteSeleccionado: {}
         }
     },
     created() {
@@ -325,8 +413,7 @@ export default{
     props: [],
     mounted: async function() {
 
-        const responsePaquetes = await axios.get( this.BASE_URL_AXIOS + 'getPaquetes');
-        this.paquetes = responsePaquetes.data;
+        this.getPaquetes()
 
         const responseTipoDocumento = await axios.get( this.BASE_URL_AXIOS + 'getTiposDocumentos');
         this.tiposDocumentos = responseTipoDocumento.data;
@@ -334,6 +421,10 @@ export default{
         this.getPaises();
     },
     methods: {
+        async getPaquetes(){
+            const responsePaquetes = await axios.get( this.BASE_URL_AXIOS + 'getPaquetes');
+            this.paquetes = responsePaquetes.data;
+        },
         async getPaises(){
             const response = await axios.get( this.BASE_URL_AXIOS + 'getPaises/'+this.idMultiuser);
             this.paises = response.data;
@@ -378,10 +469,47 @@ export default{
                 this.modalHuesped = true;
             }
         },
-        buscarPack(){
+        modalPaqueteClick(paquete) {
+            if(this.modalPaquete){
+                this.modalPaquete = false;
+            }else{
+                this.modalPaquete = true;
+                this.paqueteSeleccionado = paquete;
+            }
+        },
+        limpiarFiltros(){
+            this.getPaquetes();
+            this.ciudad = "";
+            this.pais = "";
+            this.fechaInicio = null;
+            this.fechaFin = null;
+            this.contAdultos = "1";
+            this.contNinos = "0";
+            this.contHabitaciones = "1";
+
+        },
+        async buscarPack(){
             console.log(this.contAdultos);
             console.log(this.contNinos);
             console.log(this.contHabitaciones);
+            
+            if(this.pais != ""){
+                if(this.ciudad == ""){
+                    this.ciudad = 0
+                }
+                
+                if(this.fechaInicio == ""){
+                    this.fechaInicio = 0
+                }
+
+                if(this.fechaFin == ""){
+                    this.fechaFin = 0
+                }
+                const responsePaquetes = await axios.get( this.BASE_URL_AXIOS + 'getPaquetesByFiltros/'+this.pais+'/'+this.ciudad+'/'+this.fechaInicio+'/'+this.fechaFin);
+                this.paquetes = responsePaquetes.data;
+            } else {
+                console.log("Seleccione un destino");
+            }
         },
         async showLogin(){
             this.tabResgiter = false

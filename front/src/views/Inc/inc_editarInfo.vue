@@ -1,4 +1,5 @@
 <template>
+<template v-if="2 == 3">
     <div class="mp_row_Alert" v-if="showAlert">{{valorAlerta}}<i @click="hideAlert"></i></div>
     <transition name="fade">
         <div v-if="show" class="conteiner divSombraAlerta">
@@ -102,6 +103,7 @@
         </div>
     </transition>
 </template>
+</template>
 
 <script>
 import axios from 'axios';
@@ -114,6 +116,7 @@ export default {
         return {
             title: 'Operadores',
             id: localStorage.getItem('id'),
+            id_perfil: localStorage.getItem('id_perfil'),
             persona: null,
             nombres: null,
             apellidoPaterno: null,

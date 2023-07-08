@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -26,6 +27,15 @@ public class ctl_Paquetes {
         List<mdl_Paquetes> listPaqPers =null;
         listPaqPers = servicio.getPaquetes();
 
+        return listPaqPers;
+    }
+
+    @GetMapping("/getPaquetesByFiltros/{idPais}/{idCiudad}/{fechaInicio}/{fechaFinal}")
+    @ResponseStatus(HttpStatus.CREATED)
+    List<mdl_Paquetes> getPaquetesByFiltros(@PathVariable String idPais, @PathVariable String idCiudad, @PathVariable String fechaInicio, @PathVariable String fechaFinal){
+        List<mdl_Paquetes> listPaqPers =null;
+
+        listPaqPers = servicio.getPaquetesByFiltros(idPais, idCiudad, fechaInicio, fechaFinal);
         return listPaqPers;
     }
     

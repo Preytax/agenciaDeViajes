@@ -83,5 +83,71 @@ public class rpt_paquetes implements itf_rct_paquetes{
         }
         return 0;
     }
+
+    @Override
+    public List<mdl_Paquetes> getPaquetesByFiltros(String idPais, String idCiudad, String fechaInicio, String fechaFinal) {
+        List<mdl_Paquetes> listPaq = null;
+        
+        String query = ""+
+            "SELECT " + 
+                table + ".id, "+
+                table + ".id_modo, "+
+                table + ".id_usuario, "+
+                table + ".id_departamento, "+
+                table + ".actividades, "+
+                table + ".id_hoteles, "+
+                table + ".id_modo_transporte, "+
+                table + ".id_transporte, "+
+                table + ".fecha_inicio, "+
+                table + ".fecha_final, "+
+                table + ".monto, "+
+                " agv_paises.nombre AS pais, "+
+                " agv_ciudades.nombre AS ciudad "+
+            
+            " FROM " + table +
+            
+            " INNER JOIN agv_paises ON " +
+                " agv_paises.id = " + table + ".id_pais" +
+
+            " INNER JOIN agv_ciudades ON " +
+                " agv_ciudades.id = " + table + ".id_ciudad " +
+                
+            " WHERE " + 
+                table + ".estado = 1 AND "+
+                table + ".id_pais = "+idPais;
+
+            if(!idCiudad.equals("0")){
+                query += " AND "+table + ".id_ciudad = '"+idCiudad+"'";
+            }
+
+            if(!fechaInicio.equals("0")){
+                query += " AND "+table + ".fecha_inicio <= '"+fechaInicio+"'";
+            }
+
+            if(!fechaFinal.equals("0")){
+                query += " AND "+table + ".fecha_final >= '"+fechaFinal+"'";
+            }
+
+            System.out.println(query);
+
+        listPaq =JdbcTemplate.query(query,
+            (rs, rowNum) -> new mdl_Paquetes(
+                rs.getInt("ID"),
+                rs.getInt("ID_MODO"),
+                rs.getInt("ID_USUARIO"),
+                rs.getString("PAIS"),
+                rs.getInt("ID_DEPARTAMENTO"),
+                rs.getString("CIUDAD"),
+                rs.getInt("ID_HOTELES"),
+                rs.getInt("ID_MODO_TRANSPORTE"),
+                rs.getInt("ID_TRANSPORTE"),
+                rs.getString("FECHA_INICIO"),
+                rs.getString("FECHA_FINAL"),
+                rs.getInt("MONTO"),
+                rs.getString("ACTIVIDADES")
+            )
+        );
+        return listPaq;
+    }
     
 }
