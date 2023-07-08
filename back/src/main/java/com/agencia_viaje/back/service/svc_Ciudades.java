@@ -40,4 +40,8 @@ public class svc_Ciudades implements itf_ciudades {
         return repocitorio.findAllByIdMultiuserAndIdDepartamento(idMultiuser, idDepartamento);
     }
 
+    @Override
+    public List<mdl_Ciudades> getCiudadesByIdPais(int idPais) {
+        return repocitorio.findAllByIdPais(idPais);
+    }
 }

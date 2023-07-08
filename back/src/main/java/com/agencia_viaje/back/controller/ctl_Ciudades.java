@@ -63,4 +63,13 @@ public class ctl_Ciudades {
 
         return listCiudades;
     }
+
+    @GetMapping("/getCiudadesByIdPais/{idDepartamento}")
+    @ResponseStatus(HttpStatus.CREATED)
+    List<mdl_Ciudades> getCiudadesByIdPais(@PathVariable int idDepartamento){
+        List<mdl_Ciudades> listCiudades =null;
+        listCiudades = servicio.getCiudadesByIdPais(idDepartamento);
+
+        return listCiudades;
+    }
 }

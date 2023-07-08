@@ -56,5 +56,7 @@ app.component('FilterMatchMode', FilterMatchMode);
 app.component('FilterOperator', FilterOperator);
 /* END DATATABLES */
 
+import { loadMercadoPago } from "@mercadopago/sdk-js";
+app.component('loadMercadoPago', loadMercadoPago);
 
 app.mount('#app');

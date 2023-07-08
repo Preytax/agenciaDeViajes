@@ -18,6 +18,7 @@ import AddCiudad from '@/views/ubigeo/AddCiudad.vue'
 import GetCiudad from '@/views/ubigeo/GetCiudad.vue'
 import AddActividad from '@/views/acciones/AddActividad.vue'
 import GetActividad from '@/views/acciones/GetActividad.vue'
+import mercadoPago from '@/views/pasarela/mercadoPago'
 
 const routes = [
   {
@@ -69,6 +70,11 @@ const routes = [
     path: '/departamento/GetDepartamento',
     name: 'GetDepartamento',
     component: GetDepartamento,
+  },
+  {
+    path: '/mercadoPago',
+    name: 'mercadoPago',
+    component: mercadoPago,
   },
   {
     path: '/HomeOperador',

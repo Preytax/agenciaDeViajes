@@ -9,4 +9,6 @@ public interface itf_ciudades {
     public List<mdl_Ciudades> getCiudadById(int id);
     public List<mdl_Ciudades> getCiudadesByIdMultiuser(int idUsuario);
     public List<mdl_Ciudades> getCiudadesByIdMultiuserAndIdDepartamento(int idUsuario, int idDepartamento);
+
+    public List<mdl_Ciudades> getCiudadesByIdPais(int idPais);
 }
