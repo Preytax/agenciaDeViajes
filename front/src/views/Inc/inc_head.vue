@@ -62,6 +62,16 @@
                   </a>
                 </li>
               </template>
+              <template v-if="id_perfil == 3 || id_perfil == 4">
+                <li class="sidebar-item">
+                  <a class="sidebar-link" :href="`${BASE_URL}comentarios/comentarios`" aria-expanded="false">
+                    <span>
+                      <i class="ti ti-loyout-dashboard"></i>
+                    </span>
+                    <span class="hide-menu">Comentarios</span>
+                  </a>
+                </li>
+              </template>
 
               <li class="nav-small-cap">
                   <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
