@@ -97,10 +97,6 @@
                             <label for="inputEmail4" class="form-label">Elegir Fecha Final</label>
                             <input v-model="fechaFinal" type="date" class="form-control" id="" placeholder="">
                         </div>
-                        <div class="col-md-12"> <!--Monto-->
-                            <label for="inputEmail4" class="form-label">Monto Total</label>
-                            <textarea class="form-control" id="montoFinal" placeholder="Monto Final"></textarea>
-                        </div>
                     </form>
                     <hr class="my-4" />
                     <a class="w-100 btn btn-primary btn-lg" @click="addPaquetePersonalizado" href="#">Guardar Paquete</a>
@@ -148,17 +144,7 @@ var axios = require('axios');
 var error = 0;
 
 export default{
-    beforeRouteEnter(to, from, next) {
-        // Verificar si la variable de sesión existe
-        if (!localStorage.getItem('id')) {
-            // Redirigir a la página de inicio de sesión
-            next('/login');
-        } else if(localStorage.getItem('id_perfil') != 3){
-            next('/home');
-        } else {
-            next();
-        }
-    },
+
     inject: ['BASE_URL_AXIOS','BASE_URL'],
     components: {
         inc_head
@@ -181,7 +167,6 @@ export default{
             cantidadPersonas: null,
             fechaInicio: null,
             fechaFinal: null,
-            monto: null,
             showAlert: null,
             mostrarActividad: false,
             grupoActividades: [],
@@ -280,7 +265,6 @@ export default{
                     idtransporte: this.transportes1,
                     fechaInicio: this.fechaInicio,
                     fechaFinal: this.fechaFinal,
-                    monto: this.monto,
                     usuarioRegistra: localStorage.getItem('id'),
                 };
 

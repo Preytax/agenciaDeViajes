@@ -9,7 +9,6 @@ import sesion from '@/views/HomePrincipal.vue'
 import Login from '@/views/sesion/LogIn.vue'
 import Register from '@/views/sesion/RegisterIn.vue'
 import HelpChat from '@/views/whatsapp/helpChat.vue'
-import AddPaqueteEstandar from '@/views/paquetes/AddPaqueteEstandar.vue'
 import AddPais from '@/views/ubigeo/AddPais.vue'
 import GetPais from '@/views/ubigeo/GetPais.vue'
 import AddDepartamento from '@/views/ubigeo/AddDepartamento.vue'
@@ -134,11 +133,6 @@ const routes = [
     path: '/paquete/get',
     name: 'GetPaquetes',
     component: GetPaquetes,
-  },
-  {
-    path: '/paquete/addEstandar',
-    name: 'AddPaqueteEstandar',
-    component: AddPaqueteEstandar,
   }
 ]
 

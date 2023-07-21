@@ -511,6 +511,36 @@ export default{
                 console.log("Seleccione un destino");
             }
         },
+        calcularPrecio(latDest, longDest, latPart, longPart, cantPers, fechaInicio, fechaFinal, costTrans, costHotel, costActividad){
+            
+            let actividad   = cantPers * costActividad;
+            let hotel       = cantPers * costHotel;
+            let transporte  = cantPers * costTrans * (this.getDistanciaKilometros(latDest, longDest, latPart, longPart));
+            
+
+            let costoTotal = (actividad + hotel + transporte) * (fechaFinal - fechaInicio);
+            console.log(costoTotal);
+        },
+        getDistanciaKilometros(latitud1, longitud1, latitud2, longitud2) {
+            const degreesToRadians = function(degrees) {
+                return degrees * Math.PI / 180;
+            };
+
+            const earthRadiusKilometers = 6378.137; // Radio de la tierra en kilómetros
+
+            const deltaLatitude = degreesToRadians(latitud2 - latitud1);
+            const deltaLongitude = degreesToRadians(longitud2 - longitud1);
+
+            const haversineA = Math.sin(deltaLatitude/2) * Math.sin(deltaLatitude/2) + 
+                                Math.cos(degreesToRadians(latitud1)) * Math.cos(degreesToRadians(latitud2)) * 
+                                Math.sin(deltaLongitude/2) * Math.sin(deltaLongitude/2);
+
+            const haversineC = 2 * Math.atan2(Math.sqrt(haversineA), Math.sqrt(1-haversineA));
+
+            // Aquí obtienes la distancia en kilómetros
+            const distanceInKilometers = earthRadiusKilometers * haversineC;
+            return distanceInKilometers;
+        },
         async showLogin(){
             this.tabResgiter = false
             this.navRegister = false
