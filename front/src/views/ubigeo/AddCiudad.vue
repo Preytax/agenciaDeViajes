@@ -29,14 +29,14 @@
                         </div>
                         <div class="col-sm-6">
                             <label for="firstName" class="form-label" _msttexthash="76193" _msthash="27">Latitud de Ciudad</label>
-                            <input type="text" class="form-control" id="nombreCiudad" placeholder="" maxlength="45" v-model="nombreCiudad" required/>
+                            <input type="text" class="form-control" id="nombreCiudad" placeholder="" maxlength="45" v-model="latitud" required/>
                             <div ref="nombreCiudad" class="invalid-feedback" _msttexthash="637039" _msthidden="1" _msthash="28">
                                 La latitud es obligatoria.
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <label for="firstName" class="form-label" _msttexthash="76193" _msthash="27">Longitud de Ciudad</label>
-                            <input type="text" class="form-control" id="nombreCiudad" placeholder="" maxlength="45" v-model="nombreCiudad" required/>
+                            <input type="text" class="form-control" id="nombreCiudad" placeholder="" maxlength="45" v-model="longitud" required/>
                             <div ref="nombreCiudad" class="invalid-feedback" _msttexthash="637039" _msthidden="1" _msthash="28">
                                 La longitud es obligatorio.
                             </div>
@@ -81,7 +81,9 @@ export default{
             departamentos: "",
             departamento: "",
             showAlert: false,
-            nombreCiudad: ""
+            nombreCiudad: "",
+            latitud: "",
+            longitud: "",
         }
     },
     mounted: async function () {
@@ -111,7 +113,9 @@ export default{
                     nombre          : this.nombreCiudad,
                     usuarioRegistra : this.id,
                     idMultiuser     : this.idMultiuser,
-                    idDepartamento  : this.departamento
+                    idDepartamento  : this.departamento,
+                    latitud         : this.latitud,
+                    longitud        : this.longitud
                 };
 
                 const request = await axios({
