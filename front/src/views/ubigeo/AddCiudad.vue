@@ -27,6 +27,20 @@
                                 El nombre de la ciudad es obligatorio.
                             </div>
                         </div>
+                        <div class="col-sm-6">
+                            <label for="firstName" class="form-label" _msttexthash="76193" _msthash="27">Latitud de Ciudad</label>
+                            <input type="text" class="form-control" id="nombreCiudad" placeholder="" maxlength="45" v-model="nombreCiudad" required/>
+                            <div ref="nombreCiudad" class="invalid-feedback" _msttexthash="637039" _msthidden="1" _msthash="28">
+                                La latitud es obligatoria.
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="firstName" class="form-label" _msttexthash="76193" _msthash="27">Longitud de Ciudad</label>
+                            <input type="text" class="form-control" id="nombreCiudad" placeholder="" maxlength="45" v-model="nombreCiudad" required/>
+                            <div ref="nombreCiudad" class="invalid-feedback" _msttexthash="637039" _msthidden="1" _msthash="28">
+                                La longitud es obligatorio.
+                            </div>
+                        </div>
                     </div>
                     <hr class="my-4">
                     <a class="w-100 btn btn-primary btn-lg" @click="addCiudad()" href="#">Registrar</a>
@@ -43,7 +57,7 @@ var error = 0;
 
 
 export default{
-    beforeRouteEnter(to, from, next) {
+    /* beforeRouteEnter(to, from, next) {
         // Verificar si la variable de sesión existe
         if (!localStorage.getItem('id')) {
             // Redirigir a la página de inicio de sesión
@@ -53,7 +67,7 @@ export default{
         } else {
             next();
         }
-    },
+    }, */
     inject: ['BASE_URL_AXIOS','BASE_URL'],
     components: {
         inc_head,
