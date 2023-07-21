@@ -6,48 +6,31 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name="agv_hoteles")
 public class mdl_Hoteles {
     @Id
     @Column(name="id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     @Column(name = "ID_CIUDAD")
+    @Getter @Setter
     private int id_ciudad;
-    @Column(name="nombre")
+
+    @Column(name="NOMBRE")
+    @Getter @Setter
     private String nombre;
 
-    public mdl_Hoteles() {
-    }
-
-    public mdl_Hoteles(int id,int id_ciudad, String nombre) {
-        this.id = id;
-        this.id_ciudad=id_ciudad;
-        this.nombre = nombre;
-    }
-    
-    public int getId() {
-        return id;
-    }
-    public void setId(int id) {
-        this.id = id;
-    }
-    
-    public String getNombre() {
-        return nombre;
-    }
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public int getId_ciudad() {
-        return id_ciudad;
-    }
-
-    public void setId_ciudad(int id_ciudad) {
-        this.id_ciudad = id_ciudad;
-    }
-    
+    @Column(name="PRECIO_DIA")
+    @Getter @Setter
+    private double precioDia;
+  
 }

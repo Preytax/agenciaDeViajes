@@ -1,4 +1,4 @@
-package com.agencia_viaje.back.repocitory;
+/* package com.agencia_viaje.back.repocitory;
 
 import java.util.List;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -30,3 +30,4 @@ public class rpt_hoteles implements itf_rct_hoteles{
     }
     
 }
+ */

@@ -39,5 +39,7 @@ public class mdl_Actividades {
     @Getter @Setter
     private String nombre;
     
+    @Column(name="PRECIO")
+    @Getter @Setter
+    private double precio;
 }
-
