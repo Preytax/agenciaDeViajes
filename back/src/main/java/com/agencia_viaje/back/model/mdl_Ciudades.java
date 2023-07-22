@@ -38,4 +38,11 @@ public class mdl_Ciudades {
     @Getter @Setter
     private String nombre;
     
+    @Column(name="LATITUD")
+    @Getter @Setter
+    private String latitud;
+
+    @Column(name="LONGITUD")
+    @Getter @Setter
+    private String longitud;
 }

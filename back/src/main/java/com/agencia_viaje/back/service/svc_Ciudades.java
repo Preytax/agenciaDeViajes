@@ -26,7 +26,7 @@ public class svc_Ciudades implements itf_ciudades {
     }
 
     @Override
-    public List<mdl_Ciudades> getCiudadById(int id) {
+    public mdl_Ciudades getCiudadById(int id) {
         return repocitorio.findById(id);
     }
 

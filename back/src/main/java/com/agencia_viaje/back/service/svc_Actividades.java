@@ -34,5 +34,10 @@ public class svc_Actividades implements itf_actividades{
     public List<mdl_Actividades> getActividadesByIdMultiuserAndIdCiudad(int idMultiuser, int idCiudad) {
         return repocitorio.findAllByIdMultiuserAndIdCiudad(idMultiuser, idCiudad);
     }
+
+    @Override
+    public mdl_Actividades getActividadById(int idCiudad) {
+        return repocitorio.findById(idCiudad);
+    }
     
 }

@@ -6,4 +6,6 @@ import com.agencia_viaje.back.model.mdl_Transportes;
 
 public interface itf_transportes {
     public List<mdl_Transportes> getTransportes(int id_modo_transporte);
+
+    public mdl_Transportes getTransporteById(int id_transporte);
 }

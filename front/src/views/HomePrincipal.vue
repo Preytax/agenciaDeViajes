@@ -222,25 +222,25 @@ input[type="date"].custom-input:nth-of-type(2) {
                     <div>
                         <span>Origen</span>
                         <!-- <input type="text" class="destino"> -->
-                        <select v-model="paisOrigen" @change="getCiudades(pais)" class="custom-select">
+                        <select v-model="paisPartida" @change="getCiudadesOrigen(pais)" class="custom-select">
                             <option value="">Seleccionar</option>
                             <option v-for="pais in paises" :key="pais.id" :value="pais.id">{{ pais.nombre }}</option>
                         </select>
-                        <select v-model="ciudadOrigen" class="custom-select">
+                        <select v-model="ciudadPartida" class="custom-select">
                             <option value="">Seleccionar</option>
-                            <option v-for="ciudad in ciudades" :key="ciudad.id" :value="ciudad.id">{{ ciudad.nombre }}</option>
+                            <option v-for="ciudad in ciudadesPartida" :key="ciudad.id" :value="ciudad.id">{{ ciudad.nombre }}</option>
                         </select>
                     </div>
                     <div>
                         <span>Destino</span>
                         <!-- <input type="text" class="destino"> -->
-                        <select v-model="pais" @change="getCiudades(pais)" class="custom-select">
+                        <select v-model="paisDestino" @change="getCiudadesDestino(pais)" class="custom-select">
                             <option value="">Seleccionar</option>
                             <option v-for="pais in paises" :key="pais.id" :value="pais.id">{{ pais.nombre }}</option>
                         </select>
-                        <select v-model="ciudad" class="custom-select">
+                        <select v-model="ciudadDestino" class="custom-select">
                             <option value="">Seleccionar</option>
-                            <option v-for="ciudad in ciudades" :key="ciudad.id" :value="ciudad.id">{{ ciudad.nombre }}</option>
+                            <option v-for="ciudad in ciudadesDestino" :key="ciudad.id" :value="ciudad.id">{{ ciudad.nombre }}</option>
                         </select>
                     </div>
                     <div class="fecha">
@@ -259,7 +259,7 @@ input[type="date"].custom-input:nth-of-type(2) {
                         <!-- <input type="text" @click="huespedClick()" class="destino"> -->
                     </div>
                     <div class="btn-acciones">
-                        <div @click="buscarPack()" class="buscarPaquete">
+                        <div @click="getPaquetes()" class="buscarPaquete">
                             <span>Buscar</span>
                         </div>
                         <div @click="limpiarFiltros()" class="limpiarPaquete">
@@ -273,8 +273,7 @@ input[type="date"].custom-input:nth-of-type(2) {
                         <div style="height: 120px;" class="card-body">
                             <h5 class="card-title">{{paquete.idpais + " - " + paquete.idciudad}}</h5>
                             <p class="card-text">{{ paquete.descripcion }}</p>
-                            <p class="card-text"><small class="text-muted">S/.{{ paquete.monto }}</small></p>
-                        </div>
+                            <p class="card-text"><small class="text-muted">S/ {{ precios[paquete.id] }}</small></p>                        </div>
                         <div class="card-footer">
                             <span class="card-title"><span style="color: #2a62fb;">{{paquete.fechaInicio}}</span> - <span style="color: #f40a0a;">{{paquete.fechaFinal}}</span></span>
                         </div>
@@ -344,10 +343,10 @@ input[type="date"].custom-input:nth-of-type(2) {
 
 <script>
 import inc_head from "./Inc/inc_head";
-import CryptoJS from 'crypto-js';
-var axios = require('axios');
-var error = 0;
-
+/* import CryptoJS from 'crypto-js';
+ */var axios = require('axios');
+/* var error = 0;
+ */
 export default{
     beforeRouteEnter(to, from, next) {
         // Verificar si la variable de sesión existe
@@ -399,10 +398,18 @@ export default{
             idMultiuser: 1/* localStorage.getItem('id_multiuser') */,
 
             paises: [],
-            ciudades: [],
+            ciudadesDestino: [],
+            ciudadesPartida: [],
 
-            pais: "",
-            ciudad: "",
+            paisDestino: "",
+            ciudadDestino: "",
+            paisPartida: "",
+            ciudadPartida: "",
+
+            precios: {},
+
+            montoPaquete: "",
+            modalPaquete: "",
 
             paqueteSeleccionado: {}
         }
@@ -424,14 +431,40 @@ export default{
         async getPaquetes(){
             const responsePaquetes = await axios.get( this.BASE_URL_AXIOS + 'getPaquetes');
             this.paquetes = responsePaquetes.data;
+
+            this.paquetes.forEach((paquete) => {
+                this.calcularPrecio(paquete.idtransporte, paquete.idhotel, paquete.actividades, paquete.id).then((precio) => {
+                    this.precios[paquete.id] = precio; // Directly update the reactive property
+                });
+            });
         },
         async getPaises(){
             const response = await axios.get( this.BASE_URL_AXIOS + 'getPaises/'+this.idMultiuser);
             this.paises = response.data;
         },
-        async getCiudades(){
-            const response = await axios.get( this.BASE_URL_AXIOS + 'getCiudadesByIdPais/'+this.pais);
-            this.ciudades = response.data;
+        async getCiudadesDestino(){
+            const response = await axios.get( this.BASE_URL_AXIOS + 'getCiudadesByIdPais/'+this.paisDestino);
+            this.ciudadesDestino = response.data;
+        },
+        async getCiudadesOrigen(){
+            const response = await axios.get( this.BASE_URL_AXIOS + 'getCiudadesByIdPais/'+this.paisPartida);
+            this.ciudadesPartida = response.data;
+        },
+        async getCiudadById(idCiudad){
+            const response = await axios.get( this.BASE_URL_AXIOS + 'getCiudadById/'+idCiudad);
+            return response.data;
+        },
+        async getTransporteById(idTransporte){
+            const response = await axios.get( this.BASE_URL_AXIOS + 'getTransporteById/'+idTransporte);
+            return response.data;
+        },
+        async getHotelById(idHotel){
+            const response = await axios.get( this.BASE_URL_AXIOS + 'getHotelById/'+idHotel);
+            return response.data;
+        },
+        async getActividadById(idActividad){
+            const response = await axios.get( this.BASE_URL_AXIOS + 'getActividadById/'+idActividad);
+            return response.data;
         },
         pushAdulto(){
             this.contAdultos += 1;
@@ -483,9 +516,9 @@ export default{
             this.pais = "";
             this.fechaInicio = null;
             this.fechaFin = null;
-            this.contAdultos = "1";
-            this.contNinos = "0";
-            this.contHabitaciones = "1";
+            this.contAdultos = 1;
+            this.contNinos = 0;
+            this.contHabitaciones = 1;
 
         },
         async buscarPack(){
@@ -511,15 +544,48 @@ export default{
                 console.log("Seleccione un destino");
             }
         },
-        calcularPrecio(latDest, longDest, latPart, longPart, cantPers, fechaInicio, fechaFinal, costTrans, costHotel, costActividad){
-            
-            let actividad   = cantPers * costActividad;
-            let hotel       = cantPers * costHotel;
-            let transporte  = cantPers * costTrans * (this.getDistanciaKilometros(latDest, longDest, latPart, longPart));
-            
+        async calcularPrecio(idTransporte, idHotel, idActividad, paqueteId){
+            if(this.ciudadDestino != "" && this.ciudadPartida != "" && this.fechaInicio != "" && this.fechaFin != ""){
+                //obtener lat y lon por id de ciudad
+                let ciudadDest = await this.getCiudadById(this.ciudadDestino);
 
-            let costoTotal = (actividad + hotel + transporte) * (fechaFinal - fechaInicio);
-            console.log(costoTotal);
+                //obtener lat y lon por id de ciudad
+                let ciudadPart = await this.getCiudadById(this.ciudadPartida);
+
+                //obtener costo de transporte
+                let costTrans = await this.getTransporteById(idTransporte);
+
+                //obtener costo de transporte
+                let costHotel = await this.getHotelById(idHotel);
+
+                //obtener costo de transporte
+                let costActividad = await this.getActividadById(idActividad);
+
+                //CANTIDA DE PERSONAS
+                let cantPers = this.contAdultos + this.contNinos;
+                let actividad   = cantPers * costActividad.precio;
+                let hotel       = cantPers * costHotel.precioDia * this.contHabitaciones;
+                let transporte  = cantPers * (costTrans.precioKm) * (this.getDistanciaKilometros(ciudadDest.latitud, ciudadDest.longitud, ciudadPart.latitud, ciudadPart.longitud));
+
+                // Convert the date strings to JavaScript Date objects
+                let fechaInicioObj = new Date(this.fechaInicio);
+                let fechaFinalObj = new Date(this.fechaFin);
+
+                // Calculate the time difference in milliseconds
+                let timeDiff = fechaFinalObj.getTime() - fechaInicioObj.getTime();
+
+                // Calculate the number of days between the start and end dates
+                let days = timeDiff / (1000 * 60 * 60 * 24);
+
+                let costoTotal = (actividad + hotel + transporte) * days;
+
+                this.precios[paqueteId] = costoTotal;
+
+                return costoTotal.toFixed(2);
+            } else {
+                return "...";
+            }
+
         },
         getDistanciaKilometros(latitud1, longitud1, latitud2, longitud2) {
             const degreesToRadians = function(degrees) {
@@ -553,7 +619,7 @@ export default{
             this.tabLogin = false
             this.navLogin  = false
         },
-        async addOperador(){
+        /* async addOperador(){
             Object.keys(this.$refs).forEach((refKey) => {
                 const elements = this.$refs[refKey];
                 if (!Array.isArray(elements)) {
@@ -624,10 +690,7 @@ export default{
                     "Content-Type": "application/json"
                 }
             })
-            /*.then(()=>{
-                
-            })
-            .catch(err => console.log(err));*/
+
             var arreglo =  request.data.split("|");
 
             if(arreglo[0] == "OK")
@@ -642,7 +705,7 @@ export default{
                 this.valorAlerta = arreglo[1];
                 this.showAlert = true;
             }
-        },
+        }, */
         hideAlert() {
             this.showAlert = false;
         }

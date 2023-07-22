@@ -3,7 +3,7 @@
 </template>
 
 <script>
-console.log("");
+/* console.log("");
 
 import "@mercadopago/sdk-js";
 
@@ -22,7 +22,7 @@ mp.bricks().create("wallet", "wallet_container", {
 export default {
   name: 'MercadoPagoForm',
   // Resto del código del componente
-}; 
+};  */
 </script>
 
 <style>

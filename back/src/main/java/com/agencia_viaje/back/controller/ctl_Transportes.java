@@ -25,4 +25,13 @@ public class ctl_Transportes {
 
         return listTransportes;
     }
+
+    @GetMapping("/getTransporteById/{id_transporte}")
+    @ResponseStatus(HttpStatus.CREATED)
+    mdl_Transportes getTransporteById(@PathVariable int id_transporte){
+        mdl_Transportes listTransportes =null;
+        listTransportes = servicio.getTransporteById(id_transporte);
+
+        return listTransportes;
+    }
 }

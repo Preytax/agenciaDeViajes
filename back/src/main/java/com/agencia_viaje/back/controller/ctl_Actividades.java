@@ -55,4 +55,12 @@ public class ctl_Actividades {
         listActividades = servicio.getActividadesByIdMultiuserAndIdCiudad(idMultiuser, idCiudad);
         return listActividades;
     }
+
+    @GetMapping("/getActividadById/{id}")
+    @ResponseStatus(HttpStatus.CREATED)
+    mdl_Actividades getActividadById( @PathVariable int id){
+        mdl_Actividades listActividades =null;
+        listActividades = servicio.getActividadById(id);
+        return listActividades;
+    }
 }

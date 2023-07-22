@@ -26,4 +26,13 @@ public class ctl_Hoteles {
 
         return listHoteles;
     }
+
+    @GetMapping("/getHotelById/{id}")
+    @ResponseStatus(HttpStatus.CREATED)
+    mdl_Hoteles getHotelById(@PathVariable int id){
+        mdl_Hoteles listHoteles =null;
+        listHoteles = servicio.getHotelById(id);
+
+        return listHoteles;
+    }
 }

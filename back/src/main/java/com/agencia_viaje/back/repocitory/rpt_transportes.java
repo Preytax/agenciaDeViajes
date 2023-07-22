@@ -1,4 +1,4 @@
-package com.agencia_viaje.back.repocitory;
+/* package com.agencia_viaje.back.repocitory;
 
 import java.util.List;
 
@@ -31,3 +31,4 @@ public class rpt_transportes implements itf_rct_transportes{
     }
     
 }
+ */
