@@ -32,17 +32,17 @@ public class mdl_Paquetes {
     @Getter @Setter
     private int idusuario;
 
-    @Column(name = "id_pais")
+    /* @Column(name = "id_pais")
     @Getter @Setter
-    private String idpais;
+    private String idpais; */
 
     @Column(name = "id_departamento")
     @Getter @Setter
     private int iddepartamento;
 
-    @Column(name = "id_ciudad")
+    /* @Column(name = "id_ciudad")
     @Getter @Setter
-    private String idciudad;
+    private String idciudad; */
 
     @Column(name = "id_hoteles")
     @Getter @Setter
@@ -109,15 +109,15 @@ public class mdl_Paquetes {
     private String actividades;
 
                 
-    public mdl_Paquetes(int id, int idmodo, int idusuario, String idpais, int iddepartamento, String idciudad,
+    public mdl_Paquetes(int id, int idmodo, int idusuario/* , String idpais */, int iddepartamento/* , String idciudad */,
             int idhotel, int idmodotransporte, int idtransporte, String fechaInicio,
             String fechaFinal, int monto, String actividades) {
         this.id = id;
         this.idmodo = idmodo;
         this.idusuario = idusuario;
-        this.idpais = idpais;
+        /* this.idpais = idpais; */
         this.iddepartamento = iddepartamento;
-        this.idciudad = idciudad;
+        /* this.idciudad = idciudad; */
         this.idhotel = idhotel;
         this.idmodotransporte = idmodotransporte;
         this.idtransporte = idtransporte;

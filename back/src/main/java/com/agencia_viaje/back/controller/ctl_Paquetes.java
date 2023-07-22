@@ -30,12 +30,12 @@ public class ctl_Paquetes {
         return listPaqPers;
     }
 
-    @GetMapping("/getPaquetesByFiltros/{idPais}/{idCiudad}/{fechaInicio}/{fechaFinal}")
+    @GetMapping("/getPaquetesByFiltros/{idCiudadPartida}/{idCiudadDestino}")
     @ResponseStatus(HttpStatus.CREATED)
-    List<mdl_Paquetes> getPaquetesByFiltros(@PathVariable String idPais, @PathVariable String idCiudad, @PathVariable String fechaInicio, @PathVariable String fechaFinal){
+    List<mdl_Paquetes> getPaquetesByFiltros(@PathVariable String idCiudadPartida, @PathVariable String idCiudadDestino){
         List<mdl_Paquetes> listPaqPers =null;
 
-        listPaqPers = servicio.getPaquetesByFiltros(idPais, idCiudad, fechaInicio, fechaFinal);
+        listPaqPers = servicio.getPaquetesByFiltros(idCiudadPartida, idCiudadDestino);
         return listPaqPers;
     }
     
@@ -49,9 +49,9 @@ public class ctl_Paquetes {
             mdl_Paquetes paquete = new mdl_Paquetes();
             paquete.setIdmodo(paquetes.getIdmodo());
             paquete.setIdusuario(paquetes.getIdusuario());
-            paquete.setIdpais(paquetes.getIdpais());
+            /* paquete.setIdpais(paquetes.getIdpais()); */
             paquete.setIddepartamento(paquetes.getIddepartamento());
-            paquete.setIdciudad(paquetes.getIdciudad());
+            /* paquete.setIdciudad(paquetes.getIdciudad()); */
             paquete.setIdhotel(paquetes.getIdhotel());
             paquete.setIdmodotransporte(paquetes.getIdmodotransporte());
             paquete.setIdtransporte(paquetes.getIdtransporte());

@@ -2,7 +2,6 @@
 <style>
 
 span {
-    width: 100%;
     font-weight: 700;
     font-family: Sans,Sans-Serif;
     text-align: initial;
@@ -215,12 +214,12 @@ input[type="date"].custom-input:nth-of-type(2) {
 <template>
     <inc_head/>
     <div class="mp_row_Alert" v-if="showAlert">{{valorAlerta}}<i @click="hideAlert"></i></div>
-    <div class="body-wrapper" style="margin-left: 0; margin-top: 10px;">
+    <div class="body-wrapper" style="margin-left: 0; margin-top: 10vh;">
         <div class="container-fluid" data-bd-theme="dark">
             <div class="card">
                 <div class="buscador">
                     <div>
-                        <span>Origen</span>
+                        <span class="w-100">Origen</span>
                         <!-- <input type="text" class="destino"> -->
                         <select v-model="paisPartida" @change="getCiudadesOrigen(pais)" class="custom-select">
                             <option value="">Seleccionar</option>
@@ -232,7 +231,7 @@ input[type="date"].custom-input:nth-of-type(2) {
                         </select>
                     </div>
                     <div>
-                        <span>Destino</span>
+                        <span class="w-100">Destino</span>
                         <!-- <input type="text" class="destino"> -->
                         <select v-model="paisDestino" @change="getCiudadesDestino(pais)" class="custom-select">
                             <option value="">Seleccionar</option>
@@ -259,7 +258,7 @@ input[type="date"].custom-input:nth-of-type(2) {
                         <!-- <input type="text" @click="huespedClick()" class="destino"> -->
                     </div>
                     <div class="btn-acciones">
-                        <div @click="getPaquetes()" class="buscarPaquete">
+                        <div @click="buscarPack()" class="buscarPaquete">
                             <span>Buscar</span>
                         </div>
                         <div @click="limpiarFiltros()" class="limpiarPaquete">
@@ -325,12 +324,12 @@ input[type="date"].custom-input:nth-of-type(2) {
                 </div>
                 <div class="modal-body">
                     <div class="divPaquete">
-                        <span><i class="bi bi-arrow-right-square-fill"></i> Pa&iacute;s Origen: </span>
-                        <span><i class="bi bi-arrow-right-square-fill"></i> Ciudad Origen: </span>
-                        <span><i class="bi bi-arrow-left-square-fill"></i> Pa&iacute;s Destino: {{ paqueteSeleccionado.idpais }}</span>
-                        <span><i class="bi bi-arrow-left-square-fill"></i> Ciudad Destino: {{ paqueteSeleccionado.idciudad }}</span>
-                        <span><i class="bi bi-calendar-check"></i> Fecha de Partida: {{ paqueteSeleccionado.fechaInicio }}</span>
-                        <span><i class="bi bi-calendar-check-fill"></i> Fecha de Regreso: {{ paqueteSeleccionado.fechaFinal }}</span>
+                        <span><i class="bi bi-arrow-right-square-fill"></i> Pa&iacute;s Origen: {{ paisPartida }}</span>
+                        <span><i class="bi bi-arrow-right-square-fill"></i> Ciudad Origen: {{ ciudadPartida != "" ? getCiudadById(ciudadPartida) : "" }}</span>
+                        <span><i class="bi bi-arrow-left-square-fill"></i> Pa&iacute;s Destino: {{ paisDestino }}</span>
+                        <span><i class="bi bi-arrow-left-square-fill"></i> Ciudad Destino: {{ ciudadDestino != "" ? getCiudadById(ciudadDestino) : "" }}</span>
+                        <span><i class="bi bi-calendar-check"></i> Fecha de Partida: {{ fechaInicio }}</span>
+                        <span><i class="bi bi-calendar-check-fill"></i> Fecha de Regreso: {{ fechaFin }}</span>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -431,12 +430,6 @@ export default{
         async getPaquetes(){
             const responsePaquetes = await axios.get( this.BASE_URL_AXIOS + 'getPaquetes');
             this.paquetes = responsePaquetes.data;
-
-            this.paquetes.forEach((paquete) => {
-                this.calcularPrecio(paquete.idtransporte, paquete.idhotel, paquete.actividades, paquete.id).then((precio) => {
-                    this.precios[paquete.id] = precio; // Directly update the reactive property
-                });
-            });
         },
         async getPaises(){
             const response = await axios.get( this.BASE_URL_AXIOS + 'getPaises/'+this.idMultiuser);
@@ -522,11 +515,7 @@ export default{
 
         },
         async buscarPack(){
-            console.log(this.contAdultos);
-            console.log(this.contNinos);
-            console.log(this.contHabitaciones);
-            
-            if(this.pais != ""){
+            if(this.ciudadDestino != "" && this.ciudadPartida != "" && this.fechaInicio != "" && this.fechaFin != ""){
                 if(this.ciudad == ""){
                     this.ciudad = 0
                 }
@@ -538,8 +527,14 @@ export default{
                 if(this.fechaFin == ""){
                     this.fechaFin = 0
                 }
-                const responsePaquetes = await axios.get( this.BASE_URL_AXIOS + 'getPaquetesByFiltros/'+this.pais+'/'+this.ciudad+'/'+this.fechaInicio+'/'+this.fechaFin);
+                const responsePaquetes = await axios.get( this.BASE_URL_AXIOS + 'getPaquetesByFiltros/'+this.ciudadPartida+'/'+this.ciudadDestino);
                 this.paquetes = responsePaquetes.data;
+
+                this.paquetes.forEach((paquete) => {
+                    this.calcularPrecio(paquete.idtransporte, paquete.idhotel, paquete.actividades, paquete.id).then((precio) => {
+                        this.precios[paquete.id] = precio; // Directly update the reactive property
+                    });
+                });
             } else {
                 console.log("Seleccione un destino");
             }

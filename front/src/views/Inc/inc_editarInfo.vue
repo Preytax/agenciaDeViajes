@@ -1,5 +1,4 @@
 <template>
-<template v-if="2 == 3">
     <div class="mp_row_Alert" v-if="showAlert">{{valorAlerta}}<i @click="hideAlert"></i></div>
     <transition name="fade">
         <div v-if="show" class="conteiner divSombraAlerta">
@@ -102,7 +101,6 @@
             </div>
         </div>
     </transition>
-</template>
 </template>
 
 <script>

@@ -40,8 +40,7 @@ public class svc_paquetes implements itf_paquetes {
     }
 
     @Override
-    public List<mdl_Paquetes> getPaquetesByFiltros(String idPais, String idCiudad, String fechaInicio,
-            String fechaFinal) {
-        return repocitorio.getPaquetesByFiltros(idPais, idCiudad, fechaInicio, fechaFinal);
+    public List<mdl_Paquetes> getPaquetesByFiltros(String idCiudadPartida, String idCiudadDestino) {
+        return repocitorio.getPaquetesByFiltros(idCiudadPartida, idCiudadDestino);
     }
 }

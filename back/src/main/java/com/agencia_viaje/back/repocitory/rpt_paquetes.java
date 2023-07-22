@@ -30,17 +30,17 @@ public class rpt_paquetes implements itf_rct_paquetes{
                 table + ".id_transporte, "+
                 table + ".fecha_inicio, "+
                 table + ".fecha_final, "+
-                table + ".monto, "+
-                " agv_paises.nombre AS pais, "+
-                " agv_ciudades.nombre AS ciudad "+
+                table + ".monto "+
+                /* " agv_paises.nombre AS pais, "+
+                " agv_ciudades.nombre AS ciudad "+ */
             
             " FROM " + table +
             
-            " INNER JOIN agv_paises ON " +
+            /* " INNER JOIN agv_paises ON " +
                 " agv_paises.id = " + table + ".id_pais" +
 
             " INNER JOIN agv_ciudades ON " +
-                " agv_ciudades.id = " + table + ".id_ciudad " +
+                " agv_ciudades.id = " + table + ".id_ciudad " + */
                 
             " WHERE " + table + ".estado = 1";
 
@@ -50,9 +50,9 @@ public class rpt_paquetes implements itf_rct_paquetes{
                 rs.getInt("ID"),
                 rs.getInt("ID_MODO"),
                 rs.getInt("ID_USUARIO"),
-                rs.getString("PAIS"),
+                /* rs.getString("PAIS"), */
                 rs.getInt("ID_DEPARTAMENTO"),
-                rs.getString("CIUDAD"),
+                /* rs.getString("CIUDAD"), */
                 rs.getInt("ID_HOTELES"),
                 rs.getInt("ID_MODO_TRANSPORTE"),
                 rs.getInt("ID_TRANSPORTE"),
@@ -72,7 +72,7 @@ public class rpt_paquetes implements itf_rct_paquetes{
             int registros = JdbcTemplate.update(
                 "INSERT INTO " + table
                         + " (id_usuario,id_modo,id_pais,id_departamento,id_ciudad,id_hoteles,id_modo_transporte,id_transporte,fecha_inicio,fecha_final,monto,actividades) VALUES (?,?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-               request.getIdusuario(),request.getIdmodo(),request.getIdpais(), request.getIddepartamento(), request.getIdciudad(), request.getActividades(), request.getIdhotel(), request.getIdmodotransporte(),request.getIdtransporte(),request.getFechaInicio(),request.getFechaFinal(),request.getMonto());
+               request.getIdusuario(),request.getIdmodo()/* ,request.getIdpais() */, request.getIddepartamento()/*, request.getIdciudad() */, request.getActividades(), request.getIdhotel(), request.getIdmodotransporte(),request.getIdtransporte(),request.getFechaInicio(),request.getFechaFinal(),request.getMonto());
 
             if (registros != 0) {
                 return registros;
@@ -85,7 +85,7 @@ public class rpt_paquetes implements itf_rct_paquetes{
     }
 
     @Override
-    public List<mdl_Paquetes> getPaquetesByFiltros(String idPais, String idCiudad, String fechaInicio, String fechaFinal) {
+    public List<mdl_Paquetes> getPaquetesByFiltros(String idCiudadPartida, String idCiudadDestino) {
         List<mdl_Paquetes> listPaq = null;
         
         String query = ""+
@@ -100,44 +100,37 @@ public class rpt_paquetes implements itf_rct_paquetes{
                 table + ".id_transporte, "+
                 table + ".fecha_inicio, "+
                 table + ".fecha_final, "+
-                table + ".monto, "+
-                " agv_paises.nombre AS pais, "+
-                " agv_ciudades.nombre AS ciudad "+
+                table + ".monto "+
+                /* " agv_paises.nombre AS pais, "+
+                " agv_ciudades.nombre AS ciudad "+ */
             
             " FROM " + table +
             
-            " INNER JOIN agv_paises ON " +
+            /* " INNER JOIN agv_paises ON " +
                 " agv_paises.id = " + table + ".id_pais" +
 
             " INNER JOIN agv_ciudades ON " +
-                " agv_ciudades.id = " + table + ".id_ciudad " +
+                " agv_ciudades.id = " + table + ".id_ciudad " + */
                 
             " WHERE " + 
-                table + ".estado = 1 AND "+
-                table + ".id_pais = "+idPais;
+                table + ".estado = 1 ";
 
-            if(!idCiudad.equals("0")){
-                query += " AND "+table + ".id_ciudad = '"+idCiudad+"'";
+            if(!idCiudadPartida.equals("0")){
+                query += " AND "+table + ".id_ciudad_partida = '"+idCiudadPartida+"'";
             }
 
-            if(!fechaInicio.equals("0")){
-                query += " AND "+table + ".fecha_inicio <= '"+fechaInicio+"'";
+            if(!idCiudadDestino.equals("0")){
+                query += " AND "+table + ".id_ciudad_destino = '"+idCiudadDestino+"'";
             }
-
-            if(!fechaFinal.equals("0")){
-                query += " AND "+table + ".fecha_final >= '"+fechaFinal+"'";
-            }
-
-            System.out.println(query);
 
         listPaq =JdbcTemplate.query(query,
             (rs, rowNum) -> new mdl_Paquetes(
                 rs.getInt("ID"),
                 rs.getInt("ID_MODO"),
                 rs.getInt("ID_USUARIO"),
-                rs.getString("PAIS"),
+                /* rs.getString("PAIS"), */
                 rs.getInt("ID_DEPARTAMENTO"),
-                rs.getString("CIUDAD"),
+                /* rs.getString("CIUDAD"), */
                 rs.getInt("ID_HOTELES"),
                 rs.getInt("ID_MODO_TRANSPORTE"),
                 rs.getInt("ID_TRANSPORTE"),

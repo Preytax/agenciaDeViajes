@@ -1,7 +1,7 @@
 <template>
-  <div v-if="2 != 3">
+  <div>
     <!-- Sidebar Start -->
-    <aside v-if="2 == 3" class="left-sidebar">
+    <aside v-if="id_perfil != 3" class="left-sidebar">
       <!-- Sidebar scroll-->
       <div>
         <div class="brand-logo d-flex align-items-center justify-content-between">
@@ -54,7 +54,7 @@
               </template>
               <template v-if="id_perfil == 2  || id_perfil == 4">
                 <li class="sidebar-item">
-                  <a class="sidebar-link" :href="`${BASE_URL}paquete/addEstandar`" aria-expanded="false">
+                  <a class="sidebar-link" :href="`${BASE_URL}paquete/add`" aria-expanded="false">
                     <span>
                       <i class="ti ti-layout-dashboard"></i>
                     </span>
@@ -271,19 +271,10 @@
         </nav>
       </header>
       <!--  Header End -->
-      <div class="container-fluid">
-        <div style="border: 0;" v-show="urlRouter != 'HomeOperador' && urlRouter != 'perfil'" class="card">
-          <ul class="nav nav-pills nav-fill gap-2 p-1 small bg-primary rounded-5 shadow-sm" id="pillNav2" role="tablist" 
-            style="--bs-nav-link-color: var(--bs-white); --bs-nav-pills-link-active-color: var(--bs-primary); --bs-nav-pills-link-active-bg: var(--bs-white);">
-            <!--
-            <li class="nav-item" role="presentation">
-              <router-link to="/about">
-                <button :class="{ 'active': url === 'about'}" class="nav-link rounded-5" id="profile-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="false">
-                  About.
-                </button>
-              </router-link>
-            </li>
-            -->
+      <div  class="container-fluid">
+        <div style="border: 0;"  class="card">
+          <ul v-if="id_perfil != 3" class="nav nav-pills nav-fill gap-2 p-1 small bg-primary rounded-5 shadow-sm" id="pillNav2" role="tablist" 
+            style="margin-top: 10vh; --bs-nav-link-color: var(--bs-white); --bs-nav-pills-link-active-color: var(--bs-primary); --bs-nav-pills-link-active-bg: var(--bs-white);">
             <template v-if="id_perfil == 1 || id_perfil == 4">
               <template v-if="urlRouter == 'operador'">
                 <li class="nav-item" role="presentation">
@@ -369,8 +360,8 @@
               </template>
               <template v-if="urlRouter == 'paquete'">
                 <li class="nav-item" role="presentation">
-                  <router-link to="/paquete/addEstandar">
-                    <button :class="{ 'active': urlEvento === 'addEstandar'}" class="nav-link rounded-5" id="contact-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="false">
+                  <router-link to="/paquete/add">
+                    <button :class="{ 'active': urlEvento === 'add'}" class="nav-link rounded-5" id="contact-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="false">
                       Crear Paquetes Estandar
                     </button>
                   </router-link>
